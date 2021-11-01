@@ -1,18 +1,38 @@
 package com.huyhoang.swing.slideshow;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 public class SlideShow extends javax.swing.JPanel {
+
     private int numCom = 0;
+    private Timer timer;
 
     public SlideShow() {
         initComponents();
+        timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                numCom++;
+                if (numCom < panelSlide.getCount()) {
+                    panelSlide.setAnimateRight(false);
+                    panelSlide.show(numCom);
+                } else {
+                    numCom = 0;
+                    panelSlide.setAnimateRight(false);
+                    panelSlide.show(numCom);
+                }
+            }
+        });
+        timer.start();
     }
-    
+
     public void addCom(Component... com) {
         panelSlide.init(com);
     }
-    
+
     public void setAnimate(int animate) {
         panelSlide.setAnimate(animate);
     }
@@ -33,6 +53,7 @@ public class SlideShow extends javax.swing.JPanel {
         });
 
         buttonSlide2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_back_50px.png"))); // NOI18N
+        buttonSlide2.setRight(false);
         buttonSlide2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSlide2ActionPerformed(evt);
@@ -50,8 +71,8 @@ public class SlideShow extends javax.swing.JPanel {
         );
         panelSlideLayout.setVerticalGroup(
             panelSlideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(buttonSlide1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
-            .addComponent(buttonSlide2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonSlide1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(buttonSlide2, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -67,27 +88,35 @@ public class SlideShow extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSlide1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSlide1ActionPerformed
-        numCom++;
-        if (numCom < panelSlide.getCount()) {
-            panelSlide.setAnimateRight(false);
-            panelSlide.show(numCom);
-        } else {
-            numCom = 0;
-            panelSlide.setAnimateRight(false);
-            panelSlide.show(numCom);
+        if (timer.isRunning()) {
+            timer.stop();
+            numCom++;
+            if (numCom < panelSlide.getCount()) {
+                panelSlide.setAnimateRight(false);
+                panelSlide.show(numCom);
+            } else {
+                numCom = 0;
+                panelSlide.setAnimateRight(false);
+                panelSlide.show(numCom);
+            }
+            timer.start();
         }
     }//GEN-LAST:event_buttonSlide1ActionPerformed
 
     private void buttonSlide2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSlide2ActionPerformed
-        numCom--;
-        if (numCom >= 0) {
-            panelSlide.setAnimateRight(true);
-            panelSlide.show(numCom);
+        if (timer.isRunning()) {
+            timer.stop();
+            numCom--;
+            if (numCom >= 0) {
+                panelSlide.setAnimateRight(true);
+                panelSlide.show(numCom);
 
-        } else {
-            panelSlide.setAnimateRight(true);
-            numCom = panelSlide.getCount() - 1;
-            panelSlide.show(numCom);
+            } else {
+                panelSlide.setAnimateRight(true);
+                numCom = panelSlide.getCount() - 1;
+                panelSlide.show(numCom);
+            }
+            timer.start();
         }
     }//GEN-LAST:event_buttonSlide2ActionPerformed
 

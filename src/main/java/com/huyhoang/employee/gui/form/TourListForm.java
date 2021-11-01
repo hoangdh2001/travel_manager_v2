@@ -1,99 +1,102 @@
 package com.huyhoang.employee.gui.form;
 
+import com.huyhoang.employee.gui.component.TourDetail;
 import com.huyhoang.swing.model.ModelRow;
+import com.huyhoang.swing.scrollbar.ScrollBarCustom;
 import com.huyhoang.swing.table.CellCollapse;
 import com.huyhoang.swing.table.CellMenu;
+import com.huyhoang.swing.table.MyTable;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
-public class TourListForm extends javax.swing.JPanel {
+public class TourListForm extends JLayeredPane {
 
     private MigLayout layout;
+    private MyTable table;
+    private TourDetail tourDetail;
 
     public TourListForm() {
-        initComponents();
         buildDisplay();
     }
 
     private void buildDisplay() {
-        
+        createJScrollPane();
+        layout = new MigLayout("fill", "0[fill]10", "50[fill]");
+        setLayout(layout);
+        JLabel item = new JLabel("Tour List");
+        item.setFont(new Font("sansserif", Font.PLAIN, 18));
+        setLayer(item, JLayeredPane.POPUP_LAYER);
+        add(item, "pos 0 0 n n");
+        createTable();
+        createSlideShow();
     }
 
-//    private void initData() {
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
-//    }
+    private void createTable() {
+        table = new MyTable();
+        table.setShadowOpacity(0.3f);
+        table.setShadowSize(2);
+        table.setBackground(Color.WHITE);
+        table.setRowLineColor(Color.LIGHT_GRAY);
+        JScrollPane sp = new JScrollPane();
+        sp.setViewportView(table);
+        table.fixTable(sp);
+        add(sp, "w 60%");
+        initData();
+    }
+    
+    private void initData() {
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+        table.addRow(new ModelRow(new Object[]{new CellMenu(), "Hoàng", "Chinh đẹp trai", "Hoàng đẹp trai", new CellCollapse()}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}, new Object[]{"1", "2", "3", "4", "5", "6", "7", "8"}));
+    }
+    
+    private void createSlideShow() {
+        tourDetail = new TourDetail();
+        add(tourDetail, "w 40%");
+    }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        myTable1 = new com.huyhoang.swing.table.MyTable();
-
-        setBackground(new java.awt.Color(102, 102, 255));
-        setOpaque(false);
-
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel1.setText("Tour List");
-
-        jScrollPane1.setViewportView(myTable1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(461, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addGap(112, 112, 112)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private com.huyhoang.swing.table.MyTable myTable1;
-    // End of variables declaration//GEN-END:variables
+    private void createJScrollPane() {
+        JScrollPane sp = new JScrollPane();
+        sp.setViewportView(this);
+        sp.getViewport().setBackground(new Color(249, 249, 249));
+        sp.setVerticalScrollBar(new ScrollBarCustom());
+        JPanel p = new JPanel();
+        p.setBackground(Color.WHITE);
+        sp.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        sp.setBorder(new EmptyBorder(5, 5, 5, 5));
+    }
 }
