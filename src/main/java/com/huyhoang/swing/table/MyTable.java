@@ -129,7 +129,7 @@ public class MyTable extends JPanel {
         p.setBackground(Color.WHITE);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroll.setBorder(new EmptyBorder(5, 5, 5, 5));
+        scroll.setBorder(new EmptyBorder(5, 5, 5, 10));
     }
     
 }

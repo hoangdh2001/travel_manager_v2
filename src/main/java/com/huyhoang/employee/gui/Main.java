@@ -1,11 +1,11 @@
 package com.huyhoang.employee.gui;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.huyhoang.employee.gui.component.Content;
 import com.huyhoang.employee.gui.component.Header;
 import com.huyhoang.employee.gui.component.Menu;
 import com.huyhoang.employee.gui.form.Form2;
 import com.huyhoang.employee.gui.form.TourListForm;
-import com.huyhoang.employee.gui.form.TourListForm2;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
 import java.awt.Color;
@@ -14,6 +14,8 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JLayeredPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -71,7 +73,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int index) {
                 if (index == 0) {
-                    content.showForm(new TourListForm2());
+                    content.showForm(new TourListForm());
                 } else if (index == 1) {
                     content.showForm(new Form2());
                 }
@@ -80,12 +82,12 @@ public class Main extends javax.swing.JFrame {
 
         header = new Header();
         header.moving(this);
-        
+
         bg.setLayer(menu, JLayeredPane.POPUP_LAYER);
         bg.add(menu, "pos 0al 0al 200 100%");
         bg.add(header, "h 70!, wrap");
         content = new Content();
-        content.showForm(new TourListForm2());
+        content.showForm(new TourListForm());
         bg.add(content, "w 100%, h 100%");
     }
 
@@ -136,20 +138,9 @@ public class Main extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
         //</editor-fold>
 
