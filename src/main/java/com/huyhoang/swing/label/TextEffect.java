@@ -90,6 +90,6 @@ public class TextEffect extends JLabel {
         // bóng text
         ShadowRenderer renderer = new ShadowRenderer(shadowSize, shadowOpacity, shadowColor);
         g2.drawImage(renderer.createShadow(img), 0, 0, null);
-        g2.drawImage(img, x, x, null);
+        g2.drawImage(img, x, y, null);
     }
 }

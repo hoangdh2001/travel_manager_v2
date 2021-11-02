@@ -67,8 +67,8 @@ public class ItemImage extends javax.swing.JPanel {
 
         lblName.setForeground(new java.awt.Color(255, 255, 255));
         lblName.setText("Name");
-        lblName.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        lblName.setShadowSize(3);
+        lblName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblName.setShadowColor(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -82,9 +82,9 @@ public class ItemImage extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(183, Short.MAX_VALUE)
-                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addContainerGap(177, Short.MAX_VALUE)
+                .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
