@@ -1,15 +1,20 @@
 package com.huyhoang.employee.gui.component;
 
 import com.huyhoang.swing.panel.PanelShadow;
-import com.huyhoang.swing.slideshow.BackgroundImage;
+import com.huyhoang.swing.slideshow.ItemImage;
 import javax.swing.ImageIcon;
 
 public class TourDetail extends PanelShadow {
     public TourDetail() {
         initComponents();
-        BackgroundImage img1 = new BackgroundImage(new ImageIcon(getClass().getResource("/icon/Hinh-anh-thien-nhien-dep.jpg")));
-        BackgroundImage img2 = new BackgroundImage(new ImageIcon(getClass().getResource("/icon/hinh-anh-suy-tu-1.jpg")));
-        slideShow1.addCom(img1, img2, img1, img2);
+        ItemImage img1 = new ItemImage();
+        img1.setData(new ImageIcon(getClass().getResource("/icon/Hinh-anh-thien-nhien-dep.jpg")), "Hình ảnh thiên nhiên");
+        ItemImage img2 = new ItemImage();
+        img2.setData(new ImageIcon(getClass().getResource("/icon/hinh-anh-suy-tu-1.jpg")), "Hình ảnh suy tư");
+        ItemImage img3 = new ItemImage();
+        img3.setData(new ImageIcon(getClass().getResource("/icon/hình-ảnh-phong-cảnh-đẹp-1024x680.jpg")), "Hình ảnh phong cảnh đẹp");
+        
+        slideShow1.addCom(img1, img2, img3);
         slideShow1.setAnimate(8);
         add(slideShow1);
     }

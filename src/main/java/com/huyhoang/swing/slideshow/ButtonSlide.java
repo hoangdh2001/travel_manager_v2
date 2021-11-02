@@ -21,7 +21,7 @@ import javax.swing.JButton;
 public class ButtonSlide extends JButton {
 
     private boolean hover = false;
-    private Color in = new Color(0, 0, 0, 0.5f);
+    private Color in = new Color(0, 0, 0, 0.3f);
     private Color out = new Color(0, 0, 0, 0);
     private boolean right = true;
 
