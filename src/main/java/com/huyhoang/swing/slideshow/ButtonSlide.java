@@ -6,6 +6,7 @@
 package com.huyhoang.swing.slideshow;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,7 +22,7 @@ import javax.swing.JButton;
 public class ButtonSlide extends JButton {
 
     private boolean hover = false;
-    private Color in = new Color(0, 0, 0, 0.5f);
+    private Color in = new Color(0, 0, 0, 0.3f);
     private Color out = new Color(0, 0, 0, 0);
     private boolean right = true;
 
@@ -51,6 +52,7 @@ public class ButtonSlide extends JButton {
 
     public ButtonSlide() {
         setContentAreaFilled(false);
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
