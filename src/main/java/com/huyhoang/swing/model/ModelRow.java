@@ -1,15 +1,20 @@
 package com.huyhoang.swing.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.collections4.MapIterator;
+
+
 public class ModelRow {
     private Object[] row;
-    private Object[][] subRow;
-
-    public ModelRow(Object[] row, Object[]... subRow) {
-        this.row = row;
-        this.subRow = subRow;
-    }
+    private Object[] titleSubRow;
+    private List<Object[]> subTable;
 
     public ModelRow() {
+        subTable = new ArrayList<>();
+    }
+    public void addSubRow(Object[] subRow) {
+        subTable.add(subRow);
     }
 
     public Object[] getRow() {
@@ -20,17 +25,24 @@ public class ModelRow {
         this.row = row;
     }
 
-    public Object[][] getSubRow() {
-        return subRow;
+    public Object[] getTitleSubRow() {
+        return titleSubRow;
     }
 
-    public void setSubRow(Object[][] subRow) {
-        this.subRow = subRow;
+    public void setTitleSubRow(Object[] titleSubRow) {
+        this.titleSubRow = titleSubRow;
+    }
+
+    public List<Object[]> getSubTable() {
+        return subTable;
+    }
+
+    public void setSubTable(List<Object[]> subTable) {
+        this.subTable = subTable;
     }
 
     @Override
     public String toString() {
-        return "ModelRow{" + "row=" + row + ", subRow=" + subRow + '}';
+        return "ModelRow{" + "row=" + row + ", titleSubRow=" + titleSubRow + ", subTable=" + subTable + '}';
     }
-    
 }

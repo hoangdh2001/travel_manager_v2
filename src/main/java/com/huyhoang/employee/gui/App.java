@@ -21,13 +21,19 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+//import org.hibernate.ogm.OgmSession;
+//import org.hibernate.ogm.OgmSessionFactory;
+//import org.hibernate.ogm.boot.OgmSessionFactoryBuilder;
+//import org.hibernate.ogm.cfg.OgmProperties;
 import org.hibernate.service.ServiceRegistry;
 
 public class App {
     public static void main(String[] args) {
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+//                .applySetting(OgmProperties.ENABLED, true)
                 .configure()
                 .build();
+        
         Metadata metadata = new MetadataSources(serviceRegistry)
                 .addAnnotatedClass(ChiTietThamQuan.class)
                 .addAnnotatedClass(ChiTietThamQuan_PK.class)
@@ -48,6 +54,8 @@ public class App {
                 .build();
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
         Session session = sessionFactory.getCurrentSession();
+//        OgmSessionFactory sessionFactory = metadata.getSessionFactoryBuilder().unwrap(OgmSessionFactoryBuilder.class).build();
+//        OgmSession session = sessionFactory.openSession();
         Transaction tr = session.getTransaction();
         
         try {

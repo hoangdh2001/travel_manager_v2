@@ -19,6 +19,8 @@ public class KhachHang {
     private String maKhachHang;
     @Column(name = "hoten", columnDefinition = "nvarchar(255)", nullable = false)
     private String hoTen;
+    @Column(columnDefinition = "image", nullable = false)
+    private byte[] avatar;
     @Column(name = "CCCD", columnDefinition = "varchar(12)", nullable = false)
     private String cCCD;
     @Column(name = "sdt", columnDefinition = "varchar(10)", nullable = false)
@@ -39,10 +41,11 @@ public class KhachHang {
      * @param diaChi
      * @param matKhau
      */
-    public KhachHang(String maKhachHang, String hoTen, String cCCD, String soDienThoai, String email, DiaChi diaChi,
+    public KhachHang(String maKhachHang, String hoTen, byte[] avatar, String cCCD, String soDienThoai, String email, DiaChi diaChi,
             byte[] matKhau) {
         this.maKhachHang = maKhachHang;
         this.hoTen = hoTen;
+        this.avatar = avatar;
         this.cCCD = cCCD;
         this.soDienThoai = soDienThoai;
         this.email = email;
@@ -76,7 +79,20 @@ public class KhachHang {
     public String getHoTen() {
         return hoTen;
     }
-
+    /**
+     * @return avatar
+     */
+    public byte[] getAvatar() {
+        return avatar;
+    }
+    
+    /**
+     * @param avatar 
+     */
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
+    
     /**
      * @param hoTen the hoTen to set
      */

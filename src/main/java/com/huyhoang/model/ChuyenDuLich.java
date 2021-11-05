@@ -1,5 +1,10 @@
 package com.huyhoang.model;
 
+import com.huyhoang.swing.event.EventAction;
+import com.huyhoang.swing.model.ModelRow;
+import com.huyhoang.swing.table.CellCollapse;
+import com.huyhoang.swing.table.CellMenu;
+import com.huyhoang.swing.table.ModelAction;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +14,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,9 +25,11 @@ public class ChuyenDuLich {
     @Id
     @Column(name = "chuyen_id")
     private String maChuyen;
-    @ManyToMany
-    @JoinTable(name = "chitietloaichuyen", joinColumns = @JoinColumn(name = "chuyen_id"), inverseJoinColumns = @JoinColumn(name = "loaichuyen_id"))
-    private List<LoaiChuyenDi> dsLoaiChuyenDi;
+    @ManyToOne
+    @JoinColumn(name = "loaichuyendi_id")
+    private LoaiChuyenDi loaiChuyenDi;
+    @Column(name = "ngay_tao")
+    private Date ngayTao;
     @Column(name = "giachuyen", columnDefinition = "money")
     private double giaChuyenDi;
     @OneToMany(mappedBy = "chuyenDuLich")
@@ -51,6 +57,8 @@ public class ChuyenDuLich {
     /**
      * @param maChuyen
      * @param giaChuyenDi
+     * @param loaiChuyenDi
+     * @param ngayTao
      * @param ngayKhoiHanh
      * @param ngayKetThuc
      * @param trangThai
@@ -60,11 +68,13 @@ public class ChuyenDuLich {
      * @param dieuKien
      * @param soLuong
      */
-    public ChuyenDuLich(String maChuyen, double giaChuyenDi, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
+    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
             PhuongTien phuongTien, DongTour dongTour, String moTa,
             String dieuKien, int soLuong) {
         this.maChuyen = maChuyen;
         this.giaChuyenDi = giaChuyenDi;
+        this.loaiChuyenDi = loaiChuyenDi;
+        this.ngayTao = ngayTao;
         this.ngayKhoiHanh = ngayKhoiHanh;
         this.ngayKetThuc = ngayKetThuc;
         this.trangThai = trangThai;
@@ -73,16 +83,14 @@ public class ChuyenDuLich {
         this.moTa = moTa;
         this.dieuKien = dieuKien;
         this.soLuong = soLuong;
-        this.dsLoaiChuyenDi = new ArrayList<LoaiChuyenDi>();
         this.dsChiTietThamQuan = new ArrayList<ChiTietThamQuan>();
     }
-    
+
     /**
-     * @param trangThai 
+     * @param trangThai
      */
-    public ChuyenDuLich(TrangThaiChuyenDi trangThai)  {
+    public ChuyenDuLich(TrangThaiChuyenDi trangThai) {
         this.trangThai = trangThai;
-        this.dsLoaiChuyenDi = new ArrayList<>();
         this.dsChiTietThamQuan = new ArrayList<>();
     }
 
@@ -92,22 +100,15 @@ public class ChuyenDuLich {
     public ChuyenDuLich() {
         this(TrangThaiChuyenDi.DANG_XU_LY);
     }
+
     /**
      * @param chuyenDuLich
      * @param diaDanh
-     * @param anhDiaDanh 
+     * @param anhDiaDanh
      */
     public void themChiTietThamQuan(ChuyenDuLich chuyenDuLich, DiaDanh diaDanh, byte[] anhDiaDanh) {
         ChiTietThamQuan chiTietThamQuan = new ChiTietThamQuan(chuyenDuLich, diaDanh, anhDiaDanh);
         dsChiTietThamQuan.add(chiTietThamQuan);
-    }
-    /**
-     * @param maLoaiChuyen
-     * @param tenLoaiChuyen 
-     */
-    public void themLoaiChuyenDi(String maLoaiChuyen, String tenLoaiChuyen) {
-        LoaiChuyenDi loaiChuyenDi = new LoaiChuyenDi(maLoaiChuyen, tenLoaiChuyen);
-        dsLoaiChuyenDi.add(loaiChuyenDi);
     }
 
     /**
@@ -125,17 +126,31 @@ public class ChuyenDuLich {
     }
 
     /**
-     * @return the dsLoaiChuyenDi
+     * @return the loaiChuyenDi
      */
-    public List<LoaiChuyenDi> getDsLoaiChuyenDi() {
-        return dsLoaiChuyenDi;
+    public LoaiChuyenDi getLoaiChuyenDi() {
+        return loaiChuyenDi;
     }
 
     /**
-     * @param dsLoaiChuyenDi the dsLoaiChuyenDi to set
+     * @param loaiChuyenDi the dsLoaiChuyenDi to set
      */
-    public void setDsLoaiChuyenDi(List<LoaiChuyenDi> dsLoaiChuyenDi) {
-        this.dsLoaiChuyenDi = dsLoaiChuyenDi;
+    public void setLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) {
+        this.loaiChuyenDi = loaiChuyenDi;
+    }
+
+    /**
+     * @return ngayTao
+     */
+    public Date getNgayTao() {
+        return ngayTao;
+    }
+
+    /**
+     * @param ngayTao
+     */
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
     }
 
     /**
@@ -235,52 +250,64 @@ public class ChuyenDuLich {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
+
     /**
      * @return the trangThai
      */
     public TrangThaiChuyenDi getTrangThai() {
         return trangThai;
     }
-    
+
     /**
-     * @param trangThai 
+     * @param trangThai
      */
     public void setTrangThai(TrangThaiChuyenDi trangThai) {
         this.trangThai = trangThai;
     }
-    
+
     /**
      * @return the phuongTien
      */
     public PhuongTien getPhuongTien() {
         return phuongTien;
     }
-    
+
     /**
-     * @param phuongTien 
+     * @param phuongTien
      */
     public void setPhuongTien(PhuongTien phuongTien) {
         this.phuongTien = phuongTien;
     }
-    
+
     /**
      * @return the dongTour
      */
     public DongTour getDongTour() {
         return dongTour;
     }
+
     /**
-     * @param dongTour 
+     * @param dongTour
      */
     public void setDongTour(DongTour dongTour) {
         this.dongTour = dongTour;
     }
-    
+
     @Override
     public String toString() {
-        return "ChuyenDuLich [maChuyen=" + maChuyen + ", dsLoaiChuyenDi=" + dsLoaiChuyenDi + ", giaChuyenDi="
+        return "ChuyenDuLich [maChuyen=" + maChuyen + ", dsLoaiChuyenDi=" + loaiChuyenDi + ", giaChuyenDi="
                 + giaChuyenDi + ", dsChiTietThamQuan=" + dsChiTietThamQuan + ", ngayKhoiHanh=" + ngayKhoiHanh
                 + ", ngayKetThuc=" + ngayKetThuc + ", moTa=" + moTa + ", dieuKien=" + dieuKien + ", soLuong=" + soLuong
                 + "]";
+    }
+    
+    public ModelRow convertToRowTable(EventAction evt) {
+        ModelRow row = new ModelRow();
+        row.setRow(new Object[] {new CellMenu(), maChuyen, ngayTao, dongTour, trangThai, new ModelAction(this, evt), new CellCollapse()});
+        row.setTitleSubRow(new Object[] {"Id", "Tên địa danh", "Tỉnh"});
+        dsChiTietThamQuan.forEach(chiTietThamQuan -> {
+            row.addSubRow(new Object[] {chiTietThamQuan.getDiaDanh().getMaDiaDanh(), chiTietThamQuan.getDiaDanh().getTenDiaDanh(), chiTietThamQuan.getDiaDanh().getTinh()});
+        });
+        return  row;
     }
 }
