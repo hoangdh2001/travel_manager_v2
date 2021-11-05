@@ -1,5 +1,7 @@
 package com.huyhoang.swing.table;
 
+import com.huyhoang.model.TrangThaiChuyenDi;
+import com.huyhoang.model.TrangThaiDonDat;
 import com.huyhoang.swing.event.EventTable;
 import com.huyhoang.swing.event.EventTableSelected;
 import com.huyhoang.swing.graphics.ShadowRenderer;
@@ -11,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
@@ -142,6 +145,15 @@ public class RowTable extends JPanel {
             } else if (o instanceof ModelAction) {
                 ModelAction action = (ModelAction) o;
                 firstRow.add(new CellButton(action), "split 2");
+            } else if(o instanceof TrangThaiChuyenDi | o instanceof TrangThaiDonDat) {
+                CellStatus cell = new CellStatus(o);
+                firstRow.add(cell);
+            } else if(o instanceof CellMore) {
+                CellMore cell = (CellMore) o;
+                firstRow.add(cell, "split 2");
+            } else if(o instanceof Icon) {
+                Icon icon = (Icon) o;
+                firstRow.add(new CellAvatar(icon));
             } else {
                 String value = "";
                 if (o != null) {

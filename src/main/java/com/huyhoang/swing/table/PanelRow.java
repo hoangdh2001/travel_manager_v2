@@ -8,10 +8,9 @@ public class PanelRow extends JPanel {
     private MigLayout layout;
 
     public PanelRow() {
-        layout = new MigLayout("novisualpadding, fill, insets 0", "0[sg props, fill]0", "[]");
+        layout = new MigLayout("novisualpadding, fill, insets 0, debug", "0[sg main, fill]0", "[]");
         setLayout(layout);
         setOpaque(false);
         setBorder(new EmptyBorder(0, 5, 0, 5));
-
     }
 }
