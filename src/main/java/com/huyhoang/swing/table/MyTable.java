@@ -6,7 +6,6 @@ import com.huyhoang.swing.model.ModelRow;
 import com.huyhoang.swing.scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -77,7 +76,7 @@ public class MyTable extends JPanel {
     }
 
     private void buildDisplay() {
-        layout = new MigLayout("wrap, fill, insets 0", "0[fill]0", "3[]3");
+        layout = new MigLayout("wrap, fillx, insets 0", "0[fill]0", "3[]3");
         setLayout(layout);
     }
 
@@ -128,7 +127,7 @@ public class MyTable extends JPanel {
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setBorder(new EmptyBorder(5, 5, 5, 10));
     }
     

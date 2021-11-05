@@ -4,6 +4,7 @@ import com.huyhoang.swing.panel.PanelShadow;
 import com.huyhoang.swing.slideshow.ItemImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import net.miginfocom.swing.MigLayout;
 
 public class TourDetail extends PanelShadow {
@@ -31,6 +32,8 @@ public class TourDetail extends PanelShadow {
     private void createPnlTourDetail() {
         pnlTouDetail.setLayout(new MigLayout("fill, insets 0", "[][]", "10[]10"));
         JLabel tourName = new JLabel();
+        
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -50,7 +53,7 @@ public class TourDetail extends PanelShadow {
         pnlTouDetail.setLayout(pnlTouDetailLayout);
         pnlTouDetailLayout.setHorizontalGroup(
             pnlTouDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
         pnlTouDetailLayout.setVerticalGroup(
             pnlTouDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

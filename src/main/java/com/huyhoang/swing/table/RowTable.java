@@ -1,5 +1,7 @@
 package com.huyhoang.swing.table;
 
+import com.huyhoang.model.TrangThaiChuyenDi;
+import com.huyhoang.model.TrangThaiDonDat;
 import com.huyhoang.swing.event.EventTable;
 import com.huyhoang.swing.event.EventTableSelected;
 import com.huyhoang.swing.graphics.ShadowRenderer;
@@ -11,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
@@ -108,7 +111,7 @@ public class RowTable extends JPanel {
     public void setRowBorderRadius(int rowBorderRadius) {
         this.rowBorderRadius = rowBorderRadius;
     }
-    
+
     public Color getRowLineColor() {
         return rowLineColor;
     }
@@ -133,9 +136,24 @@ public class RowTable extends JPanel {
         PanelRow firstRow = new PanelRow();
         for (Object o : row.getRow()) {
             if (o instanceof CellMenu) {
-                firstRow.add(new CellMenu());
+                firstRow.add(new CellMenu(), "split 2");
             } else if (o instanceof CellCollapse) {
-                firstRow.add(new CellCollapse());
+                firstRow.add(new CellCollapse(), "w 40!, right");
+            } else if (o instanceof CellButton) {
+                CellButton btn = (CellButton) o;
+                firstRow.add(btn);
+            } else if (o instanceof ModelAction) {
+                ModelAction action = (ModelAction) o;
+                firstRow.add(new CellButton(action), "split 2");
+            } else if(o instanceof TrangThaiChuyenDi | o instanceof TrangThaiDonDat) {
+                CellStatus cell = new CellStatus(o);
+                firstRow.add(cell);
+            } else if(o instanceof CellMore) {
+                CellMore cell = (CellMore) o;
+                firstRow.add(cell, "split 2");
+            } else if(o instanceof Icon) {
+                Icon icon = (Icon) o;
+                firstRow.add(new CellAvatar(icon));
             } else {
                 String value = "";
                 if (o != null) {
@@ -149,7 +167,7 @@ public class RowTable extends JPanel {
         firstRow.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (row.getSubRow().length > 0) {
+                if (row.getSubTable().size() > 0) {
                     if (event.tableSelected(RowTable.this, !open)) {
                         open = !open;
                     }
@@ -158,16 +176,50 @@ public class RowTable extends JPanel {
             }
         });
 
-        for (Object[] subRow : row.getSubRow()) {
-            PanelRow panelRow = new PanelRow();
-            for (Object object : subRow) {
-                String value = "";
-                if (object != null) {
-                    value = object + "";
+        PanelRow title = new PanelRow();
+        if (row.getTitleSubRow() != null) {
+            for (Object o : row.getTitleSubRow()) {
+                if (o instanceof CellMenu) {
+                    title.add(new CellMenu());
+                } else if (o instanceof CellCollapse) {
+                    title.add(new CellCollapse());
+                } else {
+                    String value = "";
+                    if (o != null) {
+                        value = o + "";
+                    }
+                    Cell cell = new Cell(value);
+                    cell.setForeground(Color.GRAY);
+                    title.add(cell);
                 }
-                panelRow.add(new Cell(value));
             }
-            add(panelRow);
+            add(title);
+            for (Object[] subRow : row.getSubTable()) {
+                PanelRow panelRow = new PanelRow();
+                for (int i = 0; i < row.getTitleSubRow().length; i++) {
+                    String value = "";
+                    if (i < subRow.length) {
+                        if (subRow[i] != null) {
+                            value = subRow[i] + "";
+                        }
+                    }
+                    panelRow.add(new Cell(value));
+                }
+                add(panelRow);
+            }
+        } else {
+            add(title);
+            for (Object[] subRow : row.getSubTable()) {
+                PanelRow panelRow = new PanelRow();
+                for (Object object : subRow) {
+                    String value = "";
+                    if(object != null) {
+                        value = object + "";
+                    }
+                    panelRow.add(new Cell(value));
+                }
+                add(panelRow);
+            }
         }
     }
 
@@ -176,7 +228,7 @@ public class RowTable extends JPanel {
         createShadow(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(rowLineColor);
-        for (int i = 0; i < row.getSubRow().length; i++) {
+        for (int i = 0; i < row.getSubTable().size() + 1; i++) {
             if (open) {
                 int y = (i + 1) * rowHeight;
                 g2.drawLine(5, y, getWidth() - 5, y);

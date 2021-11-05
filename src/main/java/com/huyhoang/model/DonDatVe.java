@@ -1,5 +1,8 @@
 package com.huyhoang.model;
 
+import com.huyhoang.swing.model.ModelRow;
+import com.huyhoang.swing.table.CellCollapse;
+import com.huyhoang.swing.table.CellMenu;
 import java.util.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -220,4 +223,9 @@ public class DonDatVe {
                 + ", trangThai=" + trangThai + ", dsHanhKhach=" + dsHanhKhach + ", soLuong=" + soLuong + ", thanhTien="
                 + thanhTien + "]";
     }
+    
+//    public ModelRow convertToRowTable() {
+//        return new ModelRow(new Object[] {new CellMenu(), khachHang.getAvatar(), khachHang.getHoTen(), khachHang.getDiaChi().getTinhThanh(), trangThai, new CellCollapse()},
+//                new Object[] {});
+//    }
 }
