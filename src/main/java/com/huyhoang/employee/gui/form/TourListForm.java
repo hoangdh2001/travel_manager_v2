@@ -33,7 +33,7 @@ public class TourListForm extends JLayeredPane {
     private JScrollPane sp2;
     private final double tableSize = 60;
     private final double slideSize = 40;
-    private final double tableCSize = 70;
+    private final double tableCSize = 68;
     private final int height = 95;
     private boolean show;
 
@@ -42,11 +42,11 @@ public class TourListForm extends JLayeredPane {
     }
 
     private void buildDisplay() {
-        layout = new MigLayout("fill, insets 0");
+        layout = new MigLayout("fill, insets 0, debug");
         setLayout(layout);
         JLabel item = new JLabel("Tour List");
         item.setFont(new Font("sansserif", Font.PLAIN, 18));
-        add(item, "pos 0 0 n n");
+        add(item, "pos 5 10 n n");
         createTableOrders();
         createTableTour();
         createSlideShow();
@@ -59,16 +59,16 @@ public class TourListForm extends JLayeredPane {
                 double pointTourD;
                 double sizeTourD;
                 if (show) {
-                    pointTableC = 30 + (70 * fraction);
+                    pointTableC = 32 + (tableCSize * fraction);
                     pointTourD = 60 * fraction;
-                    sizeTourD = 30 + ((40 - 30) * fraction);
+                    sizeTourD = 30 + ((slideSize - 30) * fraction);
                     if(fraction >= 0.5f) {
                         sp1.setVisible(true);
                     }
                 } else {
-                    pointTableC = 30 + (70 * (1f - fraction));
+                    pointTableC = 32 + (tableCSize * (1f - fraction));
                     pointTourD = 60 * (1f - fraction);
-                    sizeTourD = 30 + ((40 - 30) * (1f - fraction));
+                    sizeTourD = 30 + ((slideSize - 30) * (1f - fraction));
                     if (fraction >= 0.5f) {
                         sp1.setVisible(false);
                     }
@@ -174,6 +174,66 @@ public class TourListForm extends JLayeredPane {
         row7.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
         row7.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
         tableTour.addRow(row7);
+        ModelRow row9 = new ModelRow();
+        row9.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row9.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row9.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row9.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row9);
+        ModelRow row10 = new ModelRow();
+        row10.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row10.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row10.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row10.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row10);
+        ModelRow row11 = new ModelRow();
+        row11.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row11.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row11.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row11.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row11);
+        ModelRow row12 = new ModelRow();
+        row12.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row12.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row12.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row12.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row12);
+        ModelRow row13 = new ModelRow();
+        row13.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row13.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row13.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row13.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row13);
+        ModelRow row14 = new ModelRow();
+        row14.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row14.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row14.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row14.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row14);
+        ModelRow row15 = new ModelRow();
+        row15.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row15.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row15.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row15.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row15);
+        ModelRow row16 = new ModelRow();
+        row16.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row16.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row16.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row16.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row16);
+        ModelRow row17 = new ModelRow();
+        row17.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row17.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row17.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row17.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row17);
+        ModelRow row18 = new ModelRow();
+        row18.setRow(new Object[]{new CellMore(), "D0003", "01 Nov 2021", "Giá tốt", TrangThaiChuyenDi.SAP_KET_THUC, new ModelAction(null, eventAction), new CellCollapse()});
+        row18.setTitleSubRow(new Object[]{"Id", "Tên địa danh", "Tỉnh thành"});
+        row18.addSubRow(new Object[]{"DD001", "Vũng tàu", "Bà rịa vũng tàu"});
+        row18.addSubRow(new Object[]{"DD002", "Lầu đài rượu vang", "Bình thuần"});
+        tableTour.addRow(row18);
     }
 
     private void createTableOrders() {

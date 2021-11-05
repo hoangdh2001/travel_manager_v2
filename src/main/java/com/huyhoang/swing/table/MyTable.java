@@ -123,12 +123,12 @@ public class MyTable extends JPanel {
 
     public void fixTable(JScrollPane scroll) {
         scroll.getViewport().setBackground(new Color(249, 249, 249));
-        scroll.setVerticalScrollBar(new ScrollBarCustom());
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setBorder(new EmptyBorder(5, 5, 5, 10));
+        scroll.getVerticalScrollBar().setUnitIncrement(20);
     }
     
 }
