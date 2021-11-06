@@ -5,7 +5,7 @@ import com.huyhoang.employee.gui.component.Content;
 import com.huyhoang.employee.gui.component.Header;
 import com.huyhoang.employee.gui.component.Menu;
 import com.huyhoang.employee.gui.form.Form2;
-import com.huyhoang.employee.gui.form.TourListForm;
+import com.huyhoang.employee.gui.form.TourForm;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
 import java.awt.Color;
@@ -73,7 +73,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void menuSelected(int index) {
                 if (index == 0) {
-                    content.showForm(new TourListForm());
+                    content.showForm(new TourForm());
                 } else if (index == 1) {
                     content.showForm(new Form2());
                 }
@@ -87,7 +87,7 @@ public class Main extends javax.swing.JFrame {
         bg.add(menu, "pos 0al 0al 200 100%");
         bg.add(header, "h 70!, wrap");
         content = new Content();
-        content.showForm(new TourListForm());
+        content.showForm(new TourForm());
         bg.add(content, "w 100%, h 100%");
     }
 
@@ -108,9 +108,6 @@ public class Main extends javax.swing.JFrame {
         setName(""); // NOI18N
         setUndecorated(true);
 
-        bg.setBackground(new java.awt.Color(255, 255, 255));
-        bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        bg.setShadowOpacity(0.3F);
         bg.setShadowSize(20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,14 +115,14 @@ public class Main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 1643, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 1450, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
