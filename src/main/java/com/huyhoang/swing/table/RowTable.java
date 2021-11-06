@@ -1,10 +1,12 @@
 package com.huyhoang.swing.table;
 
+import com.huyhoang.swing.model.ModelAction;
 import com.huyhoang.model.TrangThaiChuyenDi;
 import com.huyhoang.model.TrangThaiDonDat;
 import com.huyhoang.swing.event.EventTable;
 import com.huyhoang.swing.event.EventTableSelected;
 import com.huyhoang.swing.graphics.ShadowRenderer;
+import com.huyhoang.swing.model.ModelMore;
 import com.huyhoang.swing.model.ModelRow;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -148,9 +150,9 @@ public class RowTable extends JPanel {
             } else if(o instanceof TrangThaiChuyenDi | o instanceof TrangThaiDonDat) {
                 CellStatus cell = new CellStatus(o);
                 firstRow.add(cell);
-            } else if(o instanceof CellMore) {
-                CellMore cell = (CellMore) o;
-                firstRow.add(cell, "split 2");
+            } else if(o instanceof ModelMore) {
+                ModelMore more = (ModelMore) o;
+                firstRow.add(new CellMore(more), "split 2, w 30!");
             } else if(o instanceof Icon) {
                 Icon icon = (Icon) o;
                 firstRow.add(new CellAvatar(icon));

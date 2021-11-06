@@ -1,4 +1,4 @@
-package com.huyhoang.swing.table;
+package com.huyhoang.swing.model;
 
 import com.huyhoang.swing.event.EventAction;
 

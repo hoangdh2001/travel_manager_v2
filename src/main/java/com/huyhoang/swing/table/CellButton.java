@@ -1,5 +1,6 @@
 package com.huyhoang.swing.table;
 
+import com.huyhoang.swing.model.ModelAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

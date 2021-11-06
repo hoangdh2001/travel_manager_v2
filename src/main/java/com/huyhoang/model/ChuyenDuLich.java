@@ -1,10 +1,13 @@
 package com.huyhoang.model;
 
 import com.huyhoang.swing.event.EventAction;
+import com.huyhoang.swing.event.EventPopupMenu;
 import com.huyhoang.swing.model.ModelRow;
 import com.huyhoang.swing.table.CellCollapse;
 import com.huyhoang.swing.table.CellMenu;
-import com.huyhoang.swing.table.ModelAction;
+import com.huyhoang.swing.model.ModelAction;
+import com.huyhoang.swing.model.ModelMore;
+import java.awt.Frame;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,8 @@ public class ChuyenDuLich {
     @Id
     @Column(name = "chuyen_id")
     private String maChuyen;
+    @Column(name = "tenchuyendi", columnDefinition = "nvarchar(255)")
+    private String tenChuyenDi;
     @ManyToOne
     @JoinColumn(name = "loaichuyendi_id")
     private LoaiChuyenDi loaiChuyenDi;
@@ -56,6 +61,7 @@ public class ChuyenDuLich {
 
     /**
      * @param maChuyen
+     * @param tenChuyenDi
      * @param giaChuyenDi
      * @param loaiChuyenDi
      * @param ngayTao
@@ -68,10 +74,11 @@ public class ChuyenDuLich {
      * @param dieuKien
      * @param soLuong
      */
-    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
+    public ChuyenDuLich(String maChuyen, String tenChuyenDi, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
             PhuongTien phuongTien, DongTour dongTour, String moTa,
             String dieuKien, int soLuong) {
         this.maChuyen = maChuyen;
+        this.tenChuyenDi = tenChuyenDi;
         this.giaChuyenDi = giaChuyenDi;
         this.loaiChuyenDi = loaiChuyenDi;
         this.ngayTao = ngayTao;
@@ -124,7 +131,21 @@ public class ChuyenDuLich {
     public void setMaChuyen(String maChuyen) {
         this.maChuyen = maChuyen;
     }
-
+    
+    /**
+     * @return tenChuyenDi
+     */
+    public String getTenChuyenDi() {
+        return tenChuyenDi;
+    }
+    
+    /**
+     * @param tenChuyenDi 
+     */
+    public void setTenChuyenDi(String tenChuyenDi) {
+        this.tenChuyenDi = tenChuyenDi;
+    }
+    
     /**
      * @return the loaiChuyenDi
      */
@@ -301,9 +322,9 @@ public class ChuyenDuLich {
                 + "]";
     }
     
-    public ModelRow convertToRowTable(EventAction evt) {
+    public ModelRow convertToRowTable(Frame frame) {
         ModelRow row = new ModelRow();
-        row.setRow(new Object[] {new CellMenu(), maChuyen, ngayTao, dongTour, trangThai, new ModelAction(this, evt), new CellCollapse()});
+        row.setRow(new Object[] {new ModelMore(this, frame), maChuyen, ngayTao, dongTour, trangThai, new CellCollapse()});
         row.setTitleSubRow(new Object[] {"Id", "Tên địa danh", "Tỉnh"});
         dsChiTietThamQuan.forEach(chiTietThamQuan -> {
             row.addSubRow(new Object[] {chiTietThamQuan.getDiaDanh().getMaDiaDanh(), chiTietThamQuan.getDiaDanh().getTenDiaDanh(), chiTietThamQuan.getDiaDanh().getTinh()});
