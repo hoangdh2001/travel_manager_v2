@@ -1,10 +1,6 @@
 package com.huyhoang.model;
 
-import com.huyhoang.swing.model.ModelRow;
-import com.huyhoang.swing.table.CellCollapse;
-import com.huyhoang.swing.table.CellMenu;
 import java.util.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -38,7 +34,7 @@ public class DonDatVe {
     @ManyToOne
     @JoinColumn(name = "huongdanvien_id", nullable = true)
     private HuongDanVien huongDanVien;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TrangThaiDonDat trangThai;
     @OneToMany
     @JoinColumn(name = "dondatve_id")

@@ -1,4 +1,4 @@
-package com.huyhoang.swing.table;
+package com.huyhoang.swing.table2;
 
 import com.huyhoang.model.TrangThaiChuyenDi;
 import com.huyhoang.model.TrangThaiDonDat;
@@ -10,13 +10,13 @@ public class CellStatus extends javax.swing.JPanel {
         if (o instanceof TrangThaiChuyenDi) {
             TrangThaiChuyenDi trangThai = (TrangThaiChuyenDi) o;
             lblStatus.setText(trangThai.getTrangThai());
-//            lblStatus.setColorStatus(trangThai.getMauTrangThai());
-            lblStatus.setForeground(trangThai.getMauTrangThai());
+            lblStatus.setColorStatus(trangThai.getMauTrangThai());
+//            lblStatus.setForeground(trangThai.getMauTrangThai());
         } else if (o instanceof TrangThaiDonDat) {
             TrangThaiDonDat trangThai = (TrangThaiDonDat) o;
             lblStatus.setText(trangThai.getTrangThai());
-//            lblStatus.setColorStatus(trangThai.getMauTrangThai());
-            lblStatus.setForeground(trangThai.getMauTrangThai());
+            lblStatus.setColorStatus(trangThai.getMauTrangThai());
+//            lblStatus.setForeground(trangThai.getMauTrangThai());
         }
     }
 
@@ -24,9 +24,7 @@ public class CellStatus extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblStatus = new com.huyhoang.swing.table.LabelStatus3();
-
-        setOpaque(false);
+        lblStatus = new com.huyhoang.swing.table2.LabelStatus();
 
         lblStatus.setText("Status");
 
@@ -36,19 +34,19 @@ public class CellStatus extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.huyhoang.swing.table.LabelStatus3 lblStatus;
+    private com.huyhoang.swing.table2.LabelStatus lblStatus;
     // End of variables declaration//GEN-END:variables
 }

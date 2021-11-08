@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.huyhoang.employee.gui.component.Content;
 import com.huyhoang.employee.gui.component.Header;
 import com.huyhoang.employee.gui.component.Menu;
+import com.huyhoang.employee.gui.component.TabLayout;
 import com.huyhoang.employee.gui.form.Form2;
 import com.huyhoang.employee.gui.form.TourForm;
 import com.huyhoang.swing.event.EventMenuSelected;
@@ -13,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import javax.swing.JLayeredPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -28,6 +30,8 @@ public class Main extends javax.swing.JFrame {
     private Menu menu;
     private Header header;
     private Content content;
+    private TabLayout tab;
+    private final DecimalFormat df = new DecimalFormat("##0.###");
 
     public Main() {
         initComponents();
@@ -66,7 +70,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         });
-        layout = new MigLayout("fill, insets 0", "195[fill]", "[fill]0[fill]");
+        layout = new MigLayout("fill, insets 0", "195[fill]0", "0[fill]0");
         bg.setLayout(layout);
         menu = new Menu();
         menu.addEventMenuSelected(new EventMenuSelected() {
@@ -82,13 +86,13 @@ public class Main extends javax.swing.JFrame {
 
         header = new Header();
         header.moving(this);
-
         bg.setLayer(menu, JLayeredPane.POPUP_LAYER);
         bg.add(menu, "pos 0al 0al 200 100%");
         bg.add(header, "h 70!, wrap");
+
         content = new Content();
         content.showForm(new TourForm());
-        bg.add(content, "w 100%, h 100%");
+        bg.add(content);
     }
 
     private void resized() {
@@ -108,24 +112,13 @@ public class Main extends javax.swing.JFrame {
         setName(""); // NOI18N
         setUndecorated(true);
 
+        bg.setBackground(new java.awt.Color(255, 255, 255));
+        bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        bg.setShadowOpacity(0.3F);
         bg.setShadowSize(20);
+        getContentPane().add(bg, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 1450, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        pack();
+        setSize(new java.awt.Dimension(1460, 881));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

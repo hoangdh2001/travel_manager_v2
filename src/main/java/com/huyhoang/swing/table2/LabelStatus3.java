@@ -1,4 +1,4 @@
-package com.huyhoang.swing.table;
+package com.huyhoang.swing.table2;
 
 import java.awt.Color;
 import java.awt.Font;
