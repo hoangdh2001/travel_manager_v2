@@ -17,24 +17,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <Component id="lblStatus" pref="89" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblStatus" min="-2" pref="60" max="-2" attributes="0"/>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="13" max="32767" attributes="0"/>
+              <Component id="lblStatus" pref="20" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="com.huyhoang.swing.table2.LabelStatus" name="lblStatus">
+    <Component class="com.huyhoang.swing.table2.LabelStatus4" name="lblStatus">
       <Properties>
         <Property name="text" type="java.lang.String" value="Status"/>
       </Properties>

@@ -3,6 +3,7 @@ package com.huyhoang.employee.gui.form;
 import com.huyhoang.dao.ChuyenDuLichDAO;
 import com.huyhoang.employee.gui.component.TabLayout;
 import com.huyhoang.model.ChuyenDuLich;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,17 +34,17 @@ public class TourForm extends javax.swing.JLayeredPane {
         initComponents();
 
         layout = new MigLayout("fill, insets 0, wrap", "0[fill]0", "0[fill]0");
-        pnlTabelTour.setLayout(layout);
+        pnlTableTour.setLayout(layout);
         createTabPane();
 
-        pnlTabelTour.removeAll();
-        pnlTabelTour.add(createTabPane(), "pos 15% 1al n n,w 100%,h 100%");
-        pnlTabelTour.add(jPanel1, "h 13%");
-        pnlTabelTour.add(sp, "h 82%");
-        pnlTabelTour.add(jPanel2);
+        pnlTableTour.removeAll();
+        pnlTableTour.add(createTabPane(), "pos 45% 1al n n,w 100%,h 100%");
+        pnlTableTour.add(jPanel1, "h 13%");
+        pnlTableTour.add(sp, "h 82%");
+        pnlTableTour.add(jPanel2);
 
         buildDisplay();
-        pnlTabelTour.setVisible(true);
+        pnlTableTour.setVisible(true);
         pnlTableOrder.setVisible(false);
 
     }
@@ -81,22 +82,18 @@ public class TourForm extends javax.swing.JLayeredPane {
 
     private TabLayout createTabPane() {
         tab = new TabLayout();
-//        setLayer(tab, JLayeredPane.POPUP_LAYER);
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 double width;
                 if (tab.isShow()) {
-                    width = 15 * fraction;
+                    width = 45 * fraction;
                 } else {
-                    width = 15 * (1f - fraction);
+                    width = 45 * (1f - fraction);
                 }
                 width = Double.valueOf(df.format(width));
                 layout.setComponentConstraints(tab, "pos " + width + "% 1al n n, w 100%, h 100%");
-                tab.repaint();
-                tab.revalidate();
-
-                pnlTabelTour.revalidate();
+                jPanel1.revalidate();
             }
 
             @Override
@@ -141,7 +138,7 @@ public class TourForm extends javax.swing.JLayeredPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlTabelTour = new javax.swing.JPanel();
+        pnlTableTour = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         myTextField1 = new com.huyhoang.swing.textfield.MyTextField();
@@ -162,12 +159,13 @@ public class TourForm extends javax.swing.JLayeredPane {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         pnlTableOrder = new javax.swing.JPanel();
+        jButton9 = new javax.swing.JButton();
 
         setLayout(new java.awt.CardLayout());
 
-        pnlTabelTour.setBackground(new java.awt.Color(255, 255, 255));
-        pnlTabelTour.setOpaque(false);
-        pnlTabelTour.setLayout(new java.awt.BorderLayout());
+        pnlTableTour.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setOpaque(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_filter_15px.png"))); // NOI18N
@@ -216,7 +214,7 @@ public class TourForm extends javax.swing.JLayeredPane {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -237,7 +235,7 @@ public class TourForm extends javax.swing.JLayeredPane {
                 .addContainerGap())
         );
 
-        pnlTabelTour.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        pnlTableTour.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         tableTour.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -269,8 +267,9 @@ public class TourForm extends javax.swing.JLayeredPane {
             tableTour.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        pnlTabelTour.add(sp, java.awt.BorderLayout.CENTER);
+        pnlTableTour.add(sp, java.awt.BorderLayout.CENTER);
 
+        jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel4.setText("Show");
@@ -300,34 +299,50 @@ public class TourForm extends javax.swing.JLayeredPane {
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_double_left_15px_3.png"))); // NOI18N
         jPanel2.add(jButton8);
 
-        pnlTabelTour.add(jPanel2, java.awt.BorderLayout.PAGE_END);
+        pnlTableTour.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
-        add(pnlTabelTour, "card2");
+        add(pnlTableTour, "card4");
 
-        pnlTableOrder.setOpaque(false);
+        jButton9.setText("Quay lại");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlTableOrderLayout = new javax.swing.GroupLayout(pnlTableOrder);
         pnlTableOrder.setLayout(pnlTableOrderLayout);
         pnlTableOrderLayout.setHorizontalGroup(
             pnlTableOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 843, Short.MAX_VALUE)
+            .addGap(0, 1108, Short.MAX_VALUE)
+            .addGroup(pnlTableOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlTableOrderLayout.createSequentialGroup()
+                    .addGap(518, 518, 518)
+                    .addComponent(jButton9)
+                    .addContainerGap(519, Short.MAX_VALUE)))
         );
         pnlTableOrderLayout.setVerticalGroup(
             pnlTableOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
+            .addGap(0, 766, Short.MAX_VALUE)
+            .addGroup(pnlTableOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlTableOrderLayout.createSequentialGroup()
+                    .addGap(77, 77, 77)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(78, Short.MAX_VALUE)))
         );
 
         add(pnlTableOrder, "card3");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if (!animator.isRunning()) {
-            if (!tab.isShow()) {
-                tab.setVisible(true);
-                animator.start();
-            }
-        }
+        pnlTableOrder.setVisible(true);
+        pnlTableTour.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        pnlTableOrder.setVisible(false);
+        pnlTableTour.setVisible(true);
+    }//GEN-LAST:event_jButton9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -339,6 +354,7 @@ public class TourForm extends javax.swing.JLayeredPane {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -348,8 +364,8 @@ public class TourForm extends javax.swing.JLayeredPane {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private com.huyhoang.swing.textfield.MyTextField myTextField1;
-    private javax.swing.JPanel pnlTabelTour;
     private javax.swing.JPanel pnlTableOrder;
+    private javax.swing.JPanel pnlTableTour;
     private javax.swing.JScrollPane sp;
     private com.huyhoang.swing.table2.MyTable tableTour;
     // End of variables declaration//GEN-END:variables
