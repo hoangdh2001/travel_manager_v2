@@ -61,6 +61,7 @@ public class Header extends javax.swing.JPanel {
         setOpaque(false);
 
         myTextField2.setBackgroundColor(new java.awt.Color(255, 255, 255));
+        myTextField2.setBorderLine(true);
         myTextField2.setBorderRadius(30);
         myTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         myTextField2.setHint("Search...");

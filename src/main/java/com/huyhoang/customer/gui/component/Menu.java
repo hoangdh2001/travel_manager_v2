@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends javax.swing.JPanel {
@@ -17,7 +16,7 @@ public class Menu extends javax.swing.JPanel {
 
     public Menu() {
         initComponents();
-        pnlMenu.setLayout(new MigLayout("wrap, fillx, inset 3", "[fill]", "[]0[]"));
+        pnlMenu.setLayout(new MigLayout("wrap, fillx, inset 8", "[fill]", "[]0[]"));
     }
 
     public void initMenu(EventMenuSelected event) {
