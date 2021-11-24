@@ -1,6 +1,5 @@
 package com.huyhoang.employee.gui.component;
 
-import com.huyhoang.customer.gui.component.*;
 import com.huyhoang.swing.button.ButtonMenu;
 import com.huyhoang.swing.event.EventMenuSelected;
 import java.awt.Component;
