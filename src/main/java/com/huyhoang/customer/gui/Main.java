@@ -1,6 +1,10 @@
 package com.huyhoang.customer.gui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
@@ -18,14 +22,45 @@ public class Main extends javax.swing.JFrame {
     private void buildDisplay() {
         start();
         createMenu();
+        createHeader();
     }
 
     private void createMenu() {
-        menu1.initMenu((int index) -> {
+        menu.initMenu((int index) -> {
+        });
+    }
+    
+    private void createHeader() {
+        header1.addActionMinimize(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                setState(JFrame.ICONIFIED);
+            }
+        });
+        header1.addActionMaximize(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if (getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                    bg.setBackground(new Color(18, 18, 18));
+                    bg.setBorder(new EmptyBorder(10, 10, 10, 10));
+                    setExtendedState(JFrame.NORMAL);
+                } else {
+                    bg.setBackground(new Color(0, 0, 0, 0));
+                    bg.setBorder(new EmptyBorder(0, 0, 40, 0));
+                    setExtendedState(JFrame.MAXIMIZED_BOTH);
+                }
+            }
+        });
+        header1.addActionClose(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                close();
+            }
         });
     }
 
     private void start() {
+        
         setBackground(new Color(0, 0, 0, 0));
         setOpacity(0);
         TimingTarget target = new TimingTargetAdapter() {
@@ -72,8 +107,8 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         bg = new com.huyhoang.swing.panel.LayerPaneShadow();
-        menu1 = new com.huyhoang.customer.gui.component.Menu();
-        content1 = new com.huyhoang.customer.gui.component.Content();
+        menu = new com.huyhoang.customer.gui.component.Menu();
+        content = new com.huyhoang.customer.gui.component.Content();
         header1 = new com.huyhoang.customer.gui.component.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -84,21 +119,19 @@ public class Main extends javax.swing.JFrame {
         bg.setShadowOpacity(0.3F);
         bg.setShadowSize(10);
 
-        javax.swing.GroupLayout content1Layout = new javax.swing.GroupLayout(content1);
-        content1.setLayout(content1Layout);
-        content1Layout.setHorizontalGroup(
-            content1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
+        content.setLayout(contentLayout);
+        contentLayout.setHorizontalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1022, Short.MAX_VALUE)
         );
-        content1Layout.setVerticalGroup(
-            content1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 686, Short.MAX_VALUE)
+        contentLayout.setVerticalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        header1.setBackground(new java.awt.Color(18, 18, 18));
-
-        bg.setLayer(menu1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(content1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(menu, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(content, javax.swing.JLayeredPane.DEFAULT_LAYER);
         bg.setLayer(header1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
@@ -106,22 +139,18 @@ public class Main extends javax.swing.JFrame {
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(content1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(content1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,8 +194,8 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;
-    private com.huyhoang.customer.gui.component.Content content1;
+    private com.huyhoang.customer.gui.component.Content content;
     private com.huyhoang.customer.gui.component.Header header1;
-    private com.huyhoang.customer.gui.component.Menu menu1;
+    private com.huyhoang.customer.gui.component.Menu menu;
     // End of variables declaration//GEN-END:variables
 }
