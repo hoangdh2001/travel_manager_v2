@@ -1,4 +1,4 @@
-package com.huyhoang.employee.gui;
+package com.huyhoang.util;
 
 import com.huyhoang.model.ChiTietThamQuan;
 import com.huyhoang.model.ChiTietThamQuan_PK;
@@ -15,22 +15,17 @@ import com.huyhoang.model.NhanVien;
 import com.huyhoang.model.PhuongTien;
 import com.huyhoang.model.TrangThaiChuyenDi;
 import com.huyhoang.model.TrangThaiDonDat;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-//import org.hibernate.ogm.OgmSession;
-//import org.hibernate.ogm.OgmSessionFactory;
-//import org.hibernate.ogm.boot.OgmSessionFactoryBuilder;
-//import org.hibernate.ogm.cfg.OgmProperties;
 import org.hibernate.service.ServiceRegistry;
 
-public class App {
-    public static void main(String[] args) {
+public class HibernateUtil {
+    private SessionFactory sessionFactory;
+    private static HibernateUtil instance = null;
+    private HibernateUtil() {
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-//                .applySetting(OgmProperties.ENABLED, true)
                 .configure()
                 .build();
         
@@ -52,17 +47,17 @@ public class App {
                 .addAnnotatedClass(TrangThaiDonDat.class)
                 .getMetadataBuilder()
                 .build();
-        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
-        Session session = sessionFactory.getCurrentSession();
-        
-        Transaction tr = session.getTransaction();
-        
-        try {
-            tr.begin();
-            tr.commit();
-        } catch (Exception e) {
-            tr.rollback();
+        sessionFactory = metadata.getSessionFactoryBuilder().build();
+    }
+    
+    public synchronized static HibernateUtil getInstance() {
+        if(instance == null) {
+            instance = new HibernateUtil();
         }
-        
+        return instance;
+    }
+    
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

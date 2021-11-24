@@ -1,13 +1,7 @@
 package com.huyhoang.model;
 
-import com.huyhoang.swing.event.EventAction;
-import com.huyhoang.swing.event.EventPopupMenu;
-import com.huyhoang.swing.model.ModelRow;
-import com.huyhoang.swing.table.CellCollapse;
-import com.huyhoang.swing.table.CellMenu;
-import com.huyhoang.swing.model.ModelAction;
-import com.huyhoang.swing.model.ModelMore;
-import java.awt.Frame;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +9,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "chuyendulich")
+@NamedQueries({
+    @NamedQuery(name = "getChuyenDuLichs", query = "select cd from ChuyenDuLich cd")
+})
 public class ChuyenDuLich {
 
     @Id
@@ -37,19 +37,19 @@ public class ChuyenDuLich {
     private Date ngayTao;
     @Column(name = "giachuyen", columnDefinition = "money")
     private double giaChuyenDi;
-    @OneToMany(mappedBy = "chuyenDuLich")
+    @OneToMany(mappedBy = "chuyenDuLich", fetch = FetchType.EAGER)
     private List<ChiTietThamQuan> dsChiTietThamQuan;
     @Column(name = "ngaykhoihanh", columnDefinition = "datetime")
     private Date ngayKhoiHanh;
     @Column(name = "ngayketthuc", columnDefinition = "datetime")
     private Date ngayKetThuc;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "trangthai")
     private TrangThaiChuyenDi trangThai;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "phuongtien")
     private PhuongTien phuongTien;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "dongtour")
     private DongTour dongTour;
     @Column(name = "mota", columnDefinition = "nvarchar(max)")
@@ -58,6 +58,9 @@ public class ChuyenDuLich {
     private String dieuKien;
     @Column(name = "soluong")
     private int soLuong;
+    @ManyToOne
+    @JoinColumn(name = "nhanvien_id")
+    private NhanVien nhanVien;
 
     /**
      * @param maChuyen
@@ -131,21 +134,21 @@ public class ChuyenDuLich {
     public void setMaChuyen(String maChuyen) {
         this.maChuyen = maChuyen;
     }
-    
+
     /**
      * @return tenChuyenDi
      */
     public String getTenChuyenDi() {
         return tenChuyenDi;
     }
-    
+
     /**
-     * @param tenChuyenDi 
+     * @param tenChuyenDi
      */
     public void setTenChuyenDi(String tenChuyenDi) {
         this.tenChuyenDi = tenChuyenDi;
     }
-    
+
     /**
      * @return the loaiChuyenDi
      */
@@ -321,14 +324,9 @@ public class ChuyenDuLich {
                 + ", ngayKetThuc=" + ngayKetThuc + ", moTa=" + moTa + ", dieuKien=" + dieuKien + ", soLuong=" + soLuong
                 + "]";
     }
-    
-    public ModelRow convertToRowTable(Frame frame) {
-        ModelRow row = new ModelRow();
-        row.setRow(new Object[] {new ModelMore(this, frame), maChuyen, ngayTao, dongTour, trangThai, new CellCollapse()});
-        row.setTitleSubRow(new Object[] {"Id", "Tên địa danh", "Tỉnh"});
-        dsChiTietThamQuan.forEach(chiTietThamQuan -> {
-            row.addSubRow(new Object[] {chiTietThamQuan.getDiaDanh().getMaDiaDanh(), chiTietThamQuan.getDiaDanh().getTenDiaDanh(), chiTietThamQuan.getDiaDanh().getTinh()});
-        });
-        return  row;
+
+    public Object[] convertToRowTable() {
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        return new Object[] {maChuyen, tenChuyenDi, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
     }
 }

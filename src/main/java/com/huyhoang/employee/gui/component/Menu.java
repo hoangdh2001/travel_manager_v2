@@ -37,8 +37,8 @@ public class Menu extends JPanel {
     }
     
     private void init() {
-        listMenu.addItem(new ModelMenu("1", "Dashboard", ModelMenu.MenuType.MENU));
-        listMenu.addItem(new ModelMenu("2", "UI Elements", ModelMenu.MenuType.MENU));
+        listMenu.addItem(new ModelMenu("1", "Home", ModelMenu.MenuType.MENU));
+        listMenu.addItem(new ModelMenu("2", "Tour List", ModelMenu.MenuType.MENU));
         listMenu.addItem(new ModelMenu("", " ", ModelMenu.MenuType.EMPTY));
         listMenu.addItem(new ModelMenu("", " ", ModelMenu.MenuType.SEPARATOR));
 
