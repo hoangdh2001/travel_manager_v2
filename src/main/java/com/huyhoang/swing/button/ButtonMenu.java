@@ -9,6 +9,9 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
@@ -16,7 +19,15 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class ButtonMenu extends JButton {
-
+    
+    private Animator animator;
+    private int targetSize;
+    private float animatSize;
+    private Point pressedPoint;
+    private float alpha;
+    private Color effectColor = new Color(173, 173, 173);
+    private boolean over;
+    
     public Color getEffectColor() {
         return effectColor;
     }
@@ -25,17 +36,10 @@ public class ButtonMenu extends JButton {
         this.effectColor = effectColor;
     }
 
-    private Animator animator;
-    private int targetSize;
-    private float animatSize;
-    private Point pressedPoint;
-    private float alpha;
-    private Color effectColor = new Color(173, 173, 173);
-
     public ButtonMenu() {
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(8, 10, 8, 10));
-        setHorizontalAlignment(JButton.LEADING);
+        setHorizontalAlignment(JButton.LEFT);
         setBackground(new Color(43, 44, 75));
         setForeground(new Color(189, 189, 189));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -54,14 +58,14 @@ public class ButtonMenu extends JButton {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                over = true;
                 setForeground(Color.WHITE);
-                repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                over = false;
                 setForeground(new Color(189, 189, 189));
-                repaint();
             }
         });
         TimingTarget target = new TimingTargetAdapter() {
@@ -80,12 +84,17 @@ public class ButtonMenu extends JButton {
 
     @Override
     protected void paintComponent(Graphics grphcs) {
+        int width = getWidth();
+        int height = getHeight();
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
         if (pressedPoint != null) {
+            Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, 10, 10));
             g2.setColor(effectColor);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-            g2.fillOval((int) (pressedPoint.x - animatSize / 2), (int) (pressedPoint.y - animatSize / 2), (int) animatSize, (int) animatSize);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
+            area.intersect(new Area(new Ellipse2D.Double((pressedPoint.x - animatSize / 2), (pressedPoint.y - animatSize / 2), animatSize, animatSize)));
+            g2.fill(area);
         }
         g2.setComposite(AlphaComposite.SrcOver);
         super.paintComponent(grphcs);
@@ -99,10 +108,12 @@ public class ButtonMenu extends JButton {
             int height = getHeight();
             Graphics2D g2 = (Graphics2D) grphcs.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(40, 40, 40));
+            g2.setColor(new Color(48, 48, 48));
             g2.fillRoundRect(0, 0, width - 1, height - 1, 10, 10);
         } else {
-            setForeground(new Color(189, 189, 189));
+            if(!over) {
+                setForeground(new Color(189, 189, 189));
+            }
         }
         super.paint(grphcs);
     }

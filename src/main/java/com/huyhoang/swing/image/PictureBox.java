@@ -1,5 +1,6 @@
 package com.huyhoang.swing.image;
 
+import java.awt.AlphaComposite;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 
 public class PictureBox extends JLayeredPane {
-
+    private Icon image;
+    private float alpha = 1f;
+    
     public Icon getImage() {
         return image;
     }
@@ -21,14 +24,22 @@ public class PictureBox extends JLayeredPane {
         this.image = image;
     }
 
-    private Icon image;
+    public float getAlpha() {
+        return alpha;
+    }
 
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+        repaint();
+    }
+    
     @Override
     protected void paintComponent(Graphics grphcs) {
         if (image != null) {
             Graphics2D g2 = (Graphics2D) grphcs;
             Rectangle size = getAutoSize(image);
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
             g2.drawImage(toImage(image), size.getLocation().x, size.getLocation().y, size.getSize().width, size.getSize().height, null);
         }
         super.paintComponent(grphcs);

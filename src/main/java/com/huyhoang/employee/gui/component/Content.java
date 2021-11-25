@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLayeredPane;
-import javax.swing.border.EmptyBorder;
 
 public class Content extends JLayeredPane {
 

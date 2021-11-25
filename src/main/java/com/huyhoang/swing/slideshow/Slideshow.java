@@ -13,7 +13,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-public class Slideshow extends JLayeredPane {
+public class SlideShow extends JLayeredPane {
 
     private final JPanel panel;
     private final Pagination pagination;
@@ -24,10 +24,10 @@ public class Slideshow extends JLayeredPane {
     private Component componentOut;
     private int currentIndex;
     private boolean next;
-    private final ButtonSlide btnPre;
-    private final ButtonSlide btnNext;
+    private ButtonSlide btnPre;
+    private ButtonSlide btnNext;
 
-    public Slideshow() {
+    public SlideShow() {
         setOpaque(true);
         setBackground(new Color(200, 200, 200));
         layout = new MigLayout("inset 0");
@@ -55,27 +55,6 @@ public class Slideshow extends JLayeredPane {
                 }
             }
         });
-        
-        btnPre = new ButtonSlide();
-        btnPre.setIcon(new ImageIcon(getClass().getResource("/icon/pre.png")));
-        btnPre.setRight(false);
-        btnPre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                back();
-            }
-        });
-        setLayer(btnPre, POPUP_LAYER);
-        
-        btnNext = new ButtonSlide();
-        btnNext.setIcon(new ImageIcon(getClass().getResource("/icon/next.png")));
-        btnNext.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                next();
-            }
-        });
-        setLayer(btnNext, POPUP_LAYER);
         
         TimingTarget target = new TimingTargetAdapter() {
             @Override
@@ -116,19 +95,42 @@ public class Slideshow extends JLayeredPane {
         setLayout(new MigLayout("fill, inset 0", "[fill, center]", "3[fill]3"));
         
         add(pagination, "pos 0.5al 1al n n");
-        add(btnPre, "w 60!, h 100%, pos 0al 0al n n");
-        add(btnNext, "w 60!, h 100%, pos 1al 0al n n");
+        
         add(panel, "w 100%-6!");
         
-        
-        timer = new Timer(3000, new ActionListener() {
+        timer = new Timer(6000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 next();
             }
         });
         
+    }
+    
+    public void initButtonSlide() {
+        btnPre = new ButtonSlide();
+        btnPre.setIcon(new ImageIcon(getClass().getResource("/icon/pre.png")));
+        btnPre.setRight(false);
+        btnPre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                back();
+            }
+        });
+        setLayer(btnPre, POPUP_LAYER);
         
+        btnNext = new ButtonSlide();
+        btnNext.setIcon(new ImageIcon(getClass().getResource("/icon/next.png")));
+        btnNext.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                next();
+            }
+        });
+        setLayer(btnNext, POPUP_LAYER);
+        
+        add(btnPre, "w 60!, h 100%, pos 0al 0al n n");
+        add(btnNext, "w 60!, h 100%, pos 1al 0al n n");
     }
 
     public void initSlideshow(Component... coms) {
