@@ -26,7 +26,6 @@ public class ScrollBarCustom extends JScrollBar {
             public void mouseExited(MouseEvent e) {
                 setForeground(new Color(91, 91, 91));
             }
-
         });
         
         addMouseMotionListener(new MouseMotionAdapter() {

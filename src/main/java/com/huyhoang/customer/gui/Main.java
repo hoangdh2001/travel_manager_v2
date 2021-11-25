@@ -166,6 +166,8 @@ public class Main extends javax.swing.JFrame {
         bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         bg.setShadowOpacity(0.3F);
         bg.setShadowSize(10);
+        bg.setLayout(new java.awt.BorderLayout());
+        bg.add(menu, java.awt.BorderLayout.LINE_START);
 
         header.setOpaque(false);
 
@@ -187,26 +189,10 @@ public class Main extends javax.swing.JFrame {
             .addGroup(mainLayout.createSequentialGroup()
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(scrollPaneCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrollPaneCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE))
         );
 
-        bg.setLayer(menu, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(main, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
-        bg.setLayout(bgLayout);
-        bgLayout.setHorizontalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bgLayout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        bgLayout.setVerticalGroup(
-            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
-            .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        bg.add(main, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
