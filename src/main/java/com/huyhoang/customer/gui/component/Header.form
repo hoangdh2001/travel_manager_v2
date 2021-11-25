@@ -26,11 +26,9 @@
               <Component id="buttonBadges2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="buttonBadges1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="myTextField1" min="-2" pref="368" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="476" max="-2" attributes="0"/>
               <Component id="buttonInfo1" min="-2" pref="177" max="-2" attributes="0"/>
-              <EmptySpace pref="320" max="32767" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -42,10 +40,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="buttonInfo1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                              <Component id="myTextField1" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="buttonInfo1" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -176,22 +171,6 @@
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/icon/back.png"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="com.huyhoang.swing.textfield.MyTextField" name="myTextField1">
-      <Properties>
-        <Property name="backgroundColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="borderLine" type="boolean" value="true"/>
-        <Property name="borderRadius" type="int" value="38"/>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
-        </Property>
-        <Property name="hint" type="java.lang.String" value="Search tour"/>
-        <Property name="prefixIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/search_25px.png"/>
         </Property>
       </Properties>
     </Component>

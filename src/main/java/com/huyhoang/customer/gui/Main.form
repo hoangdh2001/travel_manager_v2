@@ -74,7 +74,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="header" pref="1020" max="32767" attributes="0"/>
-                  <Component id="content" alignment="0" max="32767" attributes="0"/>
+                  <Component id="scrollPaneCustom1" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -82,7 +82,7 @@
                   <Group type="102" attributes="0">
                       <Component id="header" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="content" max="32767" attributes="0"/>
+                      <Component id="scrollPaneCustom1" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -93,9 +93,18 @@
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Container class="com.huyhoang.customer.gui.component.Content" name="content">
+            <Container class="com.huyhoang.swing.scrollbar.ScrollPaneCustom" name="scrollPaneCustom1">
+              <Properties>
+                <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+              </Properties>
 
-              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Container class="com.huyhoang.customer.gui.component.Content" name="content">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                </Container>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>

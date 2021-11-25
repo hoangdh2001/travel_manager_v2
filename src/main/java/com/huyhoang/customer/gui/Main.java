@@ -2,6 +2,7 @@ package com.huyhoang.customer.gui;
 
 import com.huyhoang.customer.form.Home;
 import com.huyhoang.customer.form.Search;
+import com.huyhoang.swing.scrollbar.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -37,10 +40,8 @@ public class Main extends javax.swing.JFrame {
         menu.initMenu((int index) -> {
             if (index == 0) {
                 content.showForm(new Home());
-                header.getMyTextField1().setVisible(false);
             } else if (index == 1) {
                 content.showForm(new Search());
-                header.getMyTextField1().setVisible(true);
             }
         });
         move(menu.getjPanel1(), 0);
@@ -68,6 +69,14 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void createContent() {
+        JScrollPane scroll = new JScrollPane();
+        scroll.getViewport().setBackground(Color.WHITE);
+        scroll.setVerticalScrollBar(new ScrollBarCustom());
+        JPanel p = new JPanel();
+        p.setBackground(Color.WHITE);
+        scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        scroll.setBorder(new EmptyBorder(5, 10, 5, 10));
+        scroll.getViewport().setOpaque(false);
         content.add(new Home());
     }
 
@@ -147,6 +156,7 @@ public class Main extends javax.swing.JFrame {
         menu = new com.huyhoang.customer.gui.component.Menu();
         main = new com.huyhoang.swing.panel.LayerPaneGradient();
         header = new com.huyhoang.customer.gui.component.Header();
+        scrollPaneCustom1 = new com.huyhoang.swing.scrollbar.ScrollPaneCustom();
         content = new com.huyhoang.customer.gui.component.Content();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -159,22 +169,25 @@ public class Main extends javax.swing.JFrame {
 
         header.setOpaque(false);
 
+        scrollPaneCustom1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneCustom1.setViewportView(content);
+
         main.setLayer(header, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        main.setLayer(content, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        main.setLayer(scrollPaneCustom1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-            .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scrollPaneCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainLayout.setVerticalGroup(
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainLayout.createSequentialGroup()
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scrollPaneCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bg.setLayer(menu, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -240,5 +253,6 @@ public class Main extends javax.swing.JFrame {
     private com.huyhoang.customer.gui.component.Header header;
     private com.huyhoang.swing.panel.LayerPaneGradient main;
     private com.huyhoang.customer.gui.component.Menu menu;
+    private com.huyhoang.swing.scrollbar.ScrollPaneCustom scrollPaneCustom1;
     // End of variables declaration//GEN-END:variables
 }

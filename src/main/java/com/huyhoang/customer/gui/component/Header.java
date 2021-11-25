@@ -15,10 +15,6 @@ public class Header extends javax.swing.JPanel {
     private PopupMenu popupMenu;
     private EventMenuSelected event;
 
-    public MyTextField getMyTextField1() {
-        return myTextField1;
-    }
-
     public void addActionMinimize(ActionListener evt) {
         btnMi.addActionListener(evt);
     }
@@ -33,7 +29,6 @@ public class Header extends javax.swing.JPanel {
 
     public Header() {
         initComponents();
-        myTextField1.setVisible(false);
         buildDisplay();
     }
 
@@ -89,7 +84,6 @@ public class Header extends javax.swing.JPanel {
         buttonInfo1 = new com.huyhoang.swing.button.ButtonInfo();
         buttonBadges1 = new com.huyhoang.swing.button.ButtonBadges();
         buttonBadges2 = new com.huyhoang.swing.button.ButtonBadges();
-        myTextField1 = new com.huyhoang.swing.textfield.MyTextField();
 
         setBackground(new java.awt.Color(18, 18, 18));
 
@@ -147,13 +141,6 @@ public class Header extends javax.swing.JPanel {
         buttonBadges2.setBackground(new java.awt.Color(10, 10, 10));
         buttonBadges2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
 
-        myTextField1.setBackgroundColor(new java.awt.Color(255, 255, 255));
-        myTextField1.setBorderLine(true);
-        myTextField1.setBorderRadius(38);
-        myTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        myTextField1.setHint("Search tour");
-        myTextField1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_25px.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,11 +150,9 @@ public class Header extends javax.swing.JPanel {
                 .addComponent(buttonBadges2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonBadges1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(myTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
+                .addGap(476, 476, 476)
                 .addComponent(buttonInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -177,9 +162,7 @@ public class Header extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(buttonInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(myTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buttonInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -205,7 +188,6 @@ public class Header extends javax.swing.JPanel {
     private com.huyhoang.swing.button.ButtonBadges buttonBadges2;
     private com.huyhoang.swing.button.ButtonInfo buttonInfo1;
     private javax.swing.JPanel jPanel1;
-    private com.huyhoang.swing.textfield.MyTextField myTextField1;
     // End of variables declaration//GEN-END:variables
 
 }
