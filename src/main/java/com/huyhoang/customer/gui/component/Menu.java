@@ -8,11 +8,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends javax.swing.JPanel {
 
     private EventMenuSelected event;
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
 
     public Menu() {
         initComponents();
@@ -37,6 +42,9 @@ public class Menu extends javax.swing.JPanel {
         menu.setRolloverIcon(overIcon);
         menu.setIconTextGap(20);
         menu.setText(text);
+        if(index == 0) {
+            menu.setSelected(true);
+        }
         menu.setFont(new Font("Segoe UI", Font.BOLD, 14));
         pnlMenu.add(menu);
         menu.addActionListener((ActionEvent ae) -> {

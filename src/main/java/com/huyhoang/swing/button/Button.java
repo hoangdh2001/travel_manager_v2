@@ -12,6 +12,7 @@ import javax.swing.JButton;
 public class Button extends JButton {
     private Color overColor = new Color(93, 93, 93);
     private Color backgroundColor = new Color(19, 19, 19);
+    private int borderRadius = 0;
 
     public Color getOverColor() {
         return overColor;
@@ -21,21 +22,25 @@ public class Button extends JButton {
         this.overColor = overColor;
     }
 
+    public int getBorderRadius() {
+        return borderRadius;
+    }
+
+    public void setBorderRadius(int borderRadius) {
+        this.borderRadius = borderRadius;
+    }
+
     public Color getBackgroundColor() {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-    
     public Button() {
-        setBackground(backgroundColor);
         setContentAreaFilled(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                backgroundColor = getBackground();
                 setBackground(overColor);
             }
 
@@ -53,7 +58,7 @@ public class Button extends JButton {
         int width = getWidth();
         int height = getHeight();
         g2.setColor(getBackground());
-        g2.fillRect(0, 0, width, height);
+        g2.fillRoundRect(0, 0, width, height, borderRadius, borderRadius);
         super.paint(grphcs);
     }
 }

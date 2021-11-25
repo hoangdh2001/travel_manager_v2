@@ -1,8 +1,13 @@
 package com.huyhoang.customer.gui;
 
+import com.huyhoang.customer.form.Home;
+import com.huyhoang.customer.form.Search;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
@@ -11,6 +16,8 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class Main extends javax.swing.JFrame {
 
+    private int xx;
+    private int yy;
     private boolean show;
     private Animator start;
 
@@ -23,44 +30,48 @@ public class Main extends javax.swing.JFrame {
         start();
         createMenu();
         createHeader();
+        createContent();
     }
 
     private void createMenu() {
         menu.initMenu((int index) -> {
+            if (index == 0) {
+                content.showForm(new Home());
+                header.getMyTextField1().setVisible(false);
+            } else if (index == 1) {
+                content.showForm(new Search());
+                header.getMyTextField1().setVisible(true);
+            }
         });
+        move(menu.getjPanel1(), 0);
     }
-    
+
     private void createHeader() {
-        header1.addActionMinimize(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setState(JFrame.ICONIFIED);
+        header.addActionMinimize((ActionEvent arg0) -> {
+            setState(JFrame.ICONIFIED);
+        });
+        header.addActionMaximize((ActionEvent arg0) -> {
+            if (getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                bg.setBackground(new Color(18, 18, 18));
+                bg.setBorder(new EmptyBorder(10, 10, 10, 10));
+                setExtendedState(JFrame.NORMAL);
+            } else {
+                bg.setBackground(new Color(0, 0, 0, 0));
+                bg.setBorder(new EmptyBorder(0, 0, 40, 0));
+                setExtendedState(JFrame.MAXIMIZED_BOTH);
             }
         });
-        header1.addActionMaximize(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (getExtendedState() == JFrame.MAXIMIZED_BOTH) {
-                    bg.setBackground(new Color(18, 18, 18));
-                    bg.setBorder(new EmptyBorder(10, 10, 10, 10));
-                    setExtendedState(JFrame.NORMAL);
-                } else {
-                    bg.setBackground(new Color(0, 0, 0, 0));
-                    bg.setBorder(new EmptyBorder(0, 0, 40, 0));
-                    setExtendedState(JFrame.MAXIMIZED_BOTH);
-                }
-            }
+        header.addActionClose((ActionEvent arg0) -> {
+            close();
         });
-        header1.addActionClose(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                close();
-            }
-        });
+        move(header, menu.getWidth());
+    }
+
+    private void createContent() {
+        content.add(new Home());
     }
 
     private void start() {
-        
         setBackground(new Color(0, 0, 0, 0));
         setOpacity(0);
         TimingTarget target = new TimingTargetAdapter() {
@@ -80,7 +91,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         };
-        start = new Animator(300, target);
+        start = new Animator(200, target);
         start.setResolution(0);
         start.setAcceleration(0.5f);
     }
@@ -102,37 +113,72 @@ public class Main extends javax.swing.JFrame {
         start.start();
     }
 
+    private void move(Component com, int o) {
+        System.out.println(com.getX());
+        com.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                xx = e.getX();
+                yy = e.getY();
+            }
+        });
+        com.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getXOnScreen();
+                int y = e.getYOnScreen();
+                if (getExtendedState() == MAXIMIZED_BOTH) {
+                    bg.setBackground(new Color(18, 18, 18));
+                    bg.setBorder(new EmptyBorder(10, 10, 10, 10));
+                    setExtendedState(JFrame.NORMAL);
+                    setLocation(x - xx - o, y - yy);
+                }
+                setLocation(x - xx - o, y - yy);
+            }
+        });
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         bg = new com.huyhoang.swing.panel.LayerPaneShadow();
         menu = new com.huyhoang.customer.gui.component.Menu();
+        main = new com.huyhoang.swing.panel.LayerPaneGradient();
+        header = new com.huyhoang.customer.gui.component.Header();
         content = new com.huyhoang.customer.gui.component.Content();
-        header1 = new com.huyhoang.customer.gui.component.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        bg.setBackground(new java.awt.Color(18, 18, 18));
+        bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         bg.setShadowOpacity(0.3F);
         bg.setShadowSize(10);
 
-        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
-        content.setLayout(contentLayout);
-        contentLayout.setHorizontalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1022, Short.MAX_VALUE)
+        header.setOpaque(false);
+
+        main.setLayer(header, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        main.setLayer(content, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
+        main.setLayout(mainLayout);
+        mainLayout.setHorizontalGroup(
+            mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
+            .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        contentLayout.setVerticalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        mainLayout.setVerticalGroup(
+            mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainLayout.createSequentialGroup()
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bg.setLayer(menu, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(content, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        bg.setLayer(header1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.setLayer(main, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -140,17 +186,13 @@ public class Main extends javax.swing.JFrame {
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, 0)
+                .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
+            .addComponent(main, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -195,7 +237,8 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;
     private com.huyhoang.customer.gui.component.Content content;
-    private com.huyhoang.customer.gui.component.Header header1;
+    private com.huyhoang.customer.gui.component.Header header;
+    private com.huyhoang.swing.panel.LayerPaneGradient main;
     private com.huyhoang.customer.gui.component.Menu menu;
     // End of variables declaration//GEN-END:variables
 }

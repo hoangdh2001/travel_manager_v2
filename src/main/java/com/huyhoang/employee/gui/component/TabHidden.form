@@ -99,7 +99,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="com.huyhoang.swing.slideshow.Slideshow" name="slideShow">
+            <Component class="com.huyhoang.swing.slideshow.SlideShow" name="slideShow">
             </Component>
           </SubComponents>
         </Container>
