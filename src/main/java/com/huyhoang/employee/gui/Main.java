@@ -1,6 +1,8 @@
 package com.huyhoang.employee.gui;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.huyhoang.customer.form.Home;
+import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,6 +26,18 @@ public class Main extends javax.swing.JFrame {
 
     private void buildDisplay() {
         start();
+        createMenu();
+    }
+    
+    private void createMenu() {
+        menu1.initMenu(new EventMenuSelected() {
+            @Override
+            public void menuSelected(int index) {
+                if(index == 0) {
+                    content1.showForm(new Home());
+                }
+            }
+        });
     }
 
     private void start() {

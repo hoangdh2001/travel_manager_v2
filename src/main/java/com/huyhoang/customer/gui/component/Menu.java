@@ -8,11 +8,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends javax.swing.JPanel {
 
     private EventMenuSelected event;
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
 
     public Menu() {
         initComponents();
@@ -28,6 +33,11 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/icon/search.png")),
                  new ImageIcon(getClass().getResource("/icon/search_selected.png")),
                  new ImageIcon(getClass().getResource("/icon/search_over.png")), "Search", 1);
+        addMenu(new ImageIcon(getClass().getResource("/icon/library.png")),
+                 new ImageIcon(getClass().getResource("/icon/library_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/library_over.png")), "Library", 2);
+        addEmpty();
+        
     }
 
     private void addMenu(Icon icon, Icon selectedIcon, Icon overIcon, String text, int index) {
@@ -37,6 +47,9 @@ public class Menu extends javax.swing.JPanel {
         menu.setRolloverIcon(overIcon);
         menu.setIconTextGap(20);
         menu.setText(text);
+        if(index == 0) {
+            menu.setSelected(true);
+        }
         menu.setFont(new Font("Segoe UI", Font.BOLD, 14));
         pnlMenu.add(menu);
         menu.addActionListener((ActionEvent ae) -> {

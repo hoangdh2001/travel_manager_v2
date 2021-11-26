@@ -45,7 +45,7 @@ public class TabHidden extends PanelShadow {
         btnClose = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        slideShow = new com.huyhoang.swing.slideshow.Slideshow();
+        slideShow = new com.huyhoang.swing.slideshow.SlideShow();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -129,6 +129,6 @@ public class TabHidden extends PanelShadow {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private com.huyhoang.swing.slideshow.Slideshow slideShow;
+    private com.huyhoang.swing.slideshow.SlideShow slideShow;
     // End of variables declaration//GEN-END:variables
 }

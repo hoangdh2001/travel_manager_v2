@@ -9,25 +9,29 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-public class ButtonMenu extends JButton {
-    
+public class ButtonEffect extends JButton {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Animator animator;
     private int targetSize;
     private float animatSize;
     private Point pressedPoint;
     private float alpha;
     private Color effectColor = new Color(173, 173, 173);
-    private boolean over;
-    
+    private boolean borderline = false;
+    private int borderRadius = 0;
+    private Color borderColor = new Color(0, 0, 0, 0.3f);
+
     public Color getEffectColor() {
         return effectColor;
     }
@@ -36,36 +40,53 @@ public class ButtonMenu extends JButton {
         this.effectColor = effectColor;
     }
 
-    public ButtonMenu() {
+    public boolean isBorderline() {
+        return borderline;
+    }
+
+    public void setBorderline(boolean borderline) {
+        this.borderline = borderline;
+    }
+
+    public int getBorderRadius() {
+        return borderRadius;
+    }
+
+    public void setBorderRadius(int borderRadius) {
+        this.borderRadius = borderRadius;
+    }
+    
+    public ButtonEffect() {
+        buidButton();
+    }
+
+    public ButtonEffect(String text) {
+        super(text);
+        buidButton();
+    }
+
+    public ButtonEffect(String text, boolean fillRoundRect) {
+        super(text);
+        setBorderline(fillRoundRect);
+        buidButton();
+    }
+
+    private void buidButton() {
         setContentAreaFilled(false);
-        setBorder(new EmptyBorder(8, 10, 8, 10));
-        setHorizontalAlignment(JButton.LEFT);
-        setBackground(new Color(43, 44, 75));
-        setForeground(new Color(189, 189, 189));
+        setBorder(new EmptyBorder(5, 5, 5, 5));
+        setBackground(Color.WHITE);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent me) {
+            public void mousePressed(MouseEvent e) {
                 targetSize = Math.max(getWidth(), getHeight()) * 2;
                 animatSize = 0;
-                pressedPoint = me.getPoint();
+                pressedPoint = e.getPoint();
                 alpha = 0.5f;
                 if (animator.isRunning()) {
                     animator.stop();
                 }
                 animator.start();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                over = true;
-                setForeground(Color.WHITE);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                over = false;
-                setForeground(new Color(189, 189, 189));
             }
         });
         TimingTarget target = new TimingTargetAdapter() {
@@ -86,36 +107,30 @@ public class ButtonMenu extends JButton {
     protected void paintComponent(Graphics grphcs) {
         int width = getWidth();
         int height = getHeight();
-        Graphics2D g2 = (Graphics2D) grphcs;
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
+        if (borderline == true) {
+            if(borderRadius > 0) {
+                g2.fillRoundRect(0, 0, width, height, borderRadius, borderRadius);
+                g2.setColor(borderColor);
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, borderRadius, borderRadius);
+            }
+            else {
+                g2.fillRoundRect(0, 0, width, height, height, height);
+            }
+        } else {
+            g2.fillRoundRect(0, 0, width, height, borderRadius, borderRadius);
+        }
         if (pressedPoint != null) {
-            Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, 10, 10));
             g2.setColor(effectColor);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
-            area.intersect(new Area(new Ellipse2D.Double((pressedPoint.x - animatSize / 2), (pressedPoint.y - animatSize / 2), animatSize, animatSize)));
-            g2.fill(area);
+            g2.fillOval((int) (pressedPoint.x - animatSize / 2), (int) (pressedPoint.y - animatSize / 2), (int) animatSize, (int) animatSize);
         }
-        g2.setComposite(AlphaComposite.SrcOver);
+        g2.dispose();
+        grphcs.drawImage(img, 0, 0, null);
         super.paintComponent(grphcs);
-    }
-
-    @Override
-    public void paint(Graphics grphcs) {
-        if (isSelected()) {
-            setForeground(Color.WHITE);
-            int width = getWidth();
-            int height = getHeight();
-            Graphics2D g2 = (Graphics2D) grphcs.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(48, 48, 48));
-            g2.fillRoundRect(0, 0, width - 1, height - 1, 10, 10);
-        } else {
-            if(!over) {
-                setForeground(new Color(189, 189, 189));
-            }
-        }
-        super.paint(grphcs);
     }
 
 }
