@@ -53,44 +53,44 @@ public class Main extends javax.swing.JFrame {
     private void createMenu() {
         menu.initMenu((int index) -> {
             if (index == 0) {
-                content.showForm(home);
+                main.getContent().showForm(home);
             } else if (index == 1) {
-                content.showForm(search);
+                main.getContent().showForm(search);
             }
         });
         move(menu.getjPanel1(), 0);
     }
 
     private void createHeader() {
-        header.addEventMenuSelected(new EventMenuSelected() {
+        main.getHeader().addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void menuSelected(int index) {
-                if(index == 0) {
+                if (index == 0) {
                     System.out.println("Open hồ sơ");
-                } else if(index == 1) {
+                } else if (index == 1) {
                     System.out.println("Open cài đặt");
-                } else if(index == 2) {
+                } else if (index == 2) {
                     System.out.println("Đăng xuất");
                 }
             }
         });
-        move(header, menu.getWidth());
+        move(main.getHeader(), menu.getWidth());
     }
 
     private void createContent() {
-        scrollPaneCustom1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+        main.getScrollPaneCustom1().getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent arg0) {
-                if(arg0.getValue() > 50) {
-                    header.hidden();
+                if (arg0.getValue() > 10) {
+                    main.getHeader().hidden();
                 } else {
-                    header.display();
+                    main.getHeader().display();
                 }
             }
         });
-        content.add(home);
+        main.getContent().add(home);
     }
-    
+
     private void createChat() {
         chat.addActionMinimize((ActionEvent arg0) -> {
             setState(JFrame.ICONIFIED);
@@ -109,7 +109,7 @@ public class Main extends javax.swing.JFrame {
         chat.addActionClose((ActionEvent arg0) -> {
             close();
         });
-        move(chat.getPnlTop(), menu.getWidth() + header.getWidth());
+        move(chat.getPnlTop(), menu.getWidth() + main.getHeader().getWidth());
     }
 
     private void createFormHome() {
@@ -117,7 +117,7 @@ public class Main extends javax.swing.JFrame {
         home.addEventTour(new EventTour() {
             @Override
             public void openTour() {
-                content.showForm(new TourInfo());
+                main.getContent().showForm(new TourInfo());
             }
         });
     }
@@ -200,11 +200,9 @@ public class Main extends javax.swing.JFrame {
 
         bg = new com.huyhoang.swing.panel.LayerPaneShadow();
         menu = new com.huyhoang.customer.gui.component.Menu();
-        main = new com.huyhoang.swing.panel.LayerPaneGradient();
-        header = new com.huyhoang.customer.gui.component.Header();
-        scrollPaneCustom1 = new com.huyhoang.swing.scrollbar.ScrollPaneCustom();
-        content = new com.huyhoang.customer.gui.component.Content();
         chat = new com.huyhoang.customer.gui.component.Chat();
+        main = new com.huyhoang.customer.gui.component.Main();
+        bottom = new com.huyhoang.customer.gui.component.Bottom();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -215,30 +213,21 @@ public class Main extends javax.swing.JFrame {
         bg.setShadowSize(10);
         bg.setLayout(new java.awt.BorderLayout());
         bg.add(menu, java.awt.BorderLayout.LINE_START);
-
-        scrollPaneCustom1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPaneCustom1.setViewportView(content);
-
-        main.setLayer(header, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        main.setLayer(scrollPaneCustom1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
-        main.setLayout(mainLayout);
-        mainLayout.setHorizontalGroup(
-            mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
-            .addComponent(scrollPaneCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        mainLayout.setVerticalGroup(
-            mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainLayout.createSequentialGroup()
-                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(scrollPaneCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE))
-        );
-
-        bg.add(main, java.awt.BorderLayout.CENTER);
         bg.add(chat, java.awt.BorderLayout.LINE_END);
+        bg.add(main, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout bottomLayout = new javax.swing.GroupLayout(bottom);
+        bottom.setLayout(bottomLayout);
+        bottomLayout.setHorizontalGroup(
+            bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1216, Short.MAX_VALUE)
+        );
+        bottomLayout.setVerticalGroup(
+            bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+
+        bg.add(bottom, java.awt.BorderLayout.PAGE_END);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,7 +237,7 @@ public class Main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
         );
 
         pack();
@@ -281,11 +270,9 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;
+    private com.huyhoang.customer.gui.component.Bottom bottom;
     private com.huyhoang.customer.gui.component.Chat chat;
-    private com.huyhoang.customer.gui.component.Content content;
-    private com.huyhoang.customer.gui.component.Header header;
-    private com.huyhoang.swing.panel.LayerPaneGradient main;
+    private com.huyhoang.customer.gui.component.Main main;
     private com.huyhoang.customer.gui.component.Menu menu;
-    private com.huyhoang.swing.scrollbar.ScrollPaneCustom scrollPaneCustom1;
     // End of variables declaration//GEN-END:variables
 }
