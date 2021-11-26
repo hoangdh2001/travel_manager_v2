@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.huyhoang.employee.gui.component.Menu;
 import com.huyhoang.employee.gui.component.PanelDonDatVe;
+import com.huyhoang.employee.gui.component.PanelHuongDanVien;
 import com.huyhoang.employee.gui.component.PanelKhachHang;
 import com.huyhoang.employee.gui.component.PanelTour;
 import com.huyhoang.employee.gui.dialog.DialogTour;
@@ -77,6 +78,10 @@ public class Main extends javax.swing.JFrame {
                     case 4:
                         PanelDonDatVe panelDonDat = new PanelDonDatVe();
                         content1.showForm(panelDonDat);
+                        break;
+                    case 5:
+                        PanelHuongDanVien panelHDV = new PanelHuongDanVien();
+                        content1.showForm(panelHDV);
                         break;
                 }
             }

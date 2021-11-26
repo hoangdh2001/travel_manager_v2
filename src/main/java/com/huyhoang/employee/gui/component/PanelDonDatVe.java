@@ -39,7 +39,6 @@ public class PanelDonDatVe extends javax.swing.JPanel {
         cmbNhanVien.addItem("Nhan vien 1");
         cmbNhanVien.addItem("Nhan vien 2");
         
-        btnThem.setBackground(colorBtn);
         
         cmbSoTrang.addItem("1");
         cmbSoTrang.addItem("2");
@@ -63,7 +62,6 @@ public class PanelDonDatVe extends javax.swing.JPanel {
         txtTimKiem = new com.huyhoang.swing.textfield.MyTextField();
         cmbChonCot = new javax.swing.JComboBox<>();
         cmbTrangThai = new javax.swing.JComboBox<>();
-        btnThem = new javax.swing.JButton();
         cmbNhanVien = new javax.swing.JComboBox<>();
         jdcNgayDat = new com.toedter.calendar.JDateChooser();
         pnlCenter = new com.huyhoang.swing.panel.PanelShadow();
@@ -97,11 +95,6 @@ public class PanelDonDatVe extends javax.swing.JPanel {
             }
         });
 
-        btnThem.setBackground(new java.awt.Color(204, 255, 204));
-        btnThem.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnThem.setForeground(new java.awt.Color(0, 0, 0));
-        btnThem.setText("Thêm");
-
         cmbNhanVien.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         cmbNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +108,7 @@ public class PanelDonDatVe extends javax.swing.JPanel {
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cmbChonCot, 0, 127, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -124,9 +117,7 @@ public class PanelDonDatVe extends javax.swing.JPanel {
                 .addComponent(cmbTrangThai, 0, 127, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(cmbNhanVien, 0, 127, Short.MAX_VALUE)
-                .addGap(37, 37, 37)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
+                .addGap(104, 104, 104))
         );
         pnlTopLayout.setVerticalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +132,6 @@ public class PanelDonDatVe extends javax.swing.JPanel {
                             .addComponent(cmbChonCot, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
@@ -276,7 +266,6 @@ public class PanelDonDatVe extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSau;
-    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTruoc;
     private javax.swing.JComboBox<String> cmbChonCot;
     private javax.swing.JComboBox<String> cmbNhanVien;

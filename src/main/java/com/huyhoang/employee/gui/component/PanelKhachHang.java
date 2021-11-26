@@ -33,7 +33,6 @@ public class PanelKhachHang extends javax.swing.JPanel {
         cmbChonCot.addItem("Căn cước công dân");
         cmbChonCot.addItem("Email");
         
-        btnThem.setBackground(colorBtn);
         
         cmbSoTrang.addItem("1");
         cmbSoTrang.addItem("2");
@@ -54,7 +53,6 @@ public class PanelKhachHang extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlTop = new com.huyhoang.swing.panel.PanelShadow();
-        btnThem = new javax.swing.JButton();
         txtTimKiem = new com.huyhoang.swing.textfield.MyTextField();
         cmbChonCot = new javax.swing.JComboBox<>();
         pnlCenter = new com.huyhoang.swing.panel.PanelShadow();
@@ -71,11 +69,6 @@ public class PanelKhachHang extends javax.swing.JPanel {
 
         pnlTop.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnThem.setBackground(new java.awt.Color(204, 255, 204));
-        btnThem.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnThem.setForeground(new java.awt.Color(0, 0, 0));
-        btnThem.setText("Thêm");
-
         txtTimKiem.setText("Tìm kiếm");
         txtTimKiem.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
@@ -91,24 +84,20 @@ public class PanelKhachHang extends javax.swing.JPanel {
         pnlTopLayout.setHorizontalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
-                .addGap(235, 235, 235)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(267, 267, 267)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(cmbChonCot, 0, 127, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
-                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(332, 332, 332))
+                .addComponent(cmbChonCot, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(335, 335, 335))
         );
         pnlTopLayout.setVerticalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbChonCot, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbChonCot, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pnlCenter.setBackground(new java.awt.Color(255, 255, 255));
@@ -233,7 +222,6 @@ public class PanelKhachHang extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSau;
-    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTruoc;
     private javax.swing.JComboBox<String> cmbChonCot;
     private javax.swing.JComboBox<String> cmbSoTrang;
