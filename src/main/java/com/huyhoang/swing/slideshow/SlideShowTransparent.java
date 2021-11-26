@@ -27,7 +27,7 @@ public class SlideShowTransparent extends JLayeredPane {
     public SlideShowTransparent() {
         setOpaque(true);
         panel = new JPanel();
-        panel.setBackground(new Color(18, 18, 18));
+        panel.setBackground(new Color(30, 30, 30));
         pagination = new Pagination();
         pagination.setVisible(false);
         pagination.setEventPagination(new EventPagination() {
@@ -80,23 +80,44 @@ public class SlideShowTransparent extends JLayeredPane {
         animator.setDeceleration(0.5f);
         setLayer(pagination, POPUP_LAYER);
         panel.setLayout(new CardLayout());
-        setLayout(new MigLayout("fill, insets 0", "[fill, center]", "3[fill]3"));
+        setLayout(new MigLayout("fill, insets 0", "[fill]", "[fill]"));
 
         add(pagination, "pos 0.5al 1al n n");
         add(panel);
 
-        timer = new Timer(6000, new ActionListener() {
+        timer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 next();
             }
         });
     }
-    
-    public void setDuration(int duration) {
-        timer.setDelay(duration);
+
+    public void select(int pageClick) {
+        if (animator.isRunning()) {
+            animator.stop();
+        }
+        if (pageClick != currentIndex) {
+            timer.restart();
+            next = currentIndex < pageClick;
+            if (next) {
+                pictureOut = (PictureBox) panel.getComponent(checkNext(currentIndex));
+                currentIndex = getNext(pageClick - 1);
+                pictureShow = (PictureBox) panel.getComponent(currentIndex);
+                animator.start();
+            } else {
+                pictureOut = (PictureBox) panel.getComponent(checkBack(currentIndex));
+                currentIndex = getBack(pageClick + 1);
+                pictureShow = (PictureBox) panel.getComponent(currentIndex);
+                animator.start();
+            }
+        }
     }
-    
+
+    public void setDuration(int duration) {
+        timer.setInitialDelay(duration);
+    }
+
     public void showPagination() {
         pagination.setVisible(true);
     }
@@ -115,8 +136,21 @@ public class SlideShowTransparent extends JLayeredPane {
             }
             pagination.setTotalPage(panel.getComponentCount());
             pagination.setCurrentIndex(0);
-            timer.start();
+
         }
+    }
+
+    public void start() {
+        timer.start();
+    }
+
+    public void stop() {
+        timer.stop();
+    }
+
+    public void restart() {
+        timer.restart();
+        next();
     }
 
     public void next() {
@@ -128,6 +162,7 @@ public class SlideShowTransparent extends JLayeredPane {
             pictureOut = (PictureBox) panel.getComponent(checkNext(currentIndex - 1));
             animator.start();
         }
+
     }
 
     public void back() {

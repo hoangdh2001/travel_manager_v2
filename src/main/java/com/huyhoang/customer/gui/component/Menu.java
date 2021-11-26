@@ -33,6 +33,11 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/icon/search.png")),
                  new ImageIcon(getClass().getResource("/icon/search_selected.png")),
                  new ImageIcon(getClass().getResource("/icon/search_over.png")), "Search", 1);
+        addMenu(new ImageIcon(getClass().getResource("/icon/library.png")),
+                 new ImageIcon(getClass().getResource("/icon/library_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/library_over.png")), "Library", 2);
+        addEmpty();
+        
     }
 
     private void addMenu(Icon icon, Icon selectedIcon, Icon overIcon, String text, int index) {

@@ -6,13 +6,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class ModernScrollBarUI extends BasicScrollBarUI {
-    private final int THUMB_SIZE = 200;
+    private final int THUMB_SIZE = 100;
 
     @Override
     protected Dimension getMaximumThumbSize() {
@@ -69,11 +70,7 @@ public class ModernScrollBarUI extends BasicScrollBarUI {
     private class ScrollBarButton extends JButton {
 
         public ScrollBarButton() {
-            setPreferredSize(new Dimension(0, 0));
-            setMinimumSize(new Dimension(0, 0));
-            setMaximumSize(new Dimension(0, 0));
-            setBackground(Color.RED);
-//            setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+            setBorder(BorderFactory.createEmptyBorder());
         }
 
         @Override

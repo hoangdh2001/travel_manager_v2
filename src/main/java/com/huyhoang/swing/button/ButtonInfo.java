@@ -78,7 +78,7 @@ public class ButtonInfo extends JButton {
 
     private void paintIcon(Graphics g) {
         int width = getWidth();
-        int height = getHeight() - 2;
+        int height = getHeight() - 4;
         int diameter = Math.min(width, height);
         int y = height / 2 - diameter / 2;
         if (prefixIcon != null) {
@@ -99,7 +99,7 @@ public class ButtonInfo extends JButton {
                 g2.setColor(getBackground());
                 g2.fillOval(5, y, diameter, diameter);
             }
-            g2.drawImage(img, 1, 1, this);
+            g2.drawImage(img, 1, 2, this);
         }
     }
 
