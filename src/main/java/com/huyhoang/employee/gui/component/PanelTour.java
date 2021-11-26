@@ -5,7 +5,12 @@
  */
 package com.huyhoang.employee.gui.component;
 
+import com.huyhoang.employee.gui.dialog.DialogTour;
+import com.huyhoang.model.ChuyenDuLich;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 
 /**
  *
@@ -45,7 +50,9 @@ public class PanelTour extends javax.swing.JPanel {
                 
     }
     
-    
+    public void btnThemHandle(ActionListener actionListener){
+        btnThem.addActionListener(actionListener);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -41,6 +41,10 @@ public class Menu extends javax.swing.JPanel {
                  new ImageIcon(getClass().getResource("/icon/bill_selected.png")),
                  new ImageIcon(getClass().getResource("/icon/bill.png")), "Đơn đặt vé", 4);
         
+        addMenu(new ImageIcon(getClass().getResource("/icon/guide.png")),
+                 new ImageIcon(getClass().getResource("/icon/guide_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/guide.png")), "Hướng dẫn viên", 5);
+        
         //màu icon selected: #FF056CFF
     }
 

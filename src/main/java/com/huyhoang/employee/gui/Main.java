@@ -6,12 +6,16 @@ import com.huyhoang.employee.gui.component.Menu;
 import com.huyhoang.employee.gui.component.PanelDonDatVe;
 import com.huyhoang.employee.gui.component.PanelKhachHang;
 import com.huyhoang.employee.gui.component.PanelTour;
+import com.huyhoang.employee.gui.dialog.DialogTour;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -20,22 +24,22 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class Main extends javax.swing.JFrame {
-
+    
     private boolean show;
     private Animator start;
     private Menu menu;
-
+    
     public Main() {
         initComponents();
         buildDisplay();
         resized();
     }
-
+    
     private void buildDisplay() {
         start();
         buildMenu();
     }
-    
+
 //    private void createMenu() {
 //        menu1.initMenu(new EventMenuSelected() {
 //            @Override
@@ -46,20 +50,26 @@ public class Main extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-
     private void buildMenu() {
-
+        
         menu1.initMenu(new EventMenuSelected() {
             @Override
             public void menuSelected(int index) {
                 System.out.println("main " + index);
                 
-
                 switch (index) {
                     case 2:
                         PanelTour panelTour = new PanelTour();
+                        panelTour.btnThemHandle(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                DialogTour dialogTour = new DialogTour(Main.this);
+                                dialogTour.setVisible(true);
+                            }
+                        });
                         content1.showForm(panelTour);
                         break;
+                        
                     case 3:
                         PanelKhachHang panelKhachHang = new PanelKhachHang();
                         content1.showForm(panelKhachHang);
@@ -72,7 +82,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private void start() {
         setBackground(new Color(0, 0, 0, 0));
         setOpacity(0);
@@ -85,7 +95,7 @@ public class Main extends javax.swing.JFrame {
                     setOpacity(1f - fraction);
                 }
             }
-
+            
             @Override
             public void end() {
                 if (!show) {
@@ -97,7 +107,7 @@ public class Main extends javax.swing.JFrame {
         start.setResolution(0);
         start.setAcceleration(0.5f);
     }
-
+    
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
@@ -106,7 +116,7 @@ public class Main extends javax.swing.JFrame {
             start.start();
         }
     }
-
+    
     private void close() {
         if (start.isRunning()) {
             start.stop();
@@ -114,14 +124,14 @@ public class Main extends javax.swing.JFrame {
         show = false;
         start.start();
     }
-
+    
     private void resized() {
         ComponentResizer com = new ComponentResizer();
         com.registerComponent(this);
         com.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         com.setSnapSize(new Dimension(10, 10));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
