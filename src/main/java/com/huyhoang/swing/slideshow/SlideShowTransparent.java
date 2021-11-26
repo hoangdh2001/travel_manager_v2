@@ -27,7 +27,7 @@ public class SlideShowTransparent extends JLayeredPane {
     public SlideShowTransparent() {
         setOpaque(true);
         panel = new JPanel();
-        panel.setBackground(new Color(18, 18, 18));
+        panel.setBackground(new Color(30, 30, 30));
         pagination = new Pagination();
         pagination.setVisible(false);
         pagination.setEventPagination(new EventPagination() {
@@ -80,7 +80,7 @@ public class SlideShowTransparent extends JLayeredPane {
         animator.setDeceleration(0.5f);
         setLayer(pagination, POPUP_LAYER);
         panel.setLayout(new CardLayout());
-        setLayout(new MigLayout("fill, insets 0", "[fill, center]", "[fill]"));
+        setLayout(new MigLayout("fill, insets 0", "[fill]", "[fill]"));
 
         add(pagination, "pos 0.5al 1al n n");
         add(panel);

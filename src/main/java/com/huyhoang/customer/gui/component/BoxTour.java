@@ -2,8 +2,13 @@ package com.huyhoang.customer.gui.component;
 
 import com.huyhoang.swing.image.PictureBox;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
@@ -16,6 +21,10 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     private Animator animator;
     private SlideShowTransparent slideShowTransparent1;
 
+    public void addEventBoxTour(MouseListener event) {
+        bg.addMouseListener(event);
+    }
+
     public BoxTour() {
         initComponents();
         buildDisplay();
@@ -23,14 +32,39 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
 
     private void buildDisplay() {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
-        createBg();
         overTransparent();
-        createSlide();
+        createBg();
     }
-    
+
     private void createBg() {
-        layout = new MigLayout("fill, insets 0, wrap", "[fill]", "[fill]");
+        layout = new MigLayout("fillx, insets 0, wrap", "[fill]");
         bg.setLayout(layout);
+        createSlide();
+
+        JLabel lblTenTour = new JLabel("Tên tour");
+        lblTenTour.setForeground(Color.WHITE);
+        lblTenTour.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        bg.add(lblTenTour);
+
+        JLabel lblNguoi = new JLabel("10");
+        lblNguoi.setIcon(new ImageIcon(getClass().getResource("/icon/person.png")));
+        lblNguoi.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblNguoi.setForeground(Color.WHITE);
+        bg.add(lblNguoi);
+
+        JPanel separator = new JPanel();
+        separator.setBackground(Color.DARK_GRAY);
+        bg.add(separator, "h 1!");
+
+        JLabel lblGia = new JLabel("Giá");
+        lblGia.setForeground(Color.WHITE);
+        lblGia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        bg.add(lblGia, "split 2, left");
+
+        JLabel lblGiaTour = new JLabel("    $100,000/người");
+        lblGiaTour.setForeground(Color.WHITE);
+        lblGiaTour.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        bg.add(lblGiaTour);
     }
 
     private void overTransparent() {
@@ -68,7 +102,17 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         picture3.setImage(new ImageIcon(getClass().getResource("/icon/slide3.jpg")));
         slideShowTransparent1.initSlideshow(picture1, picture2, picture3);
         slideShowTransparent1.setDuration(1500);
-        bg.add(slideShowTransparent1);
+        bg.add(slideShowTransparent1, "h 180!");
+    }
+
+    public void refresh() {
+        over = false;
+        if (animator.isRunning()) {
+            animator.stop();
+        }
+        animator.start();
+        slideShowTransparent1.select(0);
+        slideShowTransparent1.stop();
     }
 
     @SuppressWarnings("unchecked")
@@ -124,13 +168,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     }//GEN-LAST:event_bgMouseEntered
 
     private void bgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgMouseExited
-        over = false;
-        if (animator.isRunning()) {
-            animator.stop();
-        }
-        animator.start();
-        slideShowTransparent1.select(0);
-        slideShowTransparent1.stop();
+        refresh();
     }//GEN-LAST:event_bgMouseExited
 
 

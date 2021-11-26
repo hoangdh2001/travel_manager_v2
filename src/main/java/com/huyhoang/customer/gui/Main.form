@@ -67,7 +67,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="header" alignment="0" pref="1020" max="32767" attributes="0"/>
+                  <Component id="header" alignment="0" pref="699" max="32767" attributes="0"/>
                   <Component id="scrollPaneCustom1" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
@@ -83,9 +83,6 @@
           </Layout>
           <SubComponents>
             <Component class="com.huyhoang.customer.gui.component.Header" name="header">
-              <Properties>
-                <Property name="opaque" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Container class="com.huyhoang.swing.scrollbar.ScrollPaneCustom" name="scrollPaneCustom1">
               <Properties>
@@ -102,6 +99,13 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="com.huyhoang.customer.gui.component.Chat" name="chat">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+              <BorderConstraints direction="After"/>
+            </Constraint>
+          </Constraints>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

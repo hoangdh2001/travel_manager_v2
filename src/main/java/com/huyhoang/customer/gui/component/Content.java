@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 public class Content extends JPanel {
 
     public Content() {
-        setBorder(new EmptyBorder(10, 10, 10, 10));
+//        setBorder(new EmptyBorder(10, 20, 10, 20));
         setOpaque(false);
         setLayout(new BorderLayout());
     }

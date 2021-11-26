@@ -1,11 +1,25 @@
 package com.huyhoang.customer.gui.component;
 
+import java.awt.Dimension;
+import com.huyhoang.swing.layout.WrapLayout;
 public class MapTour extends javax.swing.JPanel {
-    
     public MapTour() {
         initComponents();
+        buildDisplay();
     }
     
+    private void buildDisplay() {
+        createMapTour();
+    }
+    
+    private void createMapTour() {
+        pnlCenter.setLayout(new WrapLayout(WrapLayout.LEADING, 25, 20));
+    }
+    
+    public void addTour(BoxTour boxTour) {
+        boxTour.setPreferredSize(new Dimension(200, 280));
+        pnlCenter.add(boxTour);
+    }
     
 
     @SuppressWarnings("unchecked")
@@ -24,13 +38,14 @@ public class MapTour extends javax.swing.JPanel {
         lblRole.setText("Bảng xếp hạng");
         add(lblRole, java.awt.BorderLayout.PAGE_START);
 
+        pnlCenter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, -25, 0, -25));
         pnlCenter.setOpaque(false);
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 690, Short.MAX_VALUE)
+            .addGap(0, 740, Short.MAX_VALUE)
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
