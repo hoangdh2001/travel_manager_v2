@@ -5,12 +5,14 @@ import com.huyhoang.swing.panel.LayerPaneGradient;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JLayeredPane;
 import net.miginfocom.swing.MigLayout;
 
 public class TourInfo extends javax.swing.JLayeredPane {
-    private SlideShowTransparent slide;
     private LayerPaneGradient pnlCenter;
-    private LayerPaneGradient bg;
+    private SlideShowTransparent slide;
+    private LayerPaneGradient session;
+    
     private MigLayout layout;
     public TourInfo() {
         initComponents();
@@ -20,15 +22,9 @@ public class TourInfo extends javax.swing.JLayeredPane {
     private void builldDisplay() {
         layout = new MigLayout("fill, insets 0, wrap", "[fill]", "300[fill]");
         setLayout(layout);
-        createBG();
         createPaneCenter();
-//        createSlide();
-    }
-    
-    private void createBG() {
-        bg = new LayerPaneGradient();
-        bg.setColor1(new Color(180, 75, 59));
-        add(bg, "pos 0al 0al n n, w 100%, h 600!");
+        createSession();
+        createSlide();
     }
     
     private void createSlide() {
@@ -40,8 +36,15 @@ public class TourInfo extends javax.swing.JLayeredPane {
         PictureBox picture3 = new PictureBox();
         picture3.setImage(new ImageIcon(getClass().getResource("/icon/slide3.jpg")));
         slide.initSlideshow(picture1, picture2, picture3);
-        slide.start();
-        add(slide, "pos 0al 0al n n, w 100%, h 400!");
+        add(slide, "pos 0al 0al n n, w 100%, h 450!");
+    }
+    
+    private void createSession() {
+        session = new LayerPaneGradient();
+        session.setColor1(new Color(34, 34, 34, 10));
+        session.setColor2(new Color(19, 19, 19));
+        setLayer(session, JLayeredPane.POPUP_LAYER);
+        add(session, "pos 0al 0al n n, w 100%, h 450!");
     }
     
     private void createPaneCenter() {
@@ -56,7 +59,16 @@ public class TourInfo extends javax.swing.JLayeredPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 718, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 758, Short.MAX_VALUE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 

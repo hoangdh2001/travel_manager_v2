@@ -3,7 +3,6 @@ package com.huyhoang.customer.gui.component;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 public class Content extends JPanel {
 
