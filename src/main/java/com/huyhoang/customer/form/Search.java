@@ -1,8 +1,8 @@
-package com.huyhoang.employee.gui.form;
+package com.huyhoang.customer.form;
 
-public class Form2 extends javax.swing.JPanel {
+public class Search extends javax.swing.JPanel {
 
-    public Form2() {
+    public Search() {
         initComponents();
     }
 
@@ -10,18 +10,18 @@ public class Form2 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(51, 255, 51));
         setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 727, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

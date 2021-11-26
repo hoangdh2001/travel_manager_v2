@@ -6,18 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
-public class PanelTransparent extends JComponent {
-    
-    private int borderRadius;
-    private float alpha;
-
-    public int getBorderRadius() {
-        return borderRadius;
-    }
-
-    public void setBorderRadius(int borderRadius) {
-        this.borderRadius = borderRadius;
-    }
+public class PanelTransparentPolygon extends JComponent {
     
     public float getAlpha() {
         return alpha;
@@ -28,15 +17,18 @@ public class PanelTransparent extends JComponent {
         repaint();
     }
     
+    private float alpha;
+    
     @Override
     public void paint(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), borderRadius, borderRadius);
+        int x[] = {0, getWidth(), getWidth() - 100, 0};
+        int y[] = {0, 0, getHeight(), getHeight()};
+        g2.fillPolygon(x, y, x.length);
         g2.dispose();
         super.paint(grphcs);
     }
 }
-
