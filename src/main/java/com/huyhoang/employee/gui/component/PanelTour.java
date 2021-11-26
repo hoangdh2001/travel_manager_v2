@@ -27,10 +27,22 @@ public class PanelTour extends javax.swing.JPanel {
         txtTimKiem.setBorderLine(true);
         txtTimKiem.setBorderRadius(txtRadius);
 
-//        cmbChonCot.setBorderLine(true);
-//        cmbChonCot.setBorderRadius(cmbRadius);
-//        cmbChonCot.addItem("Tên chuyến đi");
-//        cmbChonCot.addItem("Dòng tour");
+        cmbChonCot.addItem("Tên chuyến đi");
+        cmbChonCot.addItem("Dòng tour");
+        
+        cmbTrangThai.addItem("Chưa bắt đầu");
+        cmbTrangThai.addItem("Đang diễn ra");
+        cmbTrangThai.addItem("Kết thúc");
+        
+        cmbPhuongTien.addItem("Xe khách");
+        cmbPhuongTien.addItem("Máy bay");
+        
+        
+        cmbSoTrang.addItem("1");
+        cmbSoTrang.addItem("2");
+        cmbSoTrang.addItem("3");
+        cmbSoTrang.addItem("4");
+                
     }
     
     
@@ -47,9 +59,12 @@ public class PanelTour extends javax.swing.JPanel {
         pnlTop = new com.huyhoang.swing.panel.PanelShadow();
         btnThem = new javax.swing.JButton();
         txtTimKiem = new com.huyhoang.swing.textfield.MyTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbChonCot = new javax.swing.JComboBox<>();
+        cmbTrangThai = new javax.swing.JComboBox<>();
+        cmbPhuongTien = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
         pnlCenter = new com.huyhoang.swing.panel.PanelShadow();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTour = new com.huyhoang.swing.table2.MyTable();
@@ -64,45 +79,69 @@ public class PanelTour extends javax.swing.JPanel {
 
         pnlTop.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnThem.setBackground(new java.awt.Color(204, 255, 204));
+        btnThem.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnThem.setForeground(new java.awt.Color(0, 0, 0));
         btnThem.setText("Thêm");
 
-        txtTimKiem.setText("myTextField1");
+        txtTimKiem.setText("Tìm kiếm");
+        txtTimKiem.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbChonCot.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        cmbChonCot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbChonCotActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTrangThai.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPhuongTien.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
+        jDateChooser1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+
+        jDateChooser2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+
+        jDateChooser3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlTopLayout = new javax.swing.GroupLayout(pnlTop);
         pnlTop.setLayout(pnlTopLayout);
         pnlTopLayout.setHorizontalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTopLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmbChonCot, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(cmbTrangThai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(cmbPhuongTien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addGap(18, 18, 18))
         );
         pnlTopLayout.setVerticalGroup(
             pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTopLayout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
-                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(pnlTopLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addGap(51, 51, 51))
+                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDateChooser3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbTrangThai, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(cmbPhuongTien, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbChonCot)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pnlCenter.setBackground(new java.awt.Color(255, 255, 255));
@@ -110,7 +149,7 @@ public class PanelTour extends javax.swing.JPanel {
         tblTour.setBackground(new java.awt.Color(255, 255, 255));
         tblTour.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
+                {"", "1", null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null}
@@ -119,6 +158,7 @@ public class PanelTour extends javax.swing.JPanel {
                 "", "Mã tour", "Tên tour", "Bắt đầu", "Kết thúc", "Phương tiện", "Số lượng", "Trạng thái", "Ngày tạo", "Điều kiện", "Dong tour"
             }
         ));
+        tblTour.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(tblTour);
 
         pnlPhanTrang.setBackground(new java.awt.Color(255, 255, 255));
@@ -127,11 +167,11 @@ public class PanelTour extends javax.swing.JPanel {
         lblTrang.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTrang.setText("Trang");
 
-        cmbSoTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSoTrang.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
 
-        btnTruoc.setText("<<");
+        btnTruoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/double_left.png"))); // NOI18N
 
-        btnSau.setText(">>");
+        btnSau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/double_right.png"))); // NOI18N
         btnSau.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -164,7 +204,7 @@ public class PanelTour extends javax.swing.JPanel {
                         .addComponent(cmbSoTrang, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnTruoc, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSau, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -175,14 +215,14 @@ public class PanelTour extends javax.swing.JPanel {
             .addGroup(pnlCenterLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(pnlPhanTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(672, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE)
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCenterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlPhanTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -208,15 +248,22 @@ public class PanelTour extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbChonCotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbChonCotActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbChonCotActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSau;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTruoc;
+    private javax.swing.JComboBox<String> cmbChonCot;
+    private javax.swing.JComboBox<String> cmbPhuongTien;
     private javax.swing.JComboBox<String> cmbSoTrang;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> cmbTrangThai;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblTrang;

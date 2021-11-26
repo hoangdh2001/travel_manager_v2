@@ -36,16 +36,16 @@ public class Main extends javax.swing.JFrame {
         buildMenu();
     }
     
-    private void createMenu() {
-        menu1.initMenu(new EventMenuSelected() {
-            @Override
-            public void menuSelected(int index) {
-                if(index == 0) {
-                    content1.showForm(new Home());
-                }
-            }
-        });
-    }
+//    private void createMenu() {
+//        menu1.initMenu(new EventMenuSelected() {
+//            @Override
+//            public void menuSelected(int index) {
+//                if(index == 0) {
+//                    content1.showForm(new Home());
+//                }
+//            }
+//        });
+//    }
 
     private void buildMenu() {
 
