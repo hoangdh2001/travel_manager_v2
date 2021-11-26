@@ -1,10 +1,18 @@
 package com.huyhoang.employee.gui;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.huyhoang.employee.gui.component.Menu;
+import com.huyhoang.employee.gui.component.PanelDonDat;
+import com.huyhoang.employee.gui.component.PanelKhachHang;
+import com.huyhoang.employee.gui.component.PanelTour;
+import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jdesktop.animation.timing.Animator;
@@ -15,6 +23,7 @@ public class Main extends javax.swing.JFrame {
 
     private boolean show;
     private Animator start;
+    private Menu menu;
 
     public Main() {
         initComponents();
@@ -24,6 +33,33 @@ public class Main extends javax.swing.JFrame {
 
     private void buildDisplay() {
         start();
+        buildMenu();
+    }
+
+    private void buildMenu() {
+
+        menu1.initMenu(new EventMenuSelected() {
+            @Override
+            public void menuSelected(int index) {
+                System.out.println("main " + index);
+                
+
+                switch (index) {
+                    case 2:
+                        PanelTour panelTour = new PanelTour();
+                        content1.showForm(panelTour);
+                        break;
+                    case 3:
+                        PanelKhachHang panelKhachHang = new PanelKhachHang();
+                        content1.showForm(panelKhachHang);
+                        break;
+                    case 4:
+                        PanelDonDat panelDonDat = new PanelDonDat();
+                        content1.showForm(panelDonDat);
+                        break;
+                }
+            }
+        });
     }
 
     private void start() {
@@ -133,7 +169,7 @@ public class Main extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+            UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
