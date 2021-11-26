@@ -3,7 +3,7 @@ package com.huyhoang.employee.gui;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.huyhoang.employee.gui.component.Menu;
-import com.huyhoang.employee.gui.component.PanelDonDat;
+import com.huyhoang.employee.gui.component.PanelDonDatVe;
 import com.huyhoang.employee.gui.component.PanelKhachHang;
 import com.huyhoang.employee.gui.component.PanelTour;
 import com.huyhoang.swing.event.EventMenuSelected;
@@ -65,7 +65,7 @@ public class Main extends javax.swing.JFrame {
                         content1.showForm(panelKhachHang);
                         break;
                     case 4:
-                        PanelDonDat panelDonDat = new PanelDonDat();
+                        PanelDonDatVe panelDonDat = new PanelDonDatVe();
                         content1.showForm(panelDonDat);
                         break;
                 }
