@@ -27,6 +27,7 @@ public class ButtonBadges extends JButton {
     private float alpha;
     private Color effectColor = new Color(173, 173, 173);
     private int badges;
+    private boolean show;
 
     public int getBadges() {
         return badges;
@@ -42,6 +43,14 @@ public class ButtonBadges extends JButton {
 
     public void setEffectColor(Color effectColor) {
         this.effectColor = effectColor;
+    }
+
+    public boolean isShow() {
+        return show;
+    }
+
+    public void setShow(boolean show) {
+        this.show = show;
     }
     
     public ButtonBadges() {

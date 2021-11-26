@@ -1,5 +1,6 @@
 package com.huyhoang.customer.gui.component;
 
+import com.huyhoang.swing.button.ButtonTransparent;
 import com.huyhoang.swing.image.PictureBox;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
@@ -20,6 +21,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     private MigLayout layout;
     private Animator animator;
     private SlideShowTransparent slideShowTransparent1;
+    private ButtonTransparent buttonTransparent;
 
     public void addEventBoxTour(MouseListener event) {
         bg.addMouseListener(event);
@@ -39,6 +41,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     private void createBg() {
         layout = new MigLayout("fillx, insets 0, wrap", "[fill]");
         bg.setLayout(layout);
+        createButton();
         createSlide();
 
         JLabel lblTenTour = new JLabel("Tên tour");
@@ -78,12 +81,18 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
 
             @Override
             public void timingEvent(float fraction) {
+                double point;
                 if (over) {
                     bg.setAlpha(0.1f * fraction);
+                    buttonTransparent.setAlpha(fraction);
+                    point = 130 + (10 * (1f - fraction));
                 } else {
                     bg.setAlpha(0.1f * (1f - fraction));
+                    buttonTransparent.setAlpha(1f - fraction);
+                    point = 130 + (10 * fraction);
                 }
-
+                layout.setComponentConstraints(buttonTransparent, "pos 0.85al " + point + " n n, w 40!, h 40!");
+                bg.revalidate();
             }
         };
         animator = new Animator(400, target);
@@ -102,7 +111,16 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         picture3.setImage(new ImageIcon(getClass().getResource("/icon/slide3.jpg")));
         slideShowTransparent1.initSlideshow(picture1, picture2, picture3);
         slideShowTransparent1.setDuration(1500);
+//        slideShowTransparent1.setBorderRadius(5);
         bg.add(slideShowTransparent1, "h 180!");
+    }
+    
+    private void createButton() {
+        buttonTransparent = new ButtonTransparent();
+        buttonTransparent.setIcon(new ImageIcon(getClass().getResource("/icon/play.png")));
+        buttonTransparent.setBackground(new Color(29, 185, 84));
+        buttonTransparent.setAlpha(0);
+        bg.add(buttonTransparent, "pos 0.85al 130 n n, w 40!, h 40!");
     }
 
     public void refresh() {
@@ -122,10 +140,10 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         bg = new com.huyhoang.swing.panel.PanelTransparent();
 
         setBackground(new java.awt.Color(30, 30, 30));
-        setAlpha(1.0F);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        bg.setAlpha(0.0F);
         bg.setBorderRadius(10);
         bg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -159,6 +177,10 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgMouseExited
+        refresh();
+    }//GEN-LAST:event_bgMouseExited
+
     private void bgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgMouseEntered
         over = true;
         if (animator.isRunning()) {
@@ -166,10 +188,6 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         }
         animator.start();
     }//GEN-LAST:event_bgMouseEntered
-
-    private void bgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgMouseExited
-        refresh();
-    }//GEN-LAST:event_bgMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
