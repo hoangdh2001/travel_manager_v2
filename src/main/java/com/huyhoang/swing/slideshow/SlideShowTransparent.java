@@ -19,8 +19,8 @@ public class SlideShowTransparent extends JLayeredPane {
     private final Pagination pagination;
     private final Animator animator;
     private final Timer timer;
-    private PictureBox pictureShow = new PictureBox();
-    private PictureBox pictureOut = new PictureBox();
+    private PictureBox pictureShow;
+    private PictureBox pictureOut;
     private int currentIndex;
     private boolean next;
 
@@ -114,8 +114,6 @@ public class SlideShowTransparent extends JLayeredPane {
     }
     
     public void setBorderRadius(int borderRadius) {
-        pictureOut.setBorderRadius(borderRadius);
-        pictureShow.setBorderRadius(borderRadius);
         panel.setBorderRadius(borderRadius);
     }
 

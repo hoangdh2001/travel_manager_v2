@@ -21,6 +21,9 @@ public class MapTour extends javax.swing.JPanel {
         pnlCenter.add(boxTour);
     }
     
+    public void setTitle(String text) {
+        lblRole.setText(text);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
