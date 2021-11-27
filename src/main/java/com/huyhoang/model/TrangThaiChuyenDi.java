@@ -3,7 +3,7 @@ package com.huyhoang.model;
 import java.awt.Color;
 
 public enum TrangThaiChuyenDi {
-    DANG_XU_LY("Đang xử lý", new Color(104, 104, 104)),
+    DANG_XU_LY("Đang xử lý", new Color(210, 249, 139)),
     CHUA_KHOI_HANH("Chưa khởi hành", new Color(152, 247, 111)),
     SAP_BAT_DAU("Sắp bắt đầu", new Color(111, 247, 243)),
     HUY("Hủy", new Color(253, 89, 89)),

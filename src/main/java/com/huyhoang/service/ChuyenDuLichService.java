@@ -9,4 +9,6 @@ public interface ChuyenDuLichService {
     public boolean deleteChuyenDuLich(String id);
     public ChuyenDuLich getChuyenDuLich(String id);
     public List<ChuyenDuLich> getChuyenDuLichs();
+    public List<ChuyenDuLich> getChuyenDuLich(int numPage);
+    public int getSoLuongCDL();
 }

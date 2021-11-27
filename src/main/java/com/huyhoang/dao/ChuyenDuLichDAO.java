@@ -62,5 +62,48 @@ public class ChuyenDuLichDAO implements ChuyenDuLichService{
         }
         return null;
     }
+
+    @Override
+    public List<ChuyenDuLich> getChuyenDuLich(int numPage) {
+        Session session = sessionFactory.openSession();
+        Transaction tr = session.getTransaction();
+        String sql = "select cdl.* from chuyendulich cdl order by chuyen_id offset :x row fetch next 20 rows only";
+        try {
+            tr.begin();
+            List<ChuyenDuLich> dsPhong = session
+                    .createNativeQuery(sql, ChuyenDuLich.class)
+                    .setParameter("x", numPage * 20)
+                    .getResultList();
+
+            tr.commit();
+            return dsPhong;
+
+        } catch (Exception e) {
+            tr.rollback();
+        }
+        session.close();
+        return null;
+    }
+
+    @Override
+    public int getSoLuongCDL() {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tr = session.getTransaction();
+        
+        String sql = "select count(*) from chuyendulich";
+        try {
+            tr.begin();
+            int rs = (int) session.
+                    createNativeQuery(sql)
+                    .getSingleResult();
+            tr.commit();
+            return  rs;
+        } catch (Exception e) {
+            tr.rollback();
+        }
+        return 0;
+    }
+    
+    
     
 }

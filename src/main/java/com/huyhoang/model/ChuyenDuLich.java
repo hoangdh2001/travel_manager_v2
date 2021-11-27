@@ -1,6 +1,5 @@
 package com.huyhoang.model;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
@@ -285,6 +284,20 @@ public class ChuyenDuLich {
         this.dongTour = dongTour;
     }
 
+    /**
+     * @return nhanVien
+     */
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+
+    /**
+     * @param nhanVien
+     */
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+
     @Override
     public String toString() {
         return "ChuyenDuLich [maChuyen=" + maChuyen + ", dsLoaiChuyenDi=" + loaiChuyenDi + ", giaChuyenDi="
@@ -295,6 +308,7 @@ public class ChuyenDuLich {
 
     public Object[] convertToRowTable() {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
+//        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
+        return new Object[]{maChuyen, df.format(ngayKhoiHanh), df.format(ngayKetThuc), phuongTien.getPhuongTien(), soLuong, trangThai, df.format(ngayTao), loaiChuyenDi.getTenLoaiCD(), dongTour};
     }
 }
