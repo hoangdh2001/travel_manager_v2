@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 
-public class TextEffect extends JLabel {
+public class TextShadow extends JLabel {
     private int shadowSize = 5;
     private float shadowOpacity = 0.5f;
     private Color shadowColor = Color.BLACK;
@@ -40,7 +40,7 @@ public class TextEffect extends JLabel {
         this.shadowColor = shadowColor;
     }
     
-    public TextEffect() {
+    public TextShadow() {
     }
 
     @Override

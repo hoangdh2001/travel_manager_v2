@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 public class PanelTransparent extends JComponent {
     
     private int borderRadius;
-    private float alpha;
+    private float alpha = 1;
 
     public int getBorderRadius() {
         return borderRadius;

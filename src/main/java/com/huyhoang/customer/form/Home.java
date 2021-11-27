@@ -60,7 +60,7 @@ public class Home extends javax.swing.JPanel {
         slideShowTransparent1 = new com.huyhoang.swing.slideshow.SlideShowTransparent();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(57, 20, 0, 20));
         setOpaque(false);
 
         jPanel1.setOpaque(false);
@@ -74,7 +74,7 @@ public class Home extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(mapTour1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addComponent(mapTour1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -84,7 +84,7 @@ public class Home extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(slideShowTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+            .addComponent(slideShowTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
