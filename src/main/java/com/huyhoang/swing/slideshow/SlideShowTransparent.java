@@ -1,12 +1,12 @@
 package com.huyhoang.swing.slideshow;
 
 import com.huyhoang.swing.image.PictureBox;
+import com.huyhoang.swing.panel.PanelTransparent;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
@@ -15,7 +15,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class SlideShowTransparent extends JLayeredPane {
 
-    private final JPanel panel;
+    private final PanelTransparent panel;
     private final Pagination pagination;
     private final Animator animator;
     private final Timer timer;
@@ -25,9 +25,9 @@ public class SlideShowTransparent extends JLayeredPane {
     private boolean next;
 
     public SlideShowTransparent() {
-        setOpaque(true);
-        panel = new JPanel();
+        panel = new PanelTransparent();
         panel.setBackground(new Color(30, 30, 30));
+        panel.setBorderRadius(15);
         pagination = new Pagination();
         pagination.setVisible(false);
         pagination.setEventPagination(new EventPagination() {
@@ -112,6 +112,12 @@ public class SlideShowTransparent extends JLayeredPane {
                 animator.start();
             }
         }
+    }
+    
+    public void setBorderRadius(int borderRadius) {
+        pictureOut.setBorderRadius(borderRadius);
+        pictureShow.setBorderRadius(borderRadius);
+        panel.setBorderRadius(borderRadius);
     }
 
     public void setDuration(int duration) {

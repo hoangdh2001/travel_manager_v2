@@ -28,8 +28,6 @@ public class ChuyenDuLich {
     @Id
     @Column(name = "chuyen_id")
     private String maChuyen;
-    @Column(name = "tenchuyendi", columnDefinition = "nvarchar(255)")
-    private String tenChuyenDi;
     @ManyToOne
     @JoinColumn(name = "loaichuyendi_id")
     private LoaiChuyenDi loaiChuyenDi;
@@ -37,6 +35,9 @@ public class ChuyenDuLich {
     private Date ngayTao;
     @Column(name = "giachuyen", columnDefinition = "money")
     private double giaChuyenDi;
+    @ManyToOne
+    @JoinColumn(name = "noikhoihanh")
+    private DiaChi noiKhoiHanh;
     @OneToMany(mappedBy = "chuyenDuLich", fetch = FetchType.EAGER)
     private List<ChiTietThamQuan> dsChiTietThamQuan;
     @Column(name = "ngaykhoihanh", columnDefinition = "datetime")
@@ -54,8 +55,6 @@ public class ChuyenDuLich {
     private DongTour dongTour;
     @Column(name = "mota", columnDefinition = "nvarchar(max)")
     private String moTa;
-    @Column(name = "dieukien", columnDefinition = "nvarchar(max)")
-    private String dieuKien;
     @Column(name = "soluong")
     private int soLuong;
     @ManyToOne
@@ -64,7 +63,6 @@ public class ChuyenDuLich {
 
     /**
      * @param maChuyen
-     * @param tenChuyenDi
      * @param giaChuyenDi
      * @param loaiChuyenDi
      * @param ngayTao
@@ -74,14 +72,12 @@ public class ChuyenDuLich {
      * @param phuongTien
      * @param dongTour
      * @param moTa
-     * @param dieuKien
      * @param soLuong
+     * @param nhanVien
      */
-    public ChuyenDuLich(String maChuyen, String tenChuyenDi, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
-            PhuongTien phuongTien, DongTour dongTour, String moTa,
-            String dieuKien, int soLuong) {
+    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
+            PhuongTien phuongTien, DongTour dongTour, String moTa, int soLuong, NhanVien nhanVien) {
         this.maChuyen = maChuyen;
-        this.tenChuyenDi = tenChuyenDi;
         this.giaChuyenDi = giaChuyenDi;
         this.loaiChuyenDi = loaiChuyenDi;
         this.ngayTao = ngayTao;
@@ -91,9 +87,9 @@ public class ChuyenDuLich {
         this.phuongTien = phuongTien;
         this.dongTour = dongTour;
         this.moTa = moTa;
-        this.dieuKien = dieuKien;
         this.soLuong = soLuong;
         this.dsChiTietThamQuan = new ArrayList<ChiTietThamQuan>();
+        this.nhanVien = nhanVien;
     }
 
     /**
@@ -133,20 +129,6 @@ public class ChuyenDuLich {
      */
     public void setMaChuyen(String maChuyen) {
         this.maChuyen = maChuyen;
-    }
-
-    /**
-     * @return tenChuyenDi
-     */
-    public String getTenChuyenDi() {
-        return tenChuyenDi;
-    }
-
-    /**
-     * @param tenChuyenDi
-     */
-    public void setTenChuyenDi(String tenChuyenDi) {
-        this.tenChuyenDi = tenChuyenDi;
     }
 
     /**
@@ -248,20 +230,6 @@ public class ChuyenDuLich {
     }
 
     /**
-     * @return the dieuKien
-     */
-    public String getDieuKien() {
-        return dieuKien;
-    }
-
-    /**
-     * @param dieuKien the dieuKien to set
-     */
-    public void setDieuKien(String dieuKien) {
-        this.dieuKien = dieuKien;
-    }
-
-    /**
      * @return the soLuong
      */
     public int getSoLuong() {
@@ -321,12 +289,12 @@ public class ChuyenDuLich {
     public String toString() {
         return "ChuyenDuLich [maChuyen=" + maChuyen + ", dsLoaiChuyenDi=" + loaiChuyenDi + ", giaChuyenDi="
                 + giaChuyenDi + ", dsChiTietThamQuan=" + dsChiTietThamQuan + ", ngayKhoiHanh=" + ngayKhoiHanh
-                + ", ngayKetThuc=" + ngayKetThuc + ", moTa=" + moTa + ", dieuKien=" + dieuKien + ", soLuong=" + soLuong
+                + ", ngayKetThuc=" + ngayKetThuc + ", moTa=" + moTa + ", soLuong=" + soLuong
                 + "]";
     }
 
     public Object[] convertToRowTable() {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        return new Object[] {maChuyen, tenChuyenDi, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
+        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
     }
 }
