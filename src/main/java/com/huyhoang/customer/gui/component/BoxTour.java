@@ -120,7 +120,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     
     private void createButton() {
         buttonTransparent = new ButtonTransparent();
-        buttonTransparent.setIcon(new ImageIcon(getClass().getResource("/icon/play.png")));
+        buttonTransparent.setIcon(new ImageIcon(getClass().getResource("/icon/booking_small.png")));
         buttonTransparent.setBackground(new Color(29, 185, 84));
         buttonTransparent.setAlpha(0);
         bg.add(buttonTransparent, "pos 0.85al 130 n n, w 40!, h 40!");

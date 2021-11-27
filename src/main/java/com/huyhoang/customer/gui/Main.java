@@ -8,6 +8,7 @@ import com.huyhoang.swing.event.EventTour;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
@@ -54,8 +55,12 @@ public class Main extends javax.swing.JFrame {
         menu.initMenu((int index) -> {
             if (index == 0) {
                 main.getContent().showForm(home);
+                historyComponent.add(home);
+                System.out.println(historyComponent.size());
             } else if (index == 1) {
                 main.getContent().showForm(search);
+                historyComponent.add(search);
+                System.out.println(historyComponent.size());
             }
         });
         move(menu.getjPanel1(), 0);
@@ -65,13 +70,31 @@ public class Main extends javax.swing.JFrame {
         main.getHeader().addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void menuSelected(int index) {
-                if (index == 0) {
-                    System.out.println("Open hồ sơ");
-                } else if (index == 1) {
-                    System.out.println("Open cài đặt");
-                } else if (index == 2) {
-                    System.out.println("Đăng xuất");
+                switch (index) {
+                    case 0:
+                        System.out.println("Open hồ sơ");
+                        break;
+                    case 1:
+                        System.out.println("Open cài đặt");
+                        break;
+                    case 2:
+                        System.out.println("Đăng xuất");
+                        break;
+                    default:
+                        break;
                 }
+            }
+        });
+        main.getHeader().addEventBack(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("back");
+            }
+        });
+        main.getHeader().addEventNext(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("next");
             }
         });
         move(main.getHeader(), menu.getWidth());
@@ -117,7 +140,16 @@ public class Main extends javax.swing.JFrame {
         home.addEventTour(new EventTour() {
             @Override
             public void openTour() {
-                main.getContent().showForm(new TourInfo());
+                TourInfo tourInfo = new TourInfo();
+                tourInfo.addEventLike(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        main.showMessage();
+                    }
+                });
+                main.getContent().showForm(tourInfo);
+                historyComponent.add(tourInfo);
+                System.out.println(historyComponent.size());
             }
         });
     }

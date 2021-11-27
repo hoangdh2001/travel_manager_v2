@@ -47,7 +47,7 @@ public class Home extends javax.swing.JPanel {
                     boxTour.refresh();
                 }
             });
-            mapTour1.addTour(boxTour);
+            mapTour1.addBox(boxTour, 200, 280);
         }
     }
 
@@ -56,7 +56,7 @@ public class Home extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        mapTour1 = new com.huyhoang.customer.gui.component.MapTour();
+        mapTour1 = new com.huyhoang.customer.gui.component.Map();
         slideShowTransparent1 = new com.huyhoang.swing.slideshow.SlideShowTransparent();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -99,7 +99,7 @@ public class Home extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private com.huyhoang.customer.gui.component.MapTour mapTour1;
+    private com.huyhoang.customer.gui.component.Map mapTour1;
     private com.huyhoang.swing.slideshow.SlideShowTransparent slideShowTransparent1;
     // End of variables declaration//GEN-END:variables
 }

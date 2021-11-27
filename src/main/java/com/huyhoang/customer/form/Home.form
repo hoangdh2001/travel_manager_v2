@@ -63,7 +63,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.huyhoang.customer.gui.component.MapTour" name="mapTour1">
+        <Component class="com.huyhoang.customer.gui.component.Map" name="mapTour1">
         </Component>
       </SubComponents>
     </Container>

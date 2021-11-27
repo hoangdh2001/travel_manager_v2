@@ -1,42 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.huyhoang.swing.label;
 
-import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.FontMetrics;
 import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 import java.util.Enumeration;
 import javax.swing.JLabel;
 
-/**
- * VWrappingLabel is based on Symantec's class WrappingLabel; however, this
- * class can format the text vertically, too. It also wraps text at newlines
- * embedded in the label's text.
- *
- * @see symantec.awt.WrappingLabel
- * @author Paul F. Williams (mailto:paul@criterioninc.com) Criterion, Inc.
- * (http://www.criterioninc.com)
- * @author Kyle Morris (mailto:morriskg@nexusfusion.com)
- *
- */
 public class WrapLabel extends JLabel {
-    //--------------------------------------------------
-    // constants
-    //--------------------------------------------------
 
-    //--------------------------------------------------
-    // class variables
-    //--------------------------------------------------
-    //--------------------------------------------------
-    // member variables
-    //--------------------------------------------------
     protected String text;
     protected float m_nHAlign;
     protected float m_nVAlign;
@@ -94,14 +67,6 @@ public class WrapLabel extends JLabel {
         repaint();
     }
     
-//    @Override
-//    public Dimension getPreferredSize() {
-//        return new Dimension(image.getWidth() / 2, image.getHeight() / 2);
-//    }
-
-    //--------------------------------------------------
-    // member methods
-    //--------------------------------------------------
     @Override
     public String paramString() {
         return "";
@@ -222,10 +187,6 @@ public class WrapLabel extends JLabel {
             }
 
             if (largestString == null) {
-                // Couldn't wrap at a space, so find the largest line
-                // that fits and print that.  Note that this will be
-                // slightly off -- the width of a string will not necessarily
-                // be the sum of the width of its characters, due to kerning.
                 int totalWidth = 0;
                 int oneCharWidth = 0;
 

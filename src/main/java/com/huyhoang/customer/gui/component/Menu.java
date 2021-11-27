@@ -14,6 +14,11 @@ import net.miginfocom.swing.MigLayout;
 public class Menu extends javax.swing.JPanel {
 
     private EventMenuSelected event;
+    private int currentIndex;
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
 
     public JPanel getjPanel1() {
         return jPanel1;
@@ -27,17 +32,17 @@ public class Menu extends javax.swing.JPanel {
     public void initMenu(EventMenuSelected event) {
         this.event = event;
         addMenu(new ImageIcon(getClass().getResource("/icon/home.png")),
-                 new ImageIcon(getClass().getResource("/icon/home_selected.png")),
-                 new ImageIcon(getClass().getResource("/icon/home_over.png")),
-                 "Home", 0);
+                new ImageIcon(getClass().getResource("/icon/home_selected.png")),
+                new ImageIcon(getClass().getResource("/icon/home_over.png")),
+                "Home", 0);
         addMenu(new ImageIcon(getClass().getResource("/icon/search.png")),
-                 new ImageIcon(getClass().getResource("/icon/search_selected.png")),
-                 new ImageIcon(getClass().getResource("/icon/search_over.png")), "Search", 1);
+                new ImageIcon(getClass().getResource("/icon/search_selected.png")),
+                new ImageIcon(getClass().getResource("/icon/search_over.png")), "Search", 1);
         addMenu(new ImageIcon(getClass().getResource("/icon/library.png")),
-                 new ImageIcon(getClass().getResource("/icon/library_selected.png")),
-                 new ImageIcon(getClass().getResource("/icon/library_over.png")), "Library", 2);
+                new ImageIcon(getClass().getResource("/icon/library_selected.png")),
+                new ImageIcon(getClass().getResource("/icon/library_over.png")), "Library", 2);
         addEmpty();
-        
+
     }
 
     private void addMenu(Icon icon, Icon selectedIcon, Icon overIcon, String text, int index) {
@@ -47,14 +52,17 @@ public class Menu extends javax.swing.JPanel {
         menu.setRolloverIcon(overIcon);
         menu.setIconTextGap(20);
         menu.setText(text);
-        if(index == 0) {
+        if (index == 0) {
             menu.setSelected(true);
         }
         menu.setFont(new Font("Segoe UI", Font.BOLD, 14));
         pnlMenu.add(menu);
         menu.addActionListener((ActionEvent ae) -> {
-            event.menuSelected(index);
-            setSelected(menu);
+            if (index != currentIndex) {
+                event.menuSelected(index);
+                currentIndex = index;
+                setSelected(menu);
+            }
         });
     }
 

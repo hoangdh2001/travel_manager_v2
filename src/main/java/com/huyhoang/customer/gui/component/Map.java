@@ -2,8 +2,9 @@ package com.huyhoang.customer.gui.component;
 
 import java.awt.Dimension;
 import com.huyhoang.swing.layout.WrapLayout;
-public class MapTour extends javax.swing.JPanel {
-    public MapTour() {
+import java.awt.Component;
+public class Map extends javax.swing.JPanel {
+    public Map() {
         initComponents();
         buildDisplay();
     }
@@ -16,9 +17,9 @@ public class MapTour extends javax.swing.JPanel {
         pnlCenter.setLayout(new WrapLayout(WrapLayout.LEADING, 25, 20));
     }
     
-    public void addTour(BoxTour boxTour) {
-        boxTour.setPreferredSize(new Dimension(200, 280));
-        pnlCenter.add(boxTour);
+    public void addBox(Component com, int width, int height) {
+        com.setPreferredSize(new Dimension(width, height));
+        pnlCenter.add(com);
     }
     
     public void setTitle(String text) {
