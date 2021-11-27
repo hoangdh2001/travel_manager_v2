@@ -99,7 +99,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="com.huyhoang.swing.slideshow.SlideShow" name="slideShow">
+            <Component class="org.netbeans.modules.form.InvalidComponent" name="slideShow">
             </Component>
           </SubComponents>
         </Container>

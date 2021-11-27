@@ -28,6 +28,24 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/icon/search.png")),
                  new ImageIcon(getClass().getResource("/icon/search_selected.png")),
                  new ImageIcon(getClass().getResource("/icon/search_over.png")), "Search", 1);
+        
+        addMenu(new ImageIcon(getClass().getResource("/icon/tour.png")),
+                 new ImageIcon(getClass().getResource("/icon/tour_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/tour.png")), "Tour", 2);
+        
+        addMenu(new ImageIcon(getClass().getResource("/icon/customer.png")),
+                 new ImageIcon(getClass().getResource("/icon/customer_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/customer.png")), "Khách hàng", 3);
+        
+        addMenu(new ImageIcon(getClass().getResource("/icon/bill.png")),
+                 new ImageIcon(getClass().getResource("/icon/bill_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/bill.png")), "Đơn đặt vé", 4);
+        
+        addMenu(new ImageIcon(getClass().getResource("/icon/guide.png")),
+                 new ImageIcon(getClass().getResource("/icon/guide_selected.png")),
+                 new ImageIcon(getClass().getResource("/icon/guide.png")), "Hướng dẫn viên", 5);
+        
+        //màu icon selected: #FF056CFF
     }
 
     private void addMenu(Icon icon, Icon selectedIcon, Icon overIcon, String text, int index) {

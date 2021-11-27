@@ -1,12 +1,23 @@
 package com.huyhoang.employee.gui;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.huyhoang.customer.form.Home;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.huyhoang.employee.gui.component.Menu;
+import com.huyhoang.employee.gui.component.PanelDonDatVe;
+import com.huyhoang.employee.gui.component.PanelHuongDanVien;
+import com.huyhoang.employee.gui.component.PanelKhachHang;
+import com.huyhoang.employee.gui.component.PanelTour;
+import com.huyhoang.employee.gui.dialog.DialogTour;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jdesktop.animation.timing.Animator;
@@ -14,32 +25,69 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class Main extends javax.swing.JFrame {
-
+    
     private boolean show;
     private Animator start;
-
+    private Menu menu;
+    
     public Main() {
         initComponents();
         buildDisplay();
         resized();
     }
-
+    
     private void buildDisplay() {
         start();
-        createMenu();
+        buildMenu();
     }
-    
-    private void createMenu() {
+
+//    private void createMenu() {
+//        menu1.initMenu(new EventMenuSelected() {
+//            @Override
+//            public void menuSelected(int index) {
+//                if(index == 0) {
+//                    content1.showForm(new Home());
+//                }
+//            }
+//        });
+//    }
+    private void buildMenu() {
+        
         menu1.initMenu(new EventMenuSelected() {
             @Override
             public void menuSelected(int index) {
-                if(index == 0) {
-                    content1.showForm(new Home());
+                System.out.println("main " + index);
+                
+                switch (index) {
+                    case 2:
+                        PanelTour panelTour = new PanelTour();
+                        panelTour.btnThemHandle(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                DialogTour dialogTour = new DialogTour(Main.this);
+                                dialogTour.setVisible(true);
+                            }
+                        });
+                        content1.showForm(panelTour);
+                        break;
+                        
+                    case 3:
+                        PanelKhachHang panelKhachHang = new PanelKhachHang();
+                        content1.showForm(panelKhachHang);
+                        break;
+                    case 4:
+                        PanelDonDatVe panelDonDat = new PanelDonDatVe();
+                        content1.showForm(panelDonDat);
+                        break;
+                    case 5:
+                        PanelHuongDanVien panelHDV = new PanelHuongDanVien();
+                        content1.showForm(panelHDV);
+                        break;
                 }
             }
         });
     }
-
+    
     private void start() {
         setBackground(new Color(0, 0, 0, 0));
         setOpacity(0);
@@ -52,7 +100,7 @@ public class Main extends javax.swing.JFrame {
                     setOpacity(1f - fraction);
                 }
             }
-
+            
             @Override
             public void end() {
                 if (!show) {
@@ -64,7 +112,7 @@ public class Main extends javax.swing.JFrame {
         start.setResolution(0);
         start.setAcceleration(0.5f);
     }
-
+    
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
@@ -73,7 +121,7 @@ public class Main extends javax.swing.JFrame {
             start.start();
         }
     }
-
+    
     private void close() {
         if (start.isRunning()) {
             start.stop();
@@ -81,14 +129,14 @@ public class Main extends javax.swing.JFrame {
         show = false;
         start.start();
     }
-
+    
     private void resized() {
         ComponentResizer com = new ComponentResizer();
         com.registerComponent(this);
         com.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         com.setSnapSize(new Dimension(10, 10));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -119,18 +167,16 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1226, Short.MAX_VALUE)
+                    .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
                     .addComponent(content1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addComponent(menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(bgLayout.createSequentialGroup()
                 .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(content1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE))
+            .addComponent(menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getContentPane().add(bg, java.awt.BorderLayout.CENTER);
@@ -149,7 +195,7 @@ public class Main extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+            UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }

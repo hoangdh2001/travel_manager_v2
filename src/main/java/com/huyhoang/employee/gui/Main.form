@@ -52,7 +52,7 @@
                   <Component id="menu1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="header1" pref="1226" max="32767" attributes="0"/>
+                      <Component id="header1" pref="1202" max="32767" attributes="0"/>
                       <Component id="content1" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -61,14 +61,11 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="menu1" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
                   <Component id="header1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="content1" pref="789" max="32767" attributes="0"/>
               </Group>
+              <Component id="menu1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
