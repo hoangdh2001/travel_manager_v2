@@ -19,15 +19,14 @@ public class SlideShowTransparent extends JLayeredPane {
     private final Pagination pagination;
     private final Animator animator;
     private final Timer timer;
-    private PictureBox pictureShow;
-    private PictureBox pictureOut;
+    private PictureBox pictureShow = new PictureBox();
+    private PictureBox pictureOut = new PictureBox();
     private int currentIndex;
     private boolean next;
 
     public SlideShowTransparent() {
         panel = new PanelTransparent();
         panel.setBackground(new Color(30, 30, 30));
-        panel.setBorderRadius(15);
         pagination = new Pagination();
         pagination.setVisible(false);
         pagination.setEventPagination(new EventPagination() {

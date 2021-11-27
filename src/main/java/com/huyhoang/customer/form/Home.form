@@ -68,9 +68,6 @@
       </SubComponents>
     </Container>
     <Component class="com.huyhoang.swing.slideshow.SlideShowTransparent" name="slideShowTransparent1">
-      <Properties>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

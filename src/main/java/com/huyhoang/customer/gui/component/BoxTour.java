@@ -110,8 +110,8 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         PictureBox picture3 = new PictureBox();
         picture3.setImage(new ImageIcon(getClass().getResource("/icon/slide3.jpg")));
         slideShowTransparent1.initSlideshow(picture1, picture2, picture3);
-        slideShowTransparent1.setDuration(1500);
-//        slideShowTransparent1.setBorderRadius(5);
+        slideShowTransparent1.setDuration(1800);
+        slideShowTransparent1.setBorderRadius(15);
         bg.add(slideShowTransparent1, "h 180!");
     }
     
