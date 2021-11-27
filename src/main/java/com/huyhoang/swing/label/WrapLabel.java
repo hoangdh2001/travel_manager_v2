@@ -53,6 +53,8 @@ public class WrapLabel extends JLabel {
     public WrapLabel(String s) {
         this(s, JLabel.LEFT_ALIGNMENT, JLabel.CENTER_ALIGNMENT);
     }
+    
+    
 
     public WrapLabel(String s, float nHorizontal, float nVertical) {
         setText(s);
@@ -91,6 +93,11 @@ public class WrapLabel extends JLabel {
         text = s;
         repaint();
     }
+    
+//    @Override
+//    public Dimension getPreferredSize() {
+//        return new Dimension(image.getWidth() / 2, image.getHeight() / 2);
+//    }
 
     //--------------------------------------------------
     // member methods
