@@ -23,9 +23,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="buttonBadges2" min="-2" max="-2" attributes="0"/>
+              <Component id="btnBack" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="buttonBadges1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnNext" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="611" max="32767" attributes="0"/>
               <Component id="buttonInfo1" min="-2" pref="177" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
@@ -39,8 +39,8 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="buttonInfo1" min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="buttonBadges1" alignment="1" max="32767" attributes="0"/>
-                      <Component id="buttonBadges2" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnNext" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnBack" alignment="1" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="14" max="32767" attributes="0"/>
@@ -79,7 +79,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonInfo1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="com.huyhoang.swing.button.ButtonBadges" name="buttonBadges1">
+    <Component class="com.huyhoang.swing.button.ButtonBadges" name="btnNext">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="a" green="a" red="a" type="rgb"/>
@@ -87,9 +87,10 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/icon/next_arrow.png"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="com.huyhoang.swing.button.ButtonBadges" name="buttonBadges2">
+    <Component class="com.huyhoang.swing.button.ButtonBadges" name="btnBack">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="a" green="a" red="a" type="rgb"/>
@@ -97,6 +98,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/icon/back.png"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

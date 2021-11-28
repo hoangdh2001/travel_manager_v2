@@ -1,10 +1,12 @@
 package com.huyhoang.customer.gui.component;
 
 import com.huyhoang.swing.button.Button;
+import com.huyhoang.swing.button.ButtonBadges;
 import com.huyhoang.swing.button.PopupMenu;
 import com.huyhoang.swing.event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.interpolation.PropertySetter;
 
@@ -13,10 +15,34 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
     private PopupMenu popupMenu;
     private EventMenuSelected event;
     
+    public void addEventBack(ActionListener event) {
+        btnBack.addActionListener(event);
+    }
+    
+    public void addEventNext(ActionListener event) {
+        btnNext.addActionListener(event);
+    }
+    
     public void addEventMenuSelected(EventMenuSelected event) {
         this.event = event;
     }
 
+    public ButtonBadges getBtnBack() {
+        return btnBack;
+    }
+
+    public void setBtnBack(ButtonBadges btnBack) {
+        this.btnBack = btnBack;
+    }
+
+    public ButtonBadges getBtnNext() {
+        return btnNext;
+    }
+
+    public void setBtnNext(ButtonBadges btnNext) {
+        this.btnNext = btnNext;
+    }
+    
     public Header() {
         initComponents();
         buildDisplay();
@@ -71,8 +97,8 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
     private void initComponents() {
 
         buttonInfo1 = new com.huyhoang.swing.button.ButtonInfo();
-        buttonBadges1 = new com.huyhoang.swing.button.ButtonBadges();
-        buttonBadges2 = new com.huyhoang.swing.button.ButtonBadges();
+        btnNext = new com.huyhoang.swing.button.ButtonBadges();
+        btnBack = new com.huyhoang.swing.button.ButtonBadges();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -91,11 +117,13 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
             }
         });
 
-        buttonBadges1.setBackground(new java.awt.Color(10, 10, 10));
-        buttonBadges1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/next_arrow.png"))); // NOI18N
+        btnNext.setBackground(new java.awt.Color(10, 10, 10));
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/next_arrow.png"))); // NOI18N
+        btnNext.setEnabled(false);
 
-        buttonBadges2.setBackground(new java.awt.Color(10, 10, 10));
-        buttonBadges2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
+        btnBack.setBackground(new java.awt.Color(10, 10, 10));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
+        btnBack.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,9 +131,9 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(buttonBadges2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonBadges1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 611, Short.MAX_VALUE)
                 .addComponent(buttonInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
@@ -117,8 +145,8 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(buttonInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(buttonBadges1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonBadges2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -131,8 +159,8 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.huyhoang.swing.button.ButtonBadges buttonBadges1;
-    private com.huyhoang.swing.button.ButtonBadges buttonBadges2;
+    private com.huyhoang.swing.button.ButtonBadges btnBack;
+    private com.huyhoang.swing.button.ButtonBadges btnNext;
     private com.huyhoang.swing.button.ButtonInfo buttonInfo1;
     // End of variables declaration//GEN-END:variables
 

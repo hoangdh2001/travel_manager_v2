@@ -2,6 +2,7 @@ package com.huyhoang.swing.panel;
 
 import com.huyhoang.swing.graphics.ShadowRenderer;
 import com.huyhoang.swing.graphics.ShadowType;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +17,7 @@ public class LayerPaneShadow extends JLayeredPane {
     private float shadowOpacity = 0.5f;
     private Color shadowColor = Color.BLACK;
     private int borderRadius = 5;
+    private float alpha = 1;
 
     public ShadowType getShadowType() {
         return shadowType;
@@ -61,6 +63,14 @@ public class LayerPaneShadow extends JLayeredPane {
         setOpaque(false);
     }
 
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         createShadow(g);
@@ -99,8 +109,9 @@ public class LayerPaneShadow extends JLayeredPane {
         }
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
-        g2d.setColor(getBackground());
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(getBackground());
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2d.fillRoundRect(0, 0, width, height, borderRadius, borderRadius);
         ShadowRenderer render = new ShadowRenderer(shadowSize, shadowOpacity, shadowColor);
         g2.drawImage(render.createShadow(img), 0, 0, null);

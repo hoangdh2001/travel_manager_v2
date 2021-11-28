@@ -64,6 +64,7 @@ public class ChuyenDuLich {
      * @param maChuyen
      * @param giaChuyenDi
      * @param loaiChuyenDi
+     * @param noiKhoiHanh
      * @param ngayTao
      * @param ngayKhoiHanh
      * @param ngayKetThuc
@@ -74,11 +75,12 @@ public class ChuyenDuLich {
      * @param soLuong
      * @param nhanVien
      */
-    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
+    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, DiaChi noiKhoiHanh, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
             PhuongTien phuongTien, DongTour dongTour, String moTa, int soLuong, NhanVien nhanVien) {
         this.maChuyen = maChuyen;
         this.giaChuyenDi = giaChuyenDi;
         this.loaiChuyenDi = loaiChuyenDi;
+        this.noiKhoiHanh = noiKhoiHanh;
         this.ngayTao = ngayTao;
         this.ngayKhoiHanh = ngayKhoiHanh;
         this.ngayKetThuc = ngayKetThuc;
@@ -87,7 +89,7 @@ public class ChuyenDuLich {
         this.dongTour = dongTour;
         this.moTa = moTa;
         this.soLuong = soLuong;
-        this.dsChiTietThamQuan = new ArrayList<ChiTietThamQuan>();
+        this.dsChiTietThamQuan = new ArrayList<>();
         this.nhanVien = nhanVien;
     }
 
@@ -143,7 +145,34 @@ public class ChuyenDuLich {
     public void setLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) {
         this.loaiChuyenDi = loaiChuyenDi;
     }
+    /**
+     * @return the noiKhoiHanh
+     */
+    public DiaChi getNoiKhoiHanh() {
+        return noiKhoiHanh;
+    }
+    
+    /**
+     * @param noiKhoiHanh 
+     */
+    public void setNoiKhoiHanh(DiaChi noiKhoiHanh) {
+        this.noiKhoiHanh = noiKhoiHanh;
+    }
 
+    /**
+     * @return the nhanVien
+     */
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+    
+    /**
+     * @param nhanVien 
+     */
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+    
     /**
      * @return ngayTao
      */
@@ -294,6 +323,6 @@ public class ChuyenDuLich {
 
     public Object[] convertToRowTable() {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        return new Object[]{maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
+        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiChuyen(), trangThai};
     }
 }

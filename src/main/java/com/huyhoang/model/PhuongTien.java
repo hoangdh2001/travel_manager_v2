@@ -1,8 +1,8 @@
 package com.huyhoang.model;
 
 public enum PhuongTien {
-    XE_KHACH("Xe kh�ch"),
-    MAY_BAY("M�y bay");
+    XE_KHACH("Xe khách"),
+    MAY_BAY("Máy bay");
     private final String phuongTien;
 
     /**

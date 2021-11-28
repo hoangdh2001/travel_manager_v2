@@ -44,6 +44,14 @@ public class PictureBox extends JLayeredPane {
         this.borderRadius = borderRadius;
     }
     
+    public PictureBox() {
+        
+    }
+
+    public PictureBox(Icon image) {
+        this.image = image;
+    }
+    
     @Override
     protected void paintComponent(Graphics grphcs) {
         if (image != null) {

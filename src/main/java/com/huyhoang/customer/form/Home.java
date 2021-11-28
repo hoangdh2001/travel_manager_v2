@@ -1,7 +1,7 @@
 package com.huyhoang.customer.form;
 
 import com.huyhoang.customer.gui.component.BoxTour;
-import com.huyhoang.customer.gui.component.MapTour;
+import com.huyhoang.customer.gui.component.Map;
 import com.huyhoang.swing.image.PictureBox;
 import javax.swing.ImageIcon;
 import com.huyhoang.dao.ChuyenDuLich_DAO;
@@ -59,10 +59,11 @@ public class Home extends javax.swing.JPanel {
     private void loadDataMapTourMoi() {
         List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichMoi();
         if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {
-            MapTour mapTourMoi = new MapTour();
+            Map mapTourMoi = new Map();
             mapTourMoi.setTitle("Chuyến du lịch mới nhất");
             for (ChuyenDuLich chuyenDuLich : dsChuyenDuLich) {
                 BoxTour boxTour = new BoxTour();
+                boxTour.setChuyenDuLich(chuyenDuLich);
                 boxTour.addEventBoxTour(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
@@ -70,7 +71,7 @@ public class Home extends javax.swing.JPanel {
                         boxTour.refresh();
                     }
                 });
-                mapTourMoi.addTour(boxTour);
+                mapTourMoi.addBox(boxTour, 200, 280);
             }
             pnlSuggestions.add(mapTourMoi);
         }
@@ -79,10 +80,11 @@ public class Home extends javax.swing.JPanel {
     private void loadDataMapTourPhoBien() {
         List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichNhieuDonDatNhat();
         if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {
-            MapTour mapTourMoi = new MapTour();
-            mapTourMoi.setTitle("Chuyến du lịch mới nhất");
+            Map mapTourMoi = new Map();
+            mapTourMoi.setTitle("Phổ biến");
             for (ChuyenDuLich chuyenDuLich : dsChuyenDuLich) {
                 BoxTour boxTour = new BoxTour();
+                boxTour.setChuyenDuLich(chuyenDuLich);
                 boxTour.addEventBoxTour(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
@@ -90,7 +92,7 @@ public class Home extends javax.swing.JPanel {
                         boxTour.refresh();
                     }
                 });
-                mapTourMoi.addTour(boxTour);
+                mapTourMoi.addBox(boxTour, 200, 280);
             }
             pnlSuggestions.add(mapTourMoi);
         }

@@ -87,7 +87,9 @@ public class SlideShowTransparent extends JLayeredPane {
         timer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                next();
+                if(panel.getComponentCount() != 0) {
+                    next();
+                }
             }
         });
     }
@@ -112,7 +114,7 @@ public class SlideShowTransparent extends JLayeredPane {
             }
         }
     }
-    
+
     public void setBorderRadius(int borderRadius) {
         panel.setBorderRadius(borderRadius);
     }
@@ -126,6 +128,8 @@ public class SlideShowTransparent extends JLayeredPane {
     }
 
     public void initSlideshow(PictureBox... pictures) {
+        timer.stop();
+        panel.removeAll();
         if (pictures.length >= 2) {
             for (PictureBox picture : pictures) {
                 picture.setVisible(false);
@@ -139,8 +143,34 @@ public class SlideShowTransparent extends JLayeredPane {
             }
             pagination.setTotalPage(panel.getComponentCount());
             pagination.setCurrentIndex(0);
-
         }
+    }
+
+    public void addImage(PictureBox pictureBox) {
+        pictureBox.setVisible(false);
+        pictureBox.setAlpha(0);
+        panel.add(pictureBox);
+        if (panel.getComponentCount() > 0) {
+            pictureShow = (PictureBox) panel.getComponent(0);
+            pictureShow.setAlpha(1f);
+            pictureShow.setVisible(true);
+        }
+        pagination.setTotalPage(panel.getComponentCount());
+        pagination.setCurrentIndex(0);
+    }
+    
+    public void removeAllImage() {
+        panel.removeAll();
+        pagination.setTotalPage(panel.getComponentCount());
+        panel.repaint();
+        panel.revalidate();
+    }
+    
+    public void removeImage(int index) {
+        panel.remove(index);
+        pagination.setTotalPage(panel.getComponentCount());
+        panel.repaint();
+        panel.revalidate();
     }
 
     public void start() {

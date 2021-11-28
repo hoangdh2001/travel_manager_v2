@@ -10,8 +10,11 @@ import com.huyhoang.swing.event.EventTour;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -43,7 +46,9 @@ public class Main extends javax.swing.JFrame {
     private Animator start;
     private Home home;
     private Search search;
+    private TourInfo tourInfo;
     private final List<Component> historyComponent = new ArrayList<>();
+    private int currentIndex = -1;
 
     public Main() {
         initComponents();
@@ -62,14 +67,17 @@ public class Main extends javax.swing.JFrame {
     private void createForm() {
         createFormHome();
         createFormSearch();
+        createFormTourInfo();
     }
 
     private void createMenu() {
         menu.initMenu((int index) -> {
             if (index == 0) {
                 main.getContent().showForm(home);
+                addHistory(home);
             } else if (index == 1) {
                 main.getContent().showForm(search);
+                addHistory(search);
             }
         });
         move(menu.getjPanel1(), 0);
@@ -79,12 +87,60 @@ public class Main extends javax.swing.JFrame {
         main.getHeader().addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void menuSelected(int index) {
-                if (index == 0) {
-                    System.out.println("Open hồ sơ");
-                } else if (index == 1) {
-                    System.out.println("Open cài đặt");
-                } else if (index == 2) {
-                    System.out.println("Đăng xuất");
+                switch (index) {
+                    case 0:
+                        System.out.println("Open hồ sơ");
+                        break;
+                    case 1:
+                        System.out.println("Open cài đặt");
+                        break;
+                    case 2:
+                        System.out.println("Đăng xuất");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        main.getHeader().addEventBack(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if(currentIndex > 0) {
+                    currentIndex--;
+                    Component com = historyComponent.get(currentIndex);
+                    if(com instanceof Home) {
+                        menu.setSelectedIndex(0);
+                    } else if(com instanceof Search) {
+                        menu.setSelectedIndex(1);
+                    } else {
+                        menu.unSelectedAll();
+                    }
+                    main.getContent().showForm(com);
+                    main.getHeader().getBtnNext().setEnabled(true);
+                    if(currentIndex == 0) {
+                        main.getHeader().getBtnBack().setEnabled(false);
+                    }
+                }
+            }
+        });
+        main.getHeader().addEventNext(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if(currentIndex < historyComponent.size()) {
+                    currentIndex++;
+                    Component com = historyComponent.get(currentIndex);
+                    if(com instanceof Home) {
+                        menu.setSelectedIndex(0);
+                    } else if(com instanceof Search) {
+                        menu.setSelectedIndex(1);
+                    } else {
+                        menu.unSelectedAll();
+                    }
+                    main.getContent().showForm(com);
+                    main.getHeader().getBtnBack().setEnabled(true);
+                    if(currentIndex == (historyComponent.size() - 1)) {
+                        main.getHeader().getBtnNext().setEnabled(false);
+                    }
                 }
             }
         });
@@ -103,6 +159,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
         main.getContent().add(home);
+        historyComponent.add(home);
+        currentIndex++;
     }
 
     private void createChat() {
@@ -131,18 +189,58 @@ public class Main extends javax.swing.JFrame {
         home.addEventTour(new EventTour() {
             @Override
             public void openTour(ChuyenDuLich chuyenDuLich) {
-                main.getContent().showForm(new TourInfo(chuyenDuLich));
-                try {
-                    write2File(chuyenDuLich);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                tourInfo.setChuyenDuLich(chuyenDuLich);
+                main.getContent().showForm(tourInfo);
+                menu.unSelectedAll();
+                addHistory(tourInfo);
+//                try {
+//                    write2File(chuyenDuLich);
+//                } catch (FileNotFoundException ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
         });
     }
 
     private void createFormSearch() {
         search = new Search();
+    }
+    
+    private void createFormTourInfo() {
+        tourInfo = new TourInfo();
+        tourInfo.addEventLike(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent arg0) {
+                int state = arg0.getStateChange();
+                if (state == ItemEvent.SELECTED) {
+                    main.showMessage("Đã lưu vào thư viện");
+                } else {
+                    main.showMessage("Đã xóa khỏi thư viện");
+                }
+            }
+        });
+        tourInfo.addEventTour(new EventTour() {
+            @Override
+            public void openTour(ChuyenDuLich chuyenDuLich) {
+                tourInfo.setChuyenDuLich(chuyenDuLich);
+                main.getContent().showForm(tourInfo);
+                menu.unSelectedAll();
+                addHistory(tourInfo);
+            }
+        });
+    }
+    
+    private void addHistory(Component com) {
+        if(currentIndex < (historyComponent.size() - 1)) {
+            for (int i = (currentIndex + 1); i < historyComponent.size(); i++) {
+                historyComponent.remove(i);
+            }
+            main.getHeader().getBtnNext().setEnabled(false);
+        }
+        historyComponent.add(com);
+        currentIndex++;
+        main.getHeader().getBtnBack().setEnabled(true);
+        main.getScrollPaneCustom1().getVerticalScrollBar().setValue(0);
     }
 
     private void start() {

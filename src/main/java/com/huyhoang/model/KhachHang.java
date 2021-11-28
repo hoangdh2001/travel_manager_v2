@@ -1,11 +1,14 @@
 package com.huyhoang.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -31,10 +34,13 @@ public class KhachHang {
     private DiaChi diaChi;
     @Column(name = "matkhau", nullable = false)
     private byte[] matKhau;
+    @OneToMany(mappedBy = "maChuyen")
+    private List<ChuyenDuLich> chuyenDiDaThich;
 
     /**
      * @param maKhachHang
      * @param hoTen
+     * @param avatar
      * @param cCCD
      * @param soDienThoai
      * @param email
@@ -51,6 +57,13 @@ public class KhachHang {
         this.email = email;
         this.diaChi = diaChi;
         this.matKhau = matKhau;
+        this.chuyenDiDaThich = new ArrayList<>();
+    }
+    
+    public void themChuyenDiDaThich(ChuyenDuLich chuyenDuLich) {
+        if(!chuyenDiDaThich.contains(chuyenDuLich)) {
+            chuyenDiDaThich.add(chuyenDuLich);
+        }
     }
 
     /**
@@ -79,20 +92,21 @@ public class KhachHang {
     public String getHoTen() {
         return hoTen;
     }
+
     /**
      * @return avatar
      */
     public byte[] getAvatar() {
         return avatar;
     }
-    
+
     /**
-     * @param avatar 
+     * @param avatar
      */
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
-    
+
     /**
      * @param hoTen the hoTen to set
      */
@@ -169,7 +183,21 @@ public class KhachHang {
     public void setMatKhau(byte[] matKhau) {
         this.matKhau = matKhau;
     }
-
+    
+    /**
+     * @return the chuyenDiDaThich
+     */
+    public List<ChuyenDuLich> getChuyenDiDaThich() {
+        return chuyenDiDaThich;
+    }
+    
+    /**
+     * @param chuyenDiDaThich 
+     */
+    public void setChuyenDiDaThich(List<ChuyenDuLich> chuyenDiDaThich) {
+        this.chuyenDiDaThich = chuyenDiDaThich;
+    }
+    
     @Override
     public String toString() {
         return "KhachHang [maKhachHang=" + maKhachHang + ", hoTen=" + hoTen + ", cCCD=" + cCCD + ", soDienThoai="

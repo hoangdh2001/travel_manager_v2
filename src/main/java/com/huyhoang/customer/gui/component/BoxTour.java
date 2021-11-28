@@ -1,5 +1,6 @@
 package com.huyhoang.customer.gui.component;
 
+import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.button.ButtonTransparent;
 import com.huyhoang.swing.image.PictureBox;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
@@ -7,6 +8,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,12 +24,32 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     private Animator animator;
     private SlideShowTransparent slideShowTransparent1;
     private ButtonTransparent buttonTransparent;
+    private ChuyenDuLich chuyenDuLich;
+    private JLabel lblTenTour;
+    private JLabel lblNguoi;
+    private JLabel lblGiaTour;
+    private final DecimalFormat df = new DecimalFormat("#,##0đ");
 
     public void addEventBoxTour(MouseListener event) {
         bg.addMouseListener(event);
     }
 
+    public ChuyenDuLich getChuyenDuLich() {
+        return chuyenDuLich;
+    }
+
+    public void setChuyenDuLich(ChuyenDuLich chuyenDuLich) {
+        this.chuyenDuLich = chuyenDuLich;
+        loadData();
+    }
+    
     public BoxTour() {
+        initComponents();
+        buildDisplay();
+    }
+    
+    public BoxTour(ChuyenDuLich chuyenDuLich) {
+        this.chuyenDuLich = chuyenDuLich;
         initComponents();
         buildDisplay();
     }
@@ -37,34 +59,39 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         overTransparent();
         createBg();
     }
+    
+    private void loadData() {
+        lblNguoi.setText(chuyenDuLich.getSoLuong() + "");
+        lblGiaTour.setText(df.format(chuyenDuLich.getGiaChuyenDi()) + "/khách");
+    }
 
     private void createBg() {
-        layout = new MigLayout("fillx, insets 0, wrap", "[fill]");
+        layout = new MigLayout("fillx, insets 0, wrap", "[fill]push[fill]");
         bg.setLayout(layout);
         createButton();
         createSlide();
 
-        JLabel lblTenTour = new JLabel("Tên tour");
+        lblTenTour = new JLabel("Tên tour");
         lblTenTour.setForeground(Color.WHITE);
         lblTenTour.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        bg.add(lblTenTour);
+        bg.add(lblTenTour, "span 2");
 
-        JLabel lblNguoi = new JLabel("10");
+        lblNguoi = new JLabel("10");
         lblNguoi.setIcon(new ImageIcon(getClass().getResource("/icon/person.png")));
         lblNguoi.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblNguoi.setForeground(Color.WHITE);
-        bg.add(lblNguoi);
+        bg.add(lblNguoi, "span 2");
 
         JPanel separator = new JPanel();
         separator.setBackground(Color.DARK_GRAY);
-        bg.add(separator, "h 1!");
+        bg.add(separator, "h 1!, span 2");
 
         JLabel lblGia = new JLabel("Giá");
         lblGia.setForeground(Color.WHITE);
         lblGia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        bg.add(lblGia, "split 2, left");
+        bg.add(lblGia);
 
-        JLabel lblGiaTour = new JLabel("    $100,000/người");
+        lblGiaTour = new JLabel("    $100,000/người");
         lblGiaTour.setForeground(Color.WHITE);
         lblGiaTour.setFont(new Font("Segoe UI", Font.BOLD, 14));
         bg.add(lblGiaTour);
@@ -115,12 +142,12 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         slideShowTransparent1.initSlideshow(picture1, picture2, picture3);
         slideShowTransparent1.setDuration(1800);
         slideShowTransparent1.setBorderRadius(15);
-        bg.add(slideShowTransparent1, "h 180!");
+        bg.add(slideShowTransparent1, "h 180!, span 2");
     }
     
     private void createButton() {
         buttonTransparent = new ButtonTransparent();
-        buttonTransparent.setIcon(new ImageIcon(getClass().getResource("/icon/play.png")));
+        buttonTransparent.setIcon(new ImageIcon(getClass().getResource("/icon/booking_small.png")));
         buttonTransparent.setBackground(new Color(29, 185, 84));
         buttonTransparent.setAlpha(0);
         bg.add(buttonTransparent, "pos 0.85al 130 n n, w 40!, h 40!");

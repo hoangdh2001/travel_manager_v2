@@ -50,7 +50,7 @@ public class LabelRibbon extends JLabel {
     }
 
     public LabelRibbon() {
-        setBorder(new EmptyBorder(0, 10, 0, 0));
+        setBorder(new EmptyBorder(0, 10, 0, 40));
     }
 
     @Override
