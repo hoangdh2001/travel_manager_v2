@@ -2,6 +2,8 @@ package com.huyhoang.dao;
 
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.LoaiChuyenDi;
+import com.huyhoang.model.PhuongTien;
+import com.huyhoang.model.TrangThaiChuyenDi;
 import com.huyhoang.service.ChuyenDuLichService;
 import com.huyhoang.util.HibernateUtil;
 import java.util.List;
@@ -108,20 +110,46 @@ public class ChuyenDuLichDAO implements ChuyenDuLichService {
     }
 
     @Override
-    public List<ChuyenDuLich> searchChuyenDuLichs(String textSearch, LoaiChuyenDi loaiChuyenDi, String trangThaiCDL, String phuongTien, int numPage) {
+    public List<ChuyenDuLich> searchChuyenDuLichs(String textSearch, LoaiChuyenDi loaiChuyenDi, TrangThaiChuyenDi trangThaiCDL,
+            PhuongTien phuongTien, String ngayBD, String ngayKT, String ngayTao, int numPage) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
 
-        System.out.println("numpage in DAO" + numPage);
+        String queryNgayThangNam = " and ( ";
+
+        if (!ngayBD.equals("")) {
+            queryNgayThangNam += " ngaykhoihanh = '" + ngayBD + "'  ";
+        } else {
+            queryNgayThangNam += " ngaykhoihanh like '%%' ";
+        }
+
+        if (!ngayKT.equals("")) {
+            queryNgayThangNam += "  or ngayketthuc = '" + ngayKT + "'  ";
+        }
+
+        if (!ngayTao.equals("")) {
+            queryNgayThangNam += "  or ngay_tao = '" + ngayTao + "'  ";
+        }
+
+        queryNgayThangNam += " ) ";
+
+        int soLuong = numPage * 20;
+        System.out.println("offset DAO: " + soLuong);
+        if (soLuong < 0) {
+            return null;
+        }
 
         String query = "select cdl.* from chuyendulich cdl where  "
                 + " chuyen_id like N'%" + textSearch + "%'"
                 + " and loaichuyendi_id like '%" + (loaiChuyenDi == null ? "" : loaiChuyenDi.getMaLoaiCD()) + "%'"
-                + " order by chuyen_id offset :x row fetch next 20 rows only";
+                + " and trangthai like '%" + (trangThaiCDL == null ? "" : trangThaiCDL) + "%' "
+                + " and phuongtien like '%" + (phuongTien == null ? "" : phuongTien) + "%' "
+                + queryNgayThangNam
+                + " order by chuyen_id offset " + soLuong + " rows fetch next 20 rows only";
         try {
             transaction.begin();
             List<ChuyenDuLich> list = session.createNativeQuery(query, ChuyenDuLich.class)
-                    .setParameter("x", numPage * 20).getResultList();
+                    .getResultList();
             transaction.commit();
             return list;
         } catch (Exception e) {
@@ -133,13 +161,32 @@ public class ChuyenDuLichDAO implements ChuyenDuLichService {
     }
 
     @Override
-    public int soLuongSearch(String textSearch, LoaiChuyenDi loaiChuyenDi, String trangThaiCDL, String phuongTien) {
+    public int soLuongSearch(String textSearch, LoaiChuyenDi loaiChuyenDi, TrangThaiChuyenDi trangThaiCDL, PhuongTien phuongTien,
+            String ngayBD, String ngayKT, String ngayTao) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
 
+        String queryNgayThangNam = " and ( ";
+
+        if (!ngayBD.equals("")) {
+            queryNgayThangNam += " ngaykhoihanh = '" + ngayBD + "'  ";
+        } else {
+            queryNgayThangNam += " ngaykhoihanh like '%%' ";
+        }
+        if (!ngayKT.equals("")) {
+            queryNgayThangNam += "  or ngayketthuc = '" + ngayKT + "'  ";
+        }
+        if (!ngayTao.equals("")) {
+            queryNgayThangNam += "  or ngay_tao = '" + ngayTao + "'  ";
+        }
+        queryNgayThangNam += " ) ";
+
         String query = "select count(*) from chuyendulich where  "
                 + " chuyen_id like N'%" + textSearch + "%'"
-                + " and loaichuyendi_id like '%" + (loaiChuyenDi == null ? "" : loaiChuyenDi.getMaLoaiCD()) + "%'";
+                + " and loaichuyendi_id like '%" + (loaiChuyenDi == null ? "" : loaiChuyenDi.getMaLoaiCD()) + "%'"
+                + " and trangthai like '%" + (trangThaiCDL == null ? "" : trangThaiCDL) + "%' "
+                + " and phuongtien like '%" + (phuongTien == null ? "" : phuongTien) + "%' "
+                + queryNgayThangNam;
 
         try {
             transaction.begin();

@@ -11,12 +11,33 @@ package com.huyhoang.employee.gui.dialog;
  */
 public class DialogTour extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DialogTour
-     */
+    
     public DialogTour(java.awt.Frame parent) {
         super(parent, true);
         initComponents();
+    }
+    
+    private void setPropertiesForm() {
+        int txtRadius = 10;
+
+    }
+    
+    private void clearForm(){
+        
+        txtMa.setText("");
+        
+        
+        
+        txtPhuongTien.setText("");
+        txtSoLuong.setText("");
+//        txtLoaiChuyenDi.setText("");
+
+        txtMa.setText("");
+        txtMa.setText("");
+        txtMa.setText("");
+        txtMa.setText("");
+        txtMa.setText("");
+        
     }
 
     /**
@@ -31,8 +52,6 @@ public class DialogTour extends javax.swing.JDialog {
         pnlLeft = new com.huyhoang.swing.panel.PanelShadow();
         txtMa = new javax.swing.JTextField();
         lblMa = new javax.swing.JLabel();
-        lblTenTour = new javax.swing.JLabel();
-        txtTenTour = new javax.swing.JTextField();
         lblNgayBatDau = new javax.swing.JLabel();
         jdcNgayBatDau = new com.toedter.calendar.JDateChooser();
         lblNgayKetThuc = new javax.swing.JLabel();
@@ -43,8 +62,6 @@ public class DialogTour extends javax.swing.JDialog {
         lblSoLuong = new javax.swing.JLabel();
         lblLoaiChuyenDi = new javax.swing.JLabel();
         txtLoaiChuyenDi = new javax.swing.JTextField();
-        lblDieuKien = new javax.swing.JLabel();
-        txtDieuKien = new javax.swing.JTextField();
         lblDongTour = new javax.swing.JLabel();
         txtDongTour = new javax.swing.JTextField();
         lblGiaChuyen = new javax.swing.JLabel();
@@ -97,12 +114,6 @@ public class DialogTour extends javax.swing.JDialog {
         lblMa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblMa.setText("Mã tour");
 
-        lblTenTour.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        lblTenTour.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTenTour.setText("Tên tour");
-
-        txtTenTour.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-
         lblNgayBatDau.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         lblNgayBatDau.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNgayBatDau.setText("Ngày bắt đầu");
@@ -133,12 +144,6 @@ public class DialogTour extends javax.swing.JDialog {
                 txtLoaiChuyenDiActionPerformed(evt);
             }
         });
-
-        lblDieuKien.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        lblDieuKien.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDieuKien.setText("Điều kiện");
-
-        txtDieuKien.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
         lblDongTour.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         lblDongTour.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -174,36 +179,40 @@ public class DialogTour extends javax.swing.JDialog {
             .addGroup(pnlLeftLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTenTour, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lblNgayBatDau, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblNgayKetThuc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblPhuongTien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblMoTa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblGiaChuyen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDongTour, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDieuKien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblLoaiChuyenDi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlLeftLayout.createSequentialGroup()
-                        .addComponent(btnLamMoi)
+                        .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblMoTa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblGiaChuyen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDongTour, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtPhuongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTenTour, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtLoaiChuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDieuKien, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDongTour, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtGiaChuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jdcNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jdcNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDongTour, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGiaChuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlLeftLayout.createSequentialGroup()
+                        .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblNgayBatDau, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNgayKetThuc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblPhuongTien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblLoaiChuyenDi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPhuongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLoaiChuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdcNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdcNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlLeftLayout.createSequentialGroup()
+                        .addComponent(lblMa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlLeftLayout.createSequentialGroup()
+                                .addComponent(btnLamMoi)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         pnlLeftLayout.setVerticalGroup(
@@ -213,11 +222,7 @@ public class DialogTour extends javax.swing.JDialog {
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTenTour, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTenTour, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblNgayBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jdcNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,11 +242,7 @@ public class DialogTour extends javax.swing.JDialog {
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblLoaiChuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtLoaiChuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDieuKien, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDieuKien, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDongTour, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDongTour, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -251,9 +252,11 @@ public class DialogTour extends javax.swing.JDialog {
                     .addComponent(txtGiaChuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlLeftLayout.createSequentialGroup()
+                        .addComponent(lblMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addGap(18, 18, 18)
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -550,12 +553,10 @@ public class DialogTour extends javax.swing.JDialog {
         pnlBottomRightLayout.setHorizontalGroup(
             pnlBottomRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBottomRightLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlBottomRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addGroup(pnlBottomRightLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3))
-                    .addGroup(pnlBottomRightLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(pnlTimKiemHDV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(37, 37, 37)))
                 .addContainerGap())
@@ -628,7 +629,6 @@ public class DialogTour extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane5;
     private com.toedter.calendar.JDateChooser jdcNgayBatDau;
     private com.toedter.calendar.JDateChooser jdcNgayKetThuc;
-    private javax.swing.JLabel lblDieuKien;
     private javax.swing.JLabel lblDongTour;
     private javax.swing.JLabel lblGiaChuyen;
     private javax.swing.JLabel lblLoaiChuyenDi;
@@ -638,7 +638,6 @@ public class DialogTour extends javax.swing.JDialog {
     private javax.swing.JLabel lblNgayKetThuc;
     private javax.swing.JLabel lblPhuongTien;
     private javax.swing.JLabel lblSoLuong;
-    private javax.swing.JLabel lblTenTour;
     private javax.swing.JLabel lblTrangDD;
     private javax.swing.JLabel lblTrangHDV;
     private com.huyhoang.swing.panel.PanelShadow pnlBottomRight;
@@ -653,7 +652,6 @@ public class DialogTour extends javax.swing.JDialog {
     private com.huyhoang.swing.table2.MyTable tblDiaDanhChon;
     private com.huyhoang.swing.table2.MyTable tblHDV;
     private javax.swing.JTextArea txaMoTa;
-    private javax.swing.JTextField txtDieuKien;
     private javax.swing.JTextField txtDongTour;
     private javax.swing.JTextField txtGiaChuyen;
     private javax.swing.JTextField txtLoaiChuyenDi;
@@ -662,7 +660,6 @@ public class DialogTour extends javax.swing.JDialog {
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtSoTrangDD;
     private javax.swing.JTextField txtSoTrangHDV;
-    private javax.swing.JTextField txtTenTour;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTimKiemHDV;
     // End of variables declaration//GEN-END:variables

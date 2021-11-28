@@ -12,6 +12,15 @@ public enum PhuongTien {
         this.phuongTien = phuongTien;
     }
 
+    public static PhuongTien getValuePhuongTien(String phuongTien) {
+        for (PhuongTien i : PhuongTien.values()) {
+            if (i.phuongTien.equals(phuongTien)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     /**
      * @return the phuongTien
      */

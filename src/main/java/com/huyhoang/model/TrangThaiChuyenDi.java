@@ -22,6 +22,16 @@ public enum TrangThaiChuyenDi {
         this.mauTrangThai = mauTrangThai;
 
     }
+    
+    public  static  TrangThaiChuyenDi getValueTrangThaiChuyenDi(String trangThai){
+        for (TrangThaiChuyenDi i : TrangThaiChuyenDi.values()) {
+            if (i.trangThai.equals(trangThai)) {
+                return i;
+            }
+        }
+        
+        return null;
+    }
 
     /**
      * @return the trangThai

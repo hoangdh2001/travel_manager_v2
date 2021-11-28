@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -63,39 +63,49 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblTenTour" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="lblMa" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="lblSoLuong" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lblNgayBatDau" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblNgayKetThuc" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblPhuongTien" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblMoTa" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblGiaChuyen" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblDongTour" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblDieuKien" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblLoaiChuyenDi" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="btnLamMoi" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="lblMoTa" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblGiaChuyen" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblDongTour" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnThem" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtDongTour" min="-2" pref="351" max="-2" attributes="0"/>
+                              <Component id="txtGiaChuyen" min="-2" pref="351" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="351" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="txtSoLuong" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtPhuongTien" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtMa" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtTenTour" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtLoaiChuyenDi" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtDieuKien" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtDongTour" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="txtGiaChuyen" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="jdcNgayBatDau" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
-                          <Component id="jdcNgayKetThuc" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblSoLuong" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblNgayBatDau" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblNgayKetThuc" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblPhuongTien" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblLoaiChuyenDi" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtSoLuong" min="-2" pref="351" max="-2" attributes="0"/>
+                              <Component id="txtPhuongTien" min="-2" pref="351" max="-2" attributes="0"/>
+                              <Component id="txtLoaiChuyenDi" min="-2" pref="351" max="-2" attributes="0"/>
+                              <Component id="jdcNgayBatDau" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
+                              <Component id="jdcNgayKetThuc" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="lblMa" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="btnLamMoi" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="btnThem" min="-2" pref="80" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="txtMa" alignment="1" min="-2" pref="351" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace pref="21" max="32767" attributes="0"/>
@@ -110,12 +120,7 @@
                       <Component id="lblMa" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="txtMa" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblTenTour" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="txtTenTour" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="lblNgayBatDau" max="32767" attributes="0"/>
                       <Component id="jdcNgayBatDau" min="-2" pref="36" max="-2" attributes="0"/>
@@ -140,12 +145,7 @@
                       <Component id="lblLoaiChuyenDi" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="txtLoaiChuyenDi" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblDieuKien" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="txtDieuKien" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblDongTour" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="txtDongTour" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
@@ -157,10 +157,13 @@
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblMoTa" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="172" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="lblMoTa" min="-2" pref="36" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnThem" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="btnLamMoi" min="-2" pref="40" max="-2" attributes="0"/>
@@ -186,22 +189,6 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="text" type="java.lang.String" value="M&#xe3; tour"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblTenTour">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="1"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="T&#xea;n tour"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtTenTour">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
-            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNgayBatDau">
@@ -276,22 +263,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoaiChuyenDiActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblDieuKien">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="1"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="&#x110;i&#x1ec1;u ki&#x1ec7;n"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtDieuKien">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDongTour">
           <Properties>
@@ -731,13 +702,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane3" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="pnlTimKiemHDV" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>

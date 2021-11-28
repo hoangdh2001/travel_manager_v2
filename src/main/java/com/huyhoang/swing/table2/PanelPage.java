@@ -27,11 +27,10 @@ public class PanelPage extends javax.swing.JPanel {
     public int getCurrentIndex() {
         return currentIndex;
     }
-    
+
     public void setCurrentIndex(int index) {
         this.currentIndex = index;
     }
-    
 
     public void addEventPagination(EventPagination event) {
         this.event = event;
@@ -121,10 +120,11 @@ public class PanelPage extends javax.swing.JPanel {
     }
 
     public void init(int num) {
+        System.out.println("num of PanePage: " + num);
         pnlNum.removeAll();
         cmbNumPage.removeAllItems();
         currentIndex = 0;
-        
+
         for (int i = 0; i < num; i++) {
             if (i < 4) {
                 Item item = new Item(i, event);
@@ -137,6 +137,7 @@ public class PanelPage extends javax.swing.JPanel {
             cmbNumPage.addItem(i + 1);
         }
         
+
         cmbNumPage.setSelectedIndex(currentIndex);
     }
 
