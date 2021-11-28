@@ -1,10 +1,8 @@
 package com.huyhoang.swing.table2;
 
-import gui.swing.panel.slideshow.EventPagination;
+import com.huyhoang.swing.slideshow.EventPagination;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -29,6 +27,11 @@ public class PanelPage extends javax.swing.JPanel {
     public int getCurrentIndex() {
         return currentIndex;
     }
+    
+    public void setCurrentIndex(int index) {
+        this.currentIndex = index;
+    }
+    
 
     public void addEventPagination(EventPagination event) {
         this.event = event;

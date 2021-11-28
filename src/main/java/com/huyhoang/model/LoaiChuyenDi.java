@@ -60,6 +60,6 @@ public class LoaiChuyenDi {
 
     @Override
     public String toString() {
-        return "LoaiChuyenDi [maLoaiChuyen=" + maLoaiChuyen + ", tenLoaiChuyen=" + tenLoaiChuyen + "]";
+        return tenLoaiChuyen;
     }
 }

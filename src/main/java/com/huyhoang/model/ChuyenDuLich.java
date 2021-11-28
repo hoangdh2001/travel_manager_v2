@@ -1,5 +1,6 @@
 package com.huyhoang.model;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
@@ -308,7 +309,9 @@ public class ChuyenDuLich {
 
     public Object[] convertToRowTable() {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        DecimalFormat df2 = new DecimalFormat("###,###,###");
 //        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
-        return new Object[]{maChuyen, df.format(ngayKhoiHanh), df.format(ngayKetThuc), phuongTien.getPhuongTien(), soLuong, trangThai, df.format(ngayTao), loaiChuyenDi.getTenLoaiCD(), dongTour};
+        return new Object[]{maChuyen, df.format(ngayKhoiHanh), df.format(ngayKetThuc), soLuong,
+            loaiChuyenDi.getTenLoaiCD(), dongTour, phuongTien.getPhuongTien(), df2.format(giaChuyenDi), trangThai, df.format(ngayTao)};
     }
 }

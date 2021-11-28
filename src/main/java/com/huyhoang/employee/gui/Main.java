@@ -1,8 +1,8 @@
 package com.huyhoang.employee.gui;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.huyhoang.employee.gui.component.Menu;
+import com.huyhoang.employee.gui.component.PanelDiaDanh;
 import com.huyhoang.employee.gui.component.PanelDonDatVe;
 import com.huyhoang.employee.gui.component.PanelHuongDanVien;
 import com.huyhoang.employee.gui.component.PanelKhachHang;
@@ -10,14 +10,11 @@ import com.huyhoang.employee.gui.component.PanelTour;
 import com.huyhoang.employee.gui.dialog.DialogTour;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.panel.ComponentResizer;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jdesktop.animation.timing.Animator;
@@ -70,7 +67,7 @@ public class Main extends javax.swing.JFrame {
                         });
                         content1.showForm(panelTour);
                         break;
-                        
+                    
                     case 3:
                         PanelKhachHang panelKhachHang = new PanelKhachHang();
                         content1.showForm(panelKhachHang);
@@ -82,6 +79,10 @@ public class Main extends javax.swing.JFrame {
                     case 5:
                         PanelHuongDanVien panelHDV = new PanelHuongDanVien();
                         content1.showForm(panelHDV);
+                        break;
+                    case 6:
+                        PanelDiaDanh panelDiaDanh = new PanelDiaDanh();
+                        content1.showForm(panelDiaDanh);
                         break;
                 }
             }
