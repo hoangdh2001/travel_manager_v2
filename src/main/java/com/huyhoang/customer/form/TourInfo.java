@@ -4,6 +4,7 @@ import com.huyhoang.customer.gui.component.BoxTour;
 import com.huyhoang.customer.gui.component.Map;
 import com.huyhoang.swing.button.ButtonBadges;
 import com.huyhoang.swing.button.ToggleButtonBadges;
+import com.huyhoang.swing.event.EventTour;
 import com.huyhoang.swing.image.PictureBox;
 import com.huyhoang.swing.label.LabelResizingShadow;
 import com.huyhoang.swing.label.LabelRibbon;
@@ -11,7 +12,7 @@ import com.huyhoang.swing.panel.LayerPaneGradient;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
@@ -26,9 +27,15 @@ public class TourInfo extends javax.swing.JLayeredPane {
     private LayerPaneGradient session;
     private MigLayout layout;
     private ToggleButtonBadges btnLike;
+    private Map mapTour;
+    private EventTour event;
     
-    public void addEventLike(ActionListener action) {
-        btnLike.addActionListener(action);
+    public void addEventLike(ItemListener action) {
+        btnLike.addItemListener(action);
+    }
+    
+    public void addEventTour(EventTour event) {
+        this.event = event;
     }
     
     public TourInfo() {
@@ -155,13 +162,14 @@ public class TourInfo extends javax.swing.JLayeredPane {
     }
 
     private void createPanelSuggestion() {
-        Map mapTour = new Map();
+        mapTour = new Map();
         mapTour.setTitle("Có thể bạn sẽ thích");
         for (int i = 0; i < 3; i++) {
             BoxTour boxTour = new BoxTour();
             boxTour.addEventBoxTour(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    event.openTour();
                     boxTour.refresh();
                 }
             });

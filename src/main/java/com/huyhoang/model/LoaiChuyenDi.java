@@ -3,10 +3,15 @@ package com.huyhoang.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "loaichuyendi")
+@NamedQueries({
+    @NamedQuery(name = "getDsLoaiChuyenDi", query = "select l from LoaiChuyenDi l")
+})
 public class LoaiChuyenDi {
 
     @Id
@@ -14,14 +19,18 @@ public class LoaiChuyenDi {
     private String maLoaiChuyen;
     @Column(name = "tenloai", columnDefinition = "nvarchar(255)", nullable = false)
     private String tenLoaiChuyen;
+    @Column(name = "mauloai", nullable = false)
+    private String mauLoai;
 
     /**
      * @param maLoaiChuyen
      * @param tenLoaiChuyen
+     * @param mauLoai
      */
-    public LoaiChuyenDi(String maLoaiChuyen, String tenLoaiChuyen) {
+    public LoaiChuyenDi(String maLoaiChuyen, String tenLoaiChuyen, String mauLoai) {
         this.maLoaiChuyen = maLoaiChuyen;
         this.tenLoaiChuyen = tenLoaiChuyen;
+        this.mauLoai = mauLoai;
     }
 
     /**
@@ -31,35 +40,49 @@ public class LoaiChuyenDi {
     }
 
     /**
-     * @return the maLoaiCD
+     * @return the maLoaiChuyen
      */
-    public String getMaLoaiCD() {
+    public String getMaLoaiChuyen() {
         return maLoaiChuyen;
     }
 
     /**
-     * @param maLoaiChuyen the maLoaiCD to set
+     * @param maLoaiChuyen
      */
-    public void setMaLoaiCD(String maLoaiChuyen) {
+    public void setMaLoaiChuyen(String maLoaiChuyen) {
         this.maLoaiChuyen = maLoaiChuyen;
     }
 
     /**
-     * @return the tenLoaiCD
+     * @return tenLoaiChuyen
      */
-    public String getTenLoaiCD() {
+    public String getTenLoaiChuyen() {
         return tenLoaiChuyen;
     }
 
     /**
-     * @param tenLoaiChuyen the tenLoaiCD to set
+     * @param tenLoaiChuyen
      */
-    public void setTenLoaiCD(String tenLoaiChuyen) {
+    public void setTenLoaiChuyen(String tenLoaiChuyen) {
         this.tenLoaiChuyen = tenLoaiChuyen;
+    }
+
+    /**
+     * @return the mauLoai
+     */
+    public String getMauLoai() {
+        return mauLoai;
+    }
+
+    /**
+     * @param mauLoai
+     */
+    public void setMauLoai(String mauLoai) {
+        this.mauLoai = mauLoai;
     }
 
     @Override
     public String toString() {
-        return "LoaiChuyenDi [maLoaiChuyen=" + maLoaiChuyen + ", tenLoaiChuyen=" + tenLoaiChuyen + "]";
+        return "LoaiChuyenDi{" + "maLoaiChuyen=" + maLoaiChuyen + ", tenLoaiChuyen=" + tenLoaiChuyen + ", mauLoai=" + mauLoai + '}';
     }
 }

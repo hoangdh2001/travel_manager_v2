@@ -1,6 +1,7 @@
 package com.huyhoang.customer.gui.component;
 
 import com.huyhoang.swing.button.Button;
+import com.huyhoang.swing.button.ButtonBadges;
 import com.huyhoang.swing.button.PopupMenu;
 import com.huyhoang.swing.event.EventMenuSelected;
 import java.awt.Color;
@@ -26,6 +27,22 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
         this.event = event;
     }
 
+    public ButtonBadges getBtnBack() {
+        return btnBack;
+    }
+
+    public void setBtnBack(ButtonBadges btnBack) {
+        this.btnBack = btnBack;
+    }
+
+    public ButtonBadges getBtnNext() {
+        return btnNext;
+    }
+
+    public void setBtnNext(ButtonBadges btnNext) {
+        this.btnNext = btnNext;
+    }
+    
     public Header() {
         initComponents();
         buildDisplay();
@@ -102,9 +119,11 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
 
         btnNext.setBackground(new java.awt.Color(10, 10, 10));
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/next_arrow.png"))); // NOI18N
+        btnNext.setEnabled(false);
 
         btnBack.setBackground(new java.awt.Color(10, 10, 10));
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/back.png"))); // NOI18N
+        btnBack.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -324,6 +324,6 @@ public class ChuyenDuLich {
 
     public Object[] convertToRowTable() {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiCD(), trangThai};
+        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiChuyen(), trangThai};
     }
 }

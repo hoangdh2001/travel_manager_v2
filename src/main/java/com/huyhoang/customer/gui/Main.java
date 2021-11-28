@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -30,7 +32,9 @@ public class Main extends javax.swing.JFrame {
     private Animator start;
     private Home home;
     private Search search;
+    private TourInfo tourInfo;
     private final List<Component> historyComponent = new ArrayList<>();
+    private int currentIndex = -1;
 
     public Main() {
         initComponents();
@@ -49,18 +53,17 @@ public class Main extends javax.swing.JFrame {
     private void createForm() {
         createFormHome();
         createFormSearch();
+        createFormTourInfo();
     }
 
     private void createMenu() {
         menu.initMenu((int index) -> {
             if (index == 0) {
                 main.getContent().showForm(home);
-                historyComponent.add(home);
-                System.out.println(historyComponent.size());
+                addHistory(home);
             } else if (index == 1) {
                 main.getContent().showForm(search);
-                historyComponent.add(search);
-                System.out.println(historyComponent.size());
+                addHistory(search);
             }
         });
         move(menu.getjPanel1(), 0);
@@ -88,13 +91,43 @@ public class Main extends javax.swing.JFrame {
         main.getHeader().addEventBack(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("back");
+                if(currentIndex > 0) {
+                    currentIndex--;
+                    Component com = historyComponent.get(currentIndex);
+                    if(com instanceof Home) {
+                        menu.setSelectedIndex(0);
+                    } else if(com instanceof Search) {
+                        menu.setSelectedIndex(1);
+                    } else {
+                        menu.unSelectedAll();
+                    }
+                    main.getContent().showForm(com);
+                    main.getHeader().getBtnNext().setEnabled(true);
+                    if(currentIndex == 0) {
+                        main.getHeader().getBtnBack().setEnabled(false);
+                    }
+                }
             }
         });
         main.getHeader().addEventNext(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("next");
+                if(currentIndex < historyComponent.size()) {
+                    currentIndex++;
+                    Component com = historyComponent.get(currentIndex);
+                    if(com instanceof Home) {
+                        menu.setSelectedIndex(0);
+                    } else if(com instanceof Search) {
+                        menu.setSelectedIndex(1);
+                    } else {
+                        menu.unSelectedAll();
+                    }
+                    main.getContent().showForm(com);
+                    main.getHeader().getBtnBack().setEnabled(true);
+                    if(currentIndex == (historyComponent.size() - 1)) {
+                        main.getHeader().getBtnNext().setEnabled(false);
+                    }
+                }
             }
         });
         move(main.getHeader(), menu.getWidth());
@@ -112,6 +145,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
         main.getContent().add(home);
+        historyComponent.add(home);
+        currentIndex++;
     }
 
     private void createChat() {
@@ -140,22 +175,51 @@ public class Main extends javax.swing.JFrame {
         home.addEventTour(new EventTour() {
             @Override
             public void openTour() {
-                TourInfo tourInfo = new TourInfo();
-                tourInfo.addEventLike(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent arg0) {
-                        main.showMessage();
-                    }
-                });
                 main.getContent().showForm(tourInfo);
-                historyComponent.add(tourInfo);
-                System.out.println(historyComponent.size());
+                menu.unSelectedAll();
+                addHistory(tourInfo);
             }
         });
     }
 
     private void createFormSearch() {
         search = new Search();
+    }
+    
+    private void createFormTourInfo() {
+        tourInfo = new TourInfo();
+        tourInfo.addEventLike(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent arg0) {
+                int state = arg0.getStateChange();
+                if (state == ItemEvent.SELECTED) {
+                    main.showMessage("Đã lưu vào thư viện");
+                } else {
+                    main.showMessage("Đã xóa khỏi thư viện");
+                }
+            }
+        });
+        tourInfo.addEventTour(new EventTour() {
+            @Override
+            public void openTour() {
+                main.getContent().showForm(tourInfo);
+                menu.unSelectedAll();
+                addHistory(tourInfo);
+            }
+        });
+    }
+    
+    private void addHistory(Component com) {
+        if(currentIndex < (historyComponent.size() - 1)) {
+            for (int i = (currentIndex + 1); i < historyComponent.size(); i++) {
+                historyComponent.remove(i);
+            }
+            main.getHeader().getBtnNext().setEnabled(false);
+        }
+        historyComponent.add(com);
+        currentIndex++;
+        main.getHeader().getBtnBack().setEnabled(true);
+        main.getScrollPaneCustom1().getVerticalScrollBar().setValue(0);
     }
 
     private void start() {
@@ -225,7 +289,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

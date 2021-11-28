@@ -24,10 +24,11 @@ public class ButtonBadges extends JButton {
     private int targetSize;
     private float animatSize;
     private Point pressedPoint;
-    private float alpha;
+    private float alphaEffect;
     private Color effectColor = new Color(173, 173, 173);
     private int badges;
     private boolean show;
+    private float alpha = 1;
 
     public int getBadges() {
         return badges;
@@ -52,6 +53,15 @@ public class ButtonBadges extends JButton {
     public void setShow(boolean show) {
         this.show = show;
     }
+
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+        repaint();
+    }
     
     public ButtonBadges() {
         setContentAreaFilled(false);
@@ -64,7 +74,7 @@ public class ButtonBadges extends JButton {
                 targetSize = Math.max(getWidth(), getHeight()) * 2;
                 animatSize = 0;
                 pressedPoint = me.getPoint();
-                alpha = 0.5f;
+                alphaEffect = 0.5f;
                 if (animator.isRunning()) {
                     animator.stop();
                 }
@@ -75,7 +85,7 @@ public class ButtonBadges extends JButton {
             @Override
             public void timingEvent(float fraction) {
                 if (fraction > 0.5f) {
-                    alpha = 1 - fraction;
+                    alphaEffect = 1 - fraction;
                 }
                 animatSize = fraction * targetSize;
                 repaint();
@@ -86,6 +96,13 @@ public class ButtonBadges extends JButton {
     }
 
     @Override
+    public void setEnabled(boolean b) {
+        super.setEnabled(b);
+        this.alpha = 0.5f;
+        repaint();
+    }
+    
+    @Override
     protected void paintComponent(Graphics g) {
         int width = getWidth();
         int height = getHeight();
@@ -93,10 +110,11 @@ public class ButtonBadges extends JButton {
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.fillRoundRect(0, 0, width, height, height, height);
         if (pressedPoint != null) {
             g2.setColor(effectColor);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alphaEffect));
             g2.fillOval((int) (pressedPoint.x - animatSize / 2), (int) (pressedPoint.y - animatSize / 2), (int) animatSize, (int) animatSize);
         }
         g2.dispose();

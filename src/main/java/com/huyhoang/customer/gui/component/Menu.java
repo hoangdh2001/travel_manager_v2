@@ -60,24 +60,34 @@ public class Menu extends javax.swing.JPanel {
         menu.addActionListener((ActionEvent ae) -> {
             if (index != currentIndex) {
                 event.menuSelected(index);
-                currentIndex = index;
                 setSelected(menu);
+                currentIndex = index;
             }
         });
+    }
+
+    public void setSelectedIndex(int index) {
+        ButtonMenu btn = (ButtonMenu) pnlMenu.getComponent(index);
+        setSelected(btn);
     }
 
     private void addEmpty() {
         pnlMenu.add(new JLabel(), "push");
     }
 
-    private void setSelected(ButtonMenu menu) {
+    public void setSelected(ButtonMenu menu) {
+        unSelectedAll();
+        menu.setSelected(true);
+    }
+
+    public void unSelectedAll() {
         for (Component com : pnlMenu.getComponents()) {
             if (com instanceof ButtonMenu) {
                 ButtonMenu b = (ButtonMenu) com;
                 b.setSelected(false);
             }
         }
-        menu.setSelected(true);
+        currentIndex = -1;
     }
 
     @SuppressWarnings("unchecked")

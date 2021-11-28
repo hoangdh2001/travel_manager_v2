@@ -24,9 +24,9 @@ public class Main extends javax.swing.JLayeredPane {
         pnlMessage.setLayout(layout = new MigLayout());
     }
     
-    public void showMessage() {
+    public void showMessage(String text) {
         Message ms = new Message();
-        ms.showMessage("Đã lưu vào thư viện");
+        ms.showMessage(text);
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void begin() {
@@ -39,17 +39,11 @@ public class Main extends javax.swing.JLayeredPane {
 
             @Override
             public void timingEvent(float fraction) {
-                float f;
                 if (ms.isShow()) {
                     ms.show(1f - fraction);
-                    f = 40 + (10 * fraction);
                 } else {
                     ms.show(fraction);
-                    f = 40 + (10 * (1f - fraction));
                 }
-                layout.setComponentConstraints(ms, "pos 0.5al " + f); // Hiện thị message theo 
-                pnlMessage.repaint();
-                pnlMessage.revalidate();
             }
 
             @Override
@@ -95,6 +89,7 @@ public class Main extends javax.swing.JLayeredPane {
         bg2 = new com.huyhoang.swing.panel.LayerPaneGradient();
         scrollPaneCustom1 = new com.huyhoang.swing.scrollbar.ScrollPaneCustom();
         content = new com.huyhoang.customer.gui.component.Content();
+        layerPaneGradient1 = new com.huyhoang.swing.panel.LayerPaneGradient();
 
         setLayout(new java.awt.CardLayout());
 
@@ -140,6 +135,7 @@ public class Main extends javax.swing.JLayeredPane {
         bg2.add(scrollPaneCustom1, java.awt.BorderLayout.CENTER);
 
         add(bg2, "card3");
+        add(layerPaneGradient1, "card4");
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -148,6 +144,7 @@ public class Main extends javax.swing.JLayeredPane {
     private javax.swing.JPanel bg3;
     private com.huyhoang.customer.gui.component.Content content;
     private com.huyhoang.customer.gui.component.Header header;
+    private com.huyhoang.swing.panel.LayerPaneGradient layerPaneGradient1;
     private javax.swing.JPanel pnlMessage;
     private com.huyhoang.swing.scrollbar.ScrollPaneCustom scrollPaneCustom1;
     // End of variables declaration//GEN-END:variables
