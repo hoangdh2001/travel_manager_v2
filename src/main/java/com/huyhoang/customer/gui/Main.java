@@ -3,6 +3,8 @@ package com.huyhoang.customer.gui;
 import com.huyhoang.customer.form.Home;
 import com.huyhoang.customer.form.Search;
 import com.huyhoang.customer.form.TourInfo;
+import com.huyhoang.model.ChiTietThamQuan;
+import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
 import java.awt.Color;
@@ -13,8 +15,20 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+import javax.json.Json;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
@@ -116,8 +130,13 @@ public class Main extends javax.swing.JFrame {
         home = new Home();
         home.addEventTour(new EventTour() {
             @Override
-            public void openTour() {
-                main.getContent().showForm(new TourInfo());
+            public void openTour(ChuyenDuLich chuyenDuLich) {
+                main.getContent().showForm(new TourInfo(chuyenDuLich));
+                try {
+                    write2File(chuyenDuLich);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -192,6 +211,21 @@ public class Main extends javax.swing.JFrame {
                 setLocation(x - xx - o, y - yy);
             }
         });
+    }
+
+    private static void write2File(ChuyenDuLich chuyenDuLich) throws FileNotFoundException {
+        JsonReader jsonReader = Json.createReader(new FileReader("data/ChuyenDuLich.json"));
+        JsonArray jsonArray = jsonReader.readArray();
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder(jsonArray);
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        
+        JsonObject jo = jsonObjectBuilder.add("maChuyenDi", chuyenDuLich.getMaChuyen()).build();
+        jsonArray = jsonArrayBuilder.add(jo).build();
+        try (PrintWriter out = new PrintWriter(new FileWriter("data/ChuyenDuLich.json"))) {
+            out.println(jsonArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")

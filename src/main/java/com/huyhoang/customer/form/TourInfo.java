@@ -2,9 +2,9 @@ package com.huyhoang.customer.form;
 
 import com.huyhoang.customer.gui.component.BoxTour;
 import com.huyhoang.customer.gui.component.MapTour;
+import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.button.ButtonBadges;
 import com.huyhoang.swing.button.ToggleButtonBadges;
-import com.huyhoang.swing.graphics.ShadowType;
 import com.huyhoang.swing.image.PictureBox;
 import com.huyhoang.swing.label.LabelResizingShadow;
 import com.huyhoang.swing.label.LabelRibbon;
@@ -12,7 +12,6 @@ import com.huyhoang.swing.panel.LayerPaneGradient;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
 import java.awt.Font;
-import static java.awt.SystemColor.text;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
@@ -24,9 +23,11 @@ public class TourInfo extends javax.swing.JLayeredPane {
     private LayerPaneGradient pnlCenter;
     private SlideShowTransparent slide;
     private LayerPaneGradient session;
+    private ChuyenDuLich chuyenDuLich;
     
     private MigLayout layout;
-    public TourInfo() {
+    public TourInfo(ChuyenDuLich chuyenDuLich) {
+        this.chuyenDuLich = chuyenDuLich;
         initComponents();
         builldDisplay();
     }

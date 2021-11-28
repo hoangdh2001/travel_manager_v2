@@ -3,10 +3,15 @@ package com.huyhoang.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "loaichuyendi")
+@NamedQueries({
+    @NamedQuery(name = "getDsLoaiChuyenDi", query = "select l from LoaiChuyenDi l")
+})
 public class LoaiChuyenDi {
 
     @Id

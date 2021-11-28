@@ -28,7 +28,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="slideShowTransparent1" alignment="0" pref="324" max="32767" attributes="0"/>
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="pnlSuggestions" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -36,13 +36,13 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="slideShowTransparent1" min="-2" pref="220" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
+              <Component id="pnlSuggestions" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="pnlSuggestions">
       <Properties>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
@@ -50,22 +50,15 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mapTour1" alignment="1" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="324" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="mapTour1" pref="299" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="0" pref="299" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
-      <SubComponents>
-        <Component class="com.huyhoang.customer.gui.component.MapTour" name="mapTour1">
-        </Component>
-      </SubComponents>
     </Container>
     <Component class="com.huyhoang.swing.slideshow.SlideShowTransparent" name="slideShowTransparent1">
     </Component>

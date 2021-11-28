@@ -88,7 +88,6 @@ public class PanelTour extends javax.swing.JPanel {
 
         btnThem.setBackground(new java.awt.Color(204, 255, 204));
         btnThem.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnThem.setForeground(new java.awt.Color(0, 0, 0));
         btnThem.setText("Thêm");
 
         txtTimKiem.setText("Tìm kiếm");
@@ -161,7 +160,6 @@ public class PanelTour extends javax.swing.JPanel {
 
         pnlCenter.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblTour.setBackground(new java.awt.Color(255, 255, 255));
         tblTour.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"", "1", null, null, null, null, null, null, null, null, null},
