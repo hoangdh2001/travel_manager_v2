@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
+import javax.swing.border.EmptyBorder;
 
 public class LabelResizingShadow extends JLabel {
     
@@ -49,8 +50,15 @@ public class LabelResizingShadow extends JLabel {
         this.shadowColor = shadowColor;
     }
 
+    public ShadowType getShadowType() {
+        return shadowType;
+    }
+
+    public void setShadowType(ShadowType shadowType) {
+        this.shadowType = shadowType;
+    }
+
     public LabelResizingShadow() {
-        
     }
 
     @Override

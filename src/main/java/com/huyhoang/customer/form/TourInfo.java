@@ -7,6 +7,7 @@ import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.button.ButtonBadges;
 import com.huyhoang.swing.button.ToggleButtonBadges;
 import com.huyhoang.swing.event.EventTour;
+import com.huyhoang.swing.graphics.ShadowType;
 import com.huyhoang.swing.image.PictureBox;
 import com.huyhoang.swing.label.LabelResizingShadow;
 import com.huyhoang.swing.label.LabelRibbon;
@@ -14,12 +15,15 @@ import com.huyhoang.swing.panel.LayerPaneGradient;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -47,6 +51,7 @@ public class TourInfo extends javax.swing.JLayeredPane {
     private LabelResizingShadow lblDiaDanh;
     private final DecimalFormat df = new DecimalFormat("#,##0 VND");
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    private ButtonBadges btnDat;
 
     public void addEventLike(ItemListener action) {
         btnLike.addItemListener(action);
@@ -54,6 +59,10 @@ public class TourInfo extends javax.swing.JLayeredPane {
 
     public void addEventTour(EventTour event) {
         this.event = event;
+    }
+    
+    public void addEventDat(ActionListener action) {
+        btnDat.addActionListener(action);
     }
 
     public ChuyenDuLich getChuyenDuLich() {
@@ -67,23 +76,41 @@ public class TourInfo extends javax.swing.JLayeredPane {
 
     private void loadData() {
         slide.removeAllImage();
-        String diaDanh = "";
+        String diaDanh = "[";
+        String tinh = "Du lịch ";
+        String diemDen = "";
         List<ChiTietThamQuan> dsChiTietThamQuan = chuyenDuLich.getDsChiTietThamQuan();
-        if (dsChiTietThamQuan != null) {
-            for (ChiTietThamQuan chiTietThamQuan : dsChiTietThamQuan) {
-                diaDanh = diaDanh + " - " + chiTietThamQuan.getDiaDanh().getTenDiaDanh();
-                System.out.println(chiTietThamQuan.getDiaDanh().getTenDiaDanh());
-                slide.addImage(new PictureBox(new ImageIcon(chiTietThamQuan.getAnhDiaDanh())));
+        if (dsChiTietThamQuan.size() > 0) {
+            for (int i = 0; i < dsChiTietThamQuan.size(); i++) {
+                slide.addImage(new PictureBox(new ImageIcon(dsChiTietThamQuan.get(i).getAnhDiaDanh())));
+                if (i == (dsChiTietThamQuan.size() - 1)) {
+                    diaDanh = diaDanh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + "]";
+                    tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTinh();
+                    diemDen = diemDen + dsChiTietThamQuan.get(i).getDiaDanh().getTinh();
+                } else {
+                    diaDanh = diaDanh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + " - ";
+                    tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTinh() + " - ";
+                    diemDen = diemDen + dsChiTietThamQuan.get(i).getDiaDanh().getTinh() + " - ";
+                }
             }
+            slide.select(0);
         }
+        tourName.setText(tinh);
         lblDiaDanh.setText(diaDanh);
         lblLoaiChuyen.setText(chuyenDuLich.getLoaiChuyenDi().getTenLoaiChuyen());
         lblGia.setText(df.format(chuyenDuLich.getGiaChuyenDi()));
         lblNgayKhoiHanh.setText("NGÀY KHỞI HÀNH: " + sdf.format(chuyenDuLich.getNgayKhoiHanh()));
         lblPhuongTien.setText("PHƯƠNG TIỆN: " + chuyenDuLich.getPhuongTien().getPhuongTien());
         lblNoiKhoiHanh.setText("NƠI KHỞI HÀNH: " + chuyenDuLich.getNoiKhoiHanh().getTinhThanh());
+        lblDiemDen.setText("ĐIỂM ĐẾN: " + diemDen);
         String lblText = String.format("<html><div style=\"width:%dpx;font-size:10px;font-family:'Segoe UI', Arial, sans-serif;\">%s</div></html>", 500, chuyenDuLich.getMoTa());
         lblDescription.setText(lblText);
+        lblthoiGian.setText("THỜI GIAN: " + getDifferenceDays(chuyenDuLich.getNgayKhoiHanh(), chuyenDuLich.getNgayKetThuc()) + " ngày");
+    }
+
+    private long getDifferenceDays(Date d1, Date d2) {
+        long diff = d2.getTime() - d1.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
     public TourInfo() {
@@ -123,10 +150,10 @@ public class TourInfo extends javax.swing.JLayeredPane {
 
     private void createPaneCenter() {
         pnlCenter = new LayerPaneGradient();
-        MigLayout layout2 = new MigLayout("fill, insets 0", "20[fill]push[fill]20", "100[]10[]10[]20[]5[]20[]20");
+        MigLayout layout2 = new MigLayout("fill, insets 0, wrap", "20[fill]push[fill]20", "100[]10[]10[]20[]5[]20[]20");
         pnlCenter.setLayout(layout2);
 
-        ButtonBadges btnDat = new ButtonBadges();
+        btnDat = new ButtonBadges();
         btnDat.setBackground(new Color(29, 185, 84));
         btnDat.setIcon(new ImageIcon(getClass().getResource("/icon/booking.png")));
         pnlCenter.add(btnDat, "pos 30 20 n n, w 54!, h 54!");
@@ -171,7 +198,7 @@ public class TourInfo extends javax.swing.JLayeredPane {
         lblGia = new JLabel("500,000 đ/người");
         lblGia.setForeground(new Color(29, 185, 84));
         lblGia.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        pnlCenter.add(lblGia, "wrap");
+        pnlCenter.add(lblGia, "right");
 
         lblthoiGian = new JLabel("THỜI GIAN: 1 ngày");
         lblthoiGian.setForeground(Color.WHITE);
@@ -181,7 +208,7 @@ public class TourInfo extends javax.swing.JLayeredPane {
         lblPhuongTien = new JLabel("PHƯƠNG TIỆN: Đi về bằng xe");
         lblPhuongTien.setForeground(Color.WHITE);
         lblPhuongTien.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        pnlCenter.add(lblPhuongTien, "wrap");
+        pnlCenter.add(lblPhuongTien);
 
         lblNoiKhoiHanh = new JLabel("NƠI KHỞI HÀNH: Bến Tre");
         lblNoiKhoiHanh.setForeground(Color.WHITE);
@@ -191,19 +218,19 @@ public class TourInfo extends javax.swing.JLayeredPane {
         lblDiemDen = new JLabel("ĐIỂM ĐẾN: Củ Chi - Tây Ninh");
         lblDiemDen.setForeground(Color.WHITE);
         lblDiemDen.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        pnlCenter.add(lblDiemDen, "wrap");
+        pnlCenter.add(lblDiemDen);
 
         JLabel lblMota = new JLabel("Tour này có gì hay");
         lblMota.setForeground(new Color(29, 185, 84));
         lblMota.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        pnlCenter.add(lblMota, "wrap");
+        pnlCenter.add(lblMota, "span 2");
 
         lblDescription = new JLabel();
         String lblText = String.format("<html><div style=\"width:%dpx;font-size:10px;font-family:'Segoe UI', Arial, sans-serif;\">%s</div></html>", 500, "Một hành trình trong ngày đầy thú vị, có thể tận hưởng trọn vẹn các hoạt động: Du lịch sông nước, thăm nông trại hữu cơ, thưởng thức ẩm thực xứ Dừa, khám phá sân chim với không gian tươi xanh và không khí trong lành.");
         lblDescription.setText(lblText);
         lblDescription.setForeground(Color.WHITE);
         lblDescription.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        pnlCenter.add(lblDescription, "wrap, span 2");
+        pnlCenter.add(lblDescription, "span 2");
 
         createPanelSuggestion();
         add(pnlCenter);
@@ -232,11 +259,13 @@ public class TourInfo extends javax.swing.JLayeredPane {
 
         tourName.setFont(new Font("sansserif", Font.BOLD, 30));
         tourName.setForeground(Color.WHITE);
-        add(tourName, "pos 20 210 n n, w 450!, h 50!");
+        tourName.setShadowType(ShadowType.BOT);
+        add(tourName, "pos 20 210 n n, w 550!, h 50!");
 
         lblDiaDanh = new LabelResizingShadow();
         lblDiaDanh.setText("[KHU DI TÍCH ĐỊA ĐẠO - ĐỀN BẾN DƯỢC- CÁP TREO VÂN SƠN TÂY NINH]");
         lblDiaDanh.setFont(new Font("sansserif", Font.BOLD, 30));
+        lblDiaDanh.setShadowType(ShadowType.BOT);
         lblDiaDanh.setForeground(Color.WHITE);
         add(lblDiaDanh, "pos 20 240 n n, w 650!, h 60!");
     }

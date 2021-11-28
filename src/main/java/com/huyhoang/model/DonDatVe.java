@@ -26,9 +26,6 @@ public class DonDatVe {
     @JoinColumn(name = "khachhang_id", nullable = false)
     private KhachHang khachHang;
     @ManyToOne
-    @JoinColumn(name = "nhanvien_id", nullable = false)
-    private NhanVien nhanVien;
-    @ManyToOne
     @JoinColumn(name = "chuyen_id", nullable = false)
     private ChuyenDuLich chuyenDuLich;
     @ManyToOne
@@ -57,14 +54,12 @@ public class DonDatVe {
         this.maDonDatVe = maDonDatVe;
         this.ngayDat = ngayDat;
         this.khachHang = khachHang;
-        this.nhanVien = nhanVien;
         this.chuyenDuLich = chuyenDuLich;
         this.huongDanVien = huongDanVien;
         this.trangThai = trangThai;
     }
     
     /**
-     * @param ngayDat
      * @param trangThai 
      */
     public DonDatVe(TrangThaiDonDat trangThai) {
@@ -126,20 +121,6 @@ public class DonDatVe {
      */
     public void setKhachHang(KhachHang khachHang) {
         this.khachHang = khachHang;
-    }
-
-    /**
-     * @return the nhanVien
-     */
-    public NhanVien getNhanVien() {
-        return nhanVien;
-    }
-
-    /**
-     * @param nhanVien the nhanVien to set
-     */
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
     }
 
     /**
@@ -215,13 +196,8 @@ public class DonDatVe {
     @Override
     public String toString() {
         return "DonDatVe [maDonDatVe=" + maDonDatVe + ", ngayDat=" + ngayDat + ", khachHang=" + khachHang
-                + ", nhanVien=" + nhanVien + ", chuyenDuLich=" + chuyenDuLich + ", huongDanVien=" + huongDanVien
+                + ", chuyenDuLich=" + chuyenDuLich + ", huongDanVien=" + huongDanVien
                 + ", trangThai=" + trangThai + ", dsHanhKhach=" + dsHanhKhach + ", soLuong=" + soLuong + ", thanhTien="
                 + thanhTien + "]";
     }
-    
-//    public ModelRow convertToRowTable() {
-//        return new ModelRow(new Object[] {new CellMenu(), khachHang.getAvatar(), khachHang.getHoTen(), khachHang.getDiaChi().getTinhThanh(), trangThai, new CellCollapse()},
-//                new Object[] {});
-//    }
 }

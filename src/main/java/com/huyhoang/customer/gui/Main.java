@@ -1,15 +1,14 @@
 package com.huyhoang.customer.gui;
 
+import com.huyhoang.customer.form.BookTour;
 import com.huyhoang.customer.form.Home;
 import com.huyhoang.customer.form.Search;
 import com.huyhoang.customer.form.TourInfo;
-import com.huyhoang.model.ChiTietThamQuan;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -25,8 +24,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -227,6 +224,15 @@ public class Main extends javax.swing.JFrame {
                 main.getContent().showForm(tourInfo);
                 menu.unSelectedAll();
                 addHistory(tourInfo);
+            }
+        });
+        tourInfo.addEventDat(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                BookTour bookTour = new BookTour();
+                main.getContent().showForm(bookTour);
+                menu.unSelectedAll();
+                addHistory(bookTour);
             }
         });
     }

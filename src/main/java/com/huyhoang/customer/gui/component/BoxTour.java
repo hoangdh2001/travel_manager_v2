@@ -4,6 +4,7 @@ import com.huyhoang.model.ChiTietThamQuan;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.button.ButtonTransparent;
 import com.huyhoang.swing.image.PictureBox;
+import com.huyhoang.swing.label.WrapLabel;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -27,7 +28,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     private SlideShowTransparent slideShowTransparent1;
     private ButtonTransparent buttonTransparent;
     private ChuyenDuLich chuyenDuLich;
-    private JLabel lblTenTour;
+    private WrapLabel lblTenTour;
     private JLabel lblNguoi;
     private JLabel lblGiaTour;
     private final DecimalFormat df = new DecimalFormat("#,##0đ");
@@ -65,12 +66,19 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     private void loadData() {
         List<ChiTietThamQuan> dsChiTietThamQuan = chuyenDuLich.getDsChiTietThamQuan();
         slideShowTransparent1.removeAllImage();
+        String tinh = "Du lịch ";
         if(dsChiTietThamQuan.size() > 0) {
-            for (ChiTietThamQuan chiTietThamQuan : dsChiTietThamQuan) {
-                slideShowTransparent1.addImage(new PictureBox(new ImageIcon(chiTietThamQuan.getAnhDiaDanh())));
+            for (int i = 0; i < dsChiTietThamQuan.size(); i++) {
+                slideShowTransparent1.addImage(new PictureBox(new ImageIcon(dsChiTietThamQuan.get(i).getAnhDiaDanh())));
+                if(i == (dsChiTietThamQuan.size() - 1)) {
+                    tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh();
+                } else {
+                    tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + " - ";
+                }
             }
             slideShowTransparent1.select(0);
         }
+        lblTenTour.setText(tinh);
         lblNguoi.setText(chuyenDuLich.getSoLuong() + "");
         lblGiaTour.setText(df.format(chuyenDuLich.getGiaChuyenDi()) + "/khách");
         
@@ -82,10 +90,11 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         createButton();
         createSlide();
 
-        lblTenTour = new JLabel("Tên tour");
+        lblTenTour = new WrapLabel("Tên tour");
         lblTenTour.setForeground(Color.WHITE);
+        lblTenTour.setVAlignStyle(0);
         lblTenTour.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        bg.add(lblTenTour, "span 2");
+        bg.add(lblTenTour, "span 2, h 40!, w 170!");
 
         lblNguoi = new JLabel("10");
         lblNguoi.setIcon(new ImageIcon(getClass().getResource("/icon/person.png")));
@@ -102,7 +111,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         lblGia.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         bg.add(lblGia);
 
-        lblGiaTour = new JLabel("    $100,000/người");
+        lblGiaTour = new JLabel("$100,000/người");
         lblGiaTour.setForeground(Color.WHITE);
         lblGiaTour.setFont(new Font("Segoe UI", Font.BOLD, 14));
         bg.add(lblGiaTour);
@@ -153,7 +162,7 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         slideShowTransparent1.initSlideshow(picture1, picture2, picture3);
         slideShowTransparent1.setDuration(1800);
         slideShowTransparent1.setBorderRadius(15);
-        bg.add(slideShowTransparent1, "h 180!, span 2");
+        bg.add(slideShowTransparent1, "h 160!, span 2");
     }
     
     private void createButton() {

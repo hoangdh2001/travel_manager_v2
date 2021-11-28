@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class PanelRoundLine extends JPanel {
     
@@ -26,6 +27,7 @@ public class PanelRoundLine extends JPanel {
 
     public void setBorderRadius(int borderRadius) {
         this.borderRadius = borderRadius;
+        
     }
 
     public int getBorderSize() {
@@ -34,10 +36,13 @@ public class PanelRoundLine extends JPanel {
 
     public void setBorderSize(int borderSize) {
         this.borderSize = borderSize;
+        setBorder(new EmptyBorder(borderSize, borderSize, borderSize, borderSize));
+        repaint();
     }
-    
+
     public PanelRoundLine() {
         setOpaque(false);
+        setBorder(new EmptyBorder(borderSize, borderSize, borderSize, borderSize));
     }
 
     @Override
