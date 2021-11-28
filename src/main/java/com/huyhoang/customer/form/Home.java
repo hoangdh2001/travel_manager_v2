@@ -1,21 +1,29 @@
 package com.huyhoang.customer.form;
 
+import com.huyhoang.customer.gui.component.BoxTour;
+import com.huyhoang.customer.gui.component.MapTour;
 import com.huyhoang.swing.image.PictureBox;
 import javax.swing.ImageIcon;
-import com.huyhoang.customer.gui.component.BoxTour;
+import com.huyhoang.dao.ChuyenDuLich_DAO;
+import com.huyhoang.dao.daoimpl.ChuyenDuLichImpl;
+import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.event.EventTour;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import net.miginfocom.swing.MigLayout;
 
 public class Home extends javax.swing.JPanel {
 
     private EventTour event;
+    private ChuyenDuLich_DAO chuyenDuLich_DAO;
 
     public void addEventTour(EventTour event) {
         this.event = event;
     }
 
     public Home() {
+        this.chuyenDuLich_DAO = new ChuyenDuLichImpl();
         initComponents();
         buildDisplay();
     }
@@ -38,16 +46,53 @@ public class Home extends javax.swing.JPanel {
     }
 
     private void createMapTour() {
-        for (int i = 0; i < 8; i++) {
-            BoxTour boxTour = new BoxTour();
-            boxTour.addEventBoxTour(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    event.openTour();
-                    boxTour.refresh();
-                }
-            });
-            mapTour1.addTour(boxTour);
+        pnlSuggestions.setLayout(new MigLayout("fillx, insets 0"));
+        loadDataMapTourDaXemGanDay();
+        loadDataMapTourMoi();
+        loadDataMapTourPhoBien();
+    }
+    
+    private void loadDataMapTourDaXemGanDay() {
+        
+    }
+
+    private void loadDataMapTourMoi() {
+        List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichMoi();
+        if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {
+            MapTour mapTourMoi = new MapTour();
+            mapTourMoi.setTitle("Chuyến du lịch mới nhất");
+            for (ChuyenDuLich chuyenDuLich : dsChuyenDuLich) {
+                BoxTour boxTour = new BoxTour();
+                boxTour.addEventBoxTour(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        event.openTour(chuyenDuLich);
+                        boxTour.refresh();
+                    }
+                });
+                mapTourMoi.addTour(boxTour);
+            }
+            pnlSuggestions.add(mapTourMoi);
+        }
+    }
+    
+    private void loadDataMapTourPhoBien() {
+        List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichNhieuDonDatNhat();
+        if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {
+            MapTour mapTourMoi = new MapTour();
+            mapTourMoi.setTitle("Chuyến du lịch mới nhất");
+            for (ChuyenDuLich chuyenDuLich : dsChuyenDuLich) {
+                BoxTour boxTour = new BoxTour();
+                boxTour.addEventBoxTour(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        event.openTour(chuyenDuLich);
+                        boxTour.refresh();
+                    }
+                });
+                mapTourMoi.addTour(boxTour);
+            }
+            pnlSuggestions.add(mapTourMoi);
         }
     }
 
@@ -55,51 +100,45 @@ public class Home extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        mapTour1 = new com.huyhoang.customer.gui.component.MapTour();
+        pnlSuggestions = new javax.swing.JPanel();
         slideShowTransparent1 = new com.huyhoang.swing.slideshow.SlideShowTransparent();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(57, 20, 0, 20));
         setOpaque(false);
 
-        jPanel1.setOpaque(false);
+        pnlSuggestions.setOpaque(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mapTour1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlSuggestionsLayout = new javax.swing.GroupLayout(pnlSuggestions);
+        pnlSuggestions.setLayout(pnlSuggestionsLayout);
+        pnlSuggestionsLayout.setHorizontalGroup(
+            pnlSuggestionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 324, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(mapTour1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+        pnlSuggestionsLayout.setVerticalGroup(
+            pnlSuggestionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 299, Short.MAX_VALUE)
         );
-
-        slideShowTransparent1.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(slideShowTransparent1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlSuggestions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(slideShowTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlSuggestions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private com.huyhoang.customer.gui.component.MapTour mapTour1;
+    private javax.swing.JPanel pnlSuggestions;
     private com.huyhoang.swing.slideshow.SlideShowTransparent slideShowTransparent1;
     // End of variables declaration//GEN-END:variables
 }

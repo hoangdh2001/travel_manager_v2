@@ -1,6 +1,6 @@
 package com.huyhoang.employee.gui.form;
 
-import com.huyhoang.dao.ChuyenDuLichDAO;
+import com.huyhoang.dao.daoimpl.ChuyenDuLichImpl;
 import com.huyhoang.employee.gui.component.TabLayout;
 import com.huyhoang.model.ChuyenDuLich;
 import java.awt.Color;
@@ -20,7 +20,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 public class TourForm extends javax.swing.JLayeredPane {
 
     private MigLayout layout;
-    private ChuyenDuLichDAO chuyenDuLichDAO;
+    private ChuyenDuLichImpl chuyenDuLichDAO;
     private TabLayout tab;
     private final DecimalFormat df = new DecimalFormat("##0.###");
     private Animator animator;
@@ -30,7 +30,7 @@ public class TourForm extends javax.swing.JLayeredPane {
     }
 
     public TourForm() {
-        chuyenDuLichDAO = new ChuyenDuLichDAO();
+        chuyenDuLichDAO = new ChuyenDuLichImpl();
         initComponents();
 
         layout = new MigLayout("fill, insets 0, wrap", "0[fill]0", "0[fill]0");
@@ -74,7 +74,7 @@ public class TourForm extends javax.swing.JLayeredPane {
     }
 
     private void loadData() {
-        List<ChuyenDuLich> rs = chuyenDuLichDAO.getChuyenDuLichs();
+        List<ChuyenDuLich> rs = chuyenDuLichDAO.getDsChuyenDuLich();
         rs.forEach(r -> {
             tableTour.addRow(r.convertToRowTable());
         });
