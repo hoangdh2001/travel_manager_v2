@@ -9,6 +9,7 @@ import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -325,7 +326,7 @@ public class Main extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

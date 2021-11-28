@@ -1,4 +1,4 @@
-package com.huyhoang.swing.combobox;
+package com.huyhoang.swing.scrollbar;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-public class ModernScrollBarUI extends BasicScrollBarUI {
+public class ModernScrollBarRoundedUI extends BasicScrollBarUI {
 
     private final int THUMB_SIZE = 60;
 

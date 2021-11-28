@@ -109,7 +109,7 @@ public class ChuyenDuLichImpl implements ChuyenDuLich_DAO {
         Session session = sessionFactory.openSession();
         Transaction tr = session.getTransaction();
 
-        String sql = "select top 5 * from chuyendulich\n"
+        String sql = "select top 3 * from chuyendulich\n"
                 + "where trangThai = 'CHUA_KHOI_HANH'\n"
                 + "order by chuyen_id desc";
         try {
@@ -139,7 +139,7 @@ public class ChuyenDuLichImpl implements ChuyenDuLich_DAO {
                 + "group by cd.chuyen_id, cd.dongtour, cd.giachuyen, cd.loaichuyendi_id, cd.mota,\n"
                 + "cd.noikhoihanh, cd.ngay_tao, cd.ngayketthuc, cd.ngaykhoihanh,\n"
                 + "cd.nhanvien_id, cd.phuongtien, cd.soluong, cd.trangthai\n"
-                + "having COUNT(d.dondatve_id) = (select top 5 COUNT(d.dondatve_id) as slDonDat from chuyendulich cd join dondatve d";
+                + "having COUNT(d.dondatve_id) = (select top 3 COUNT(d.dondatve_id) as slDonDat from chuyendulich cd join dondatve d";
         try {
             tr.begin();
             List<ChuyenDuLich> dsChuyenDuLich = session

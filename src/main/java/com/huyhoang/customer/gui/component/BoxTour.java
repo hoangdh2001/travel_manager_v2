@@ -1,5 +1,6 @@
 package com.huyhoang.customer.gui.component;
 
+import com.huyhoang.model.ChiTietThamQuan;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.button.ButtonTransparent;
 import com.huyhoang.swing.image.PictureBox;
@@ -9,6 +10,7 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -61,8 +63,17 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
     }
     
     private void loadData() {
+        List<ChiTietThamQuan> dsChiTietThamQuan = chuyenDuLich.getDsChiTietThamQuan();
+        slideShowTransparent1.removeAllImage();
+        if(dsChiTietThamQuan.size() > 0) {
+            for (ChiTietThamQuan chiTietThamQuan : dsChiTietThamQuan) {
+                slideShowTransparent1.addImage(new PictureBox(new ImageIcon(chiTietThamQuan.getAnhDiaDanh())));
+            }
+            slideShowTransparent1.select(0);
+        }
         lblNguoi.setText(chuyenDuLich.getSoLuong() + "");
         lblGiaTour.setText(df.format(chuyenDuLich.getGiaChuyenDi()) + "/khách");
+        
     }
 
     private void createBg() {

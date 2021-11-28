@@ -72,11 +72,11 @@ public class TourInfo extends javax.swing.JLayeredPane {
         if (dsChiTietThamQuan != null) {
             for (ChiTietThamQuan chiTietThamQuan : dsChiTietThamQuan) {
                 diaDanh = diaDanh + " - " + chiTietThamQuan.getDiaDanh().getTenDiaDanh();
+                System.out.println(chiTietThamQuan.getDiaDanh().getTenDiaDanh());
                 slide.addImage(new PictureBox(new ImageIcon(chiTietThamQuan.getAnhDiaDanh())));
             }
         }
         lblDiaDanh.setText(diaDanh);
-        slide.select(0);
         lblLoaiChuyen.setText(chuyenDuLich.getLoaiChuyenDi().getTenLoaiChuyen());
         lblGia.setText(df.format(chuyenDuLich.getGiaChuyenDi()));
         lblNgayKhoiHanh.setText("NGÀY KHỞI HÀNH: " + sdf.format(chuyenDuLich.getNgayKhoiHanh()));
