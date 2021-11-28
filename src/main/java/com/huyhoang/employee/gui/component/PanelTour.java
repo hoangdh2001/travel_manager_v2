@@ -123,8 +123,8 @@ public class PanelTour extends javax.swing.JPanel {
         cmbLoaiChuyenDi.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                trangThaiTimKiem = true;
-                System.out.println("index "+pnlPage2.getCurrentIndex());
+                
+                loadPage();
                 
                 loadDataTable(pnlPage2.getCurrentIndex());
             }
@@ -152,20 +152,16 @@ public class PanelTour extends javax.swing.JPanel {
                     });
                     tblTour.repaint();
                     tblTour.revalidate();
-
-                    int row = chuyenDuLichDAO.soLuongSearch("",
-                            cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex()), "", "");
-
-                    System.out.println("row " + row);
-
-                    pnlPage2.init(row % 20 == 0 ? row / 20 : (row / 20) + 1);
-                } else {
-                    pnlPage2.init(0);
-                }
+                } 
             }
 
         }).start();
 
+    }
+    
+    private void loadPage(){
+        int row = chuyenDuLichDAO.soLuongSearch("",cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex()), "", "");
+        pnlPage2.init(row % 20 == 0 ? row / 20 : (row / 20) + 1);
     }
 
     private void tblTourHandle() {
@@ -176,8 +172,7 @@ public class PanelTour extends javax.swing.JPanel {
             }
         });
 
-//        int row = chuyenDuLichDAO.getSoLuongCDL();
-//        pnlPage2.init(row % 20 == 0 ? row / 20 : (row / 20) + 1);
+        loadPage();
     }
 
     /**
