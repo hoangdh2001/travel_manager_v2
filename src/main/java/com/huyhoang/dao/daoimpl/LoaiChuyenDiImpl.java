@@ -4,17 +4,16 @@ import com.huyhoang.dao.LoaiChuyenDi_DAO;
 import com.huyhoang.model.LoaiChuyenDi;
 import com.huyhoang.util.HibernateUtil;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class LoaiChuyenDi_Impl extends UnicastRemoteObject implements LoaiChuyenDi_DAO {
+public class LoaiChuyenDiImpl implements LoaiChuyenDi_DAO {
     private SessionFactory sessionFactory;
     
-    public LoaiChuyenDi_Impl() {
+    public LoaiChuyenDiImpl() throws RemoteException {
         this.sessionFactory = HibernateUtil.getInstance().getSessionFactory();
     }
 
