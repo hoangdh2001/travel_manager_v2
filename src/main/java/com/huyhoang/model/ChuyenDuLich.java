@@ -1,5 +1,6 @@
 package com.huyhoang.model;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
@@ -76,8 +77,9 @@ public class ChuyenDuLich {
      * @param soLuong
      * @param nhanVien
      */
-    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, DiaChi noiKhoiHanh, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
-            PhuongTien phuongTien, DongTour dongTour, String moTa, int soLuong, NhanVien nhanVien) {
+    public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh,
+            Date ngayKetThuc, TrangThaiChuyenDi trangThai,
+            PhuongTien phuongTien, DongTour dongTour, String moTa, int soLuong, NhanVien nhanVien, DiaChi noiKhoiHanh) {
         this.maChuyen = maChuyen;
         this.giaChuyenDi = giaChuyenDi;
         this.loaiChuyenDi = loaiChuyenDi;
@@ -92,6 +94,7 @@ public class ChuyenDuLich {
         this.soLuong = soLuong;
         this.dsChiTietThamQuan = new ArrayList<>();
         this.nhanVien = nhanVien;
+        this.noiKhoiHanh = noiKhoiHanh;
     }
 
     /**
@@ -114,8 +117,8 @@ public class ChuyenDuLich {
      * @param diaDanh
      * @param anhDiaDanh
      */
-    public void themChiTietThamQuan(ChuyenDuLich chuyenDuLich, DiaDanh diaDanh, byte[] anhDiaDanh) {
-        ChiTietThamQuan chiTietThamQuan = new ChiTietThamQuan(chuyenDuLich, diaDanh, anhDiaDanh);
+    public void themChiTietThamQuan(DiaDanh diaDanh, byte[] anhDiaDanh) {
+        ChiTietThamQuan chiTietThamQuan = new ChiTietThamQuan(this, diaDanh, anhDiaDanh);
         dsChiTietThamQuan.add(chiTietThamQuan);
     }
 
@@ -146,15 +149,16 @@ public class ChuyenDuLich {
     public void setLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) {
         this.loaiChuyenDi = loaiChuyenDi;
     }
+
     /**
      * @return the noiKhoiHanh
      */
     public DiaChi getNoiKhoiHanh() {
         return noiKhoiHanh;
     }
-    
+
     /**
-     * @param noiKhoiHanh 
+     * @param noiKhoiHanh
      */
     public void setNoiKhoiHanh(DiaChi noiKhoiHanh) {
         this.noiKhoiHanh = noiKhoiHanh;
@@ -166,14 +170,14 @@ public class ChuyenDuLich {
     public NhanVien getNhanVien() {
         return nhanVien;
     }
-    
+
     /**
-     * @param nhanVien 
+     * @param nhanVien
      */
     public void setNhanVien(NhanVien nhanVien) {
         this.nhanVien = nhanVien;
     }
-    
+
     /**
      * @return ngayTao
      */
@@ -323,8 +327,11 @@ public class ChuyenDuLich {
     }
 
     public Object[] convertToRowTable() {
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiChuyen(), trangThai};
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        DecimalFormat df2 = new DecimalFormat("###,###,###");
+        return new Object[]{maChuyen, sdf.format(ngayKhoiHanh), sdf.format(ngayKetThuc), soLuong,
+            loaiChuyenDi.getTenLoaiChuyen(), dongTour, phuongTien.getPhuongTien(), df2.format(giaChuyenDi), trangThai,
+            sdf.format(ngayTao)};
     }
 
     @Override
@@ -350,6 +357,7 @@ public class ChuyenDuLich {
             return false;
         }
         return true;
+
     }
-    
+
 }
