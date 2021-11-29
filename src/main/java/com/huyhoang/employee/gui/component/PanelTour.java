@@ -5,7 +5,6 @@
  */
 package com.huyhoang.employee.gui.component;
 
-import com.huyhoang.dao.LoaiChuyenDiDAO;
 import com.huyhoang.dao.impl.ChuyenDuLichImpl;
 import com.huyhoang.dao.impl.LoaiChuyenDiImpl;
 import com.huyhoang.model.ChuyenDuLich;

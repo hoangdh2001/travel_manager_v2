@@ -5,7 +5,7 @@
  */
 package com.huyhoang.employee.gui.component;
 
-import com.huyhoang.dao.ChuyenDuLichDAO;
+import com.huyhoang.dao.impl.ChuyenDuLichImpl;
 import java.awt.Color;
 
 /**
@@ -14,9 +14,9 @@ import java.awt.Color;
  */
 public class PanelKhachHang extends javax.swing.JPanel {
 
-    private  ChuyenDuLichDAO chuyenDuLichDAO;
+    private  ChuyenDuLichImpl chuyenDuLichImpl;
     public PanelKhachHang() {
-        chuyenDuLichDAO = new ChuyenDuLichDAO();
+        chuyenDuLichImpl = new ChuyenDuLichImpl();
         initComponents();
         setPropertiesForm();
     }
