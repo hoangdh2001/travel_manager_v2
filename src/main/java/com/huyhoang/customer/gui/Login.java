@@ -72,7 +72,7 @@ public class Login extends javax.swing.JFrame {
         wrapLabel1.setHAlignStyle(0.5F);
         wrapLabel1.setVAlignStyle(0.0F);
         wrapLabel1.setFont(new Font("Segoe UI", 1, 30)); // NOI18N
-        jPanel1.add(wrapLabel1, "w 100%, h 100!, span 2");
+        jPanel1.add(wrapLabel1, "w 80%, h 100!, span 2");
         
         txtSdt.setForeground(new Color(255, 255, 255));
         txtSdt.setBackgroundColor(new Color(51, 51, 51));

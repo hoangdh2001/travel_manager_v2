@@ -3,7 +3,6 @@ package com.huyhoang.model;
 import java.awt.Color;
 
 public enum TrangThaiDonDat {
-    MOI("Mới", Color.GREEN),
     DANG_XU_LY("Đang xử lý", Color.ORANGE),
     HUY("Hủy", Color.RED),
     HOAN_THANH("Hoàn thành", Color.DARK_GRAY);

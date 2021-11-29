@@ -1,5 +1,7 @@
 package com.huyhoang.customer.gui.component;
 
+import com.huyhoang.model.LoaiChuyenDi;
+import java.awt.Color;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
@@ -7,13 +9,25 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 public class BoxType extends com.huyhoang.swing.panel.PanelTransparent {
     private boolean over;
     private Animator animator;
-    public BoxType() {
+    private LoaiChuyenDi loaiChuyenDi;
+    public BoxType(LoaiChuyenDi loaiChuyenDi) {
+        this.loaiChuyenDi = loaiChuyenDi;
         initComponents();
         buildDisplay();
     }
     
     private void buildDisplay() {
+        loadData();
         overTransparent();
+    }
+    
+    private void loadData() {
+        wrapLabel1.setText(loaiChuyenDi.getTenLoaiChuyen());
+        wrapLabel1.repaint();
+        wrapLabel1.revalidate();
+        setBackground(Color.decode(loaiChuyenDi.getMauLoai()));
+        repaint();
+        revalidate();
     }
     
     private void overTransparent() {
@@ -21,11 +35,10 @@ public class BoxType extends com.huyhoang.swing.panel.PanelTransparent {
             @Override
             public void timingEvent(float fraction) {
                 if (over) {
-                    bg.setAlpha(0.1f * fraction);
+                    bg.setAlpha(0.2f * fraction);
                 } else {
-                    bg.setAlpha(0.1f * (1f - fraction));
+                    bg.setAlpha(0.2f * (1f - fraction));
                 }
-                bg.revalidate();
             }
         };
         animator = new Animator(400, target);

@@ -1,24 +1,61 @@
 package com.huyhoang.customer.gui.form;
 
 import com.huyhoang.customer.gui.component.BoxType;
+import com.huyhoang.dao.DiaChi_DAO;
+import com.huyhoang.dao.LoaiChuyenDi_DAO;
+import com.huyhoang.dao.impl.DiaChiImpl;
+import com.huyhoang.dao.impl.LoaiChuyenDiImpl;
+import com.huyhoang.model.LoaiChuyenDi;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 
 public class Search extends javax.swing.JPanel {
 
+    private LoaiChuyenDi_DAO loaiChuyenDi_DAO;
+    private DiaChi_DAO diaChi_DAO;
     public Search() {
+        this.loaiChuyenDi_DAO = new LoaiChuyenDiImpl();
+        this.diaChi_DAO = new DiaChiImpl();
         initComponents();
         buildDisplay();
     }
-    
+
     private void buildDisplay() {
+        loadDataForm();
         createMap();
     }
     
-    private void createMap() {
-        for (int i = 0; i < 3; i++) {
-            BoxType boxType = new BoxType();
-            map1.addBox(boxType, 200, 200);
+    private void loadDataForm() {
+        DefaultComboBoxModel<String> cmbDiemDiModel = new DefaultComboBoxModel<>();
+        cmbDiemDiModel.addAll(diaChi_DAO.getAllTinhThanh());
+        cmbDiemDi.setModel(cmbDiemDiModel);
+        cmbDiemDiModel.setSelectedItem("Thành phố Hồ Chí Minh");
+        DefaultComboBoxModel<String> cmbDiemDenModel = new DefaultComboBoxModel<>();
+        cmbDiemDenModel.addAll(diaChi_DAO.getAllTinhThanh());
+        cmbDiemDen.addItem("Hãy chọn điểm đến");
+        cmbDiemDen.setModel(cmbDiemDiModel);
+        
+        for (int i = 1; i <= 31; i++) {
+            cmbNgay.addItem(i);
         }
         
+        for (int i = 1; i <= 12; i++) {
+            cmbThang.addItem(i);
+        }
+        
+        for (int i = 1951; i < 2010; i++) {
+            cmbNam.addItem(i);
+        }
+    }
+
+    private void createMap() {
+        List<LoaiChuyenDi> dsChuyenDi = loaiChuyenDi_DAO.getDsLoaiChuyenDi();
+        if (dsChuyenDi != null) {
+            for (LoaiChuyenDi loaiChuyenDi : dsChuyenDi) {
+                BoxType boxType = new BoxType(loaiChuyenDi);
+                map1.addBox(boxType, 200, 200);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -28,20 +65,20 @@ public class Search extends javax.swing.JPanel {
         map1 = new com.huyhoang.customer.gui.component.Map();
         jPanel1 = new javax.swing.JPanel();
         panelRoundLine1 = new com.huyhoang.swing.panel.PanelRoundLine();
-        combobox1 = new com.huyhoang.swing.combobox.Combobox();
+        cmbDiemDi = new com.huyhoang.swing.combobox.Combobox<>();
         jLabel1 = new javax.swing.JLabel();
         panelRoundLine2 = new com.huyhoang.swing.panel.PanelRoundLine();
-        combobox2 = new com.huyhoang.swing.combobox.Combobox();
+        cmbDiemDen = new com.huyhoang.swing.combobox.Combobox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         panelRoundLine3 = new com.huyhoang.swing.panel.PanelRoundLine();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        cmbNgay = new com.huyhoang.swing.combobox.Combobox();
+        cmbThang = new com.huyhoang.swing.combobox.Combobox();
+        cmbNam = new com.huyhoang.swing.combobox.Combobox();
         panelRoundLine4 = new com.huyhoang.swing.panel.PanelRoundLine();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        cmbSoNgay = new com.huyhoang.swing.combobox.Combobox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(57, 20, 0, 20));
@@ -55,9 +92,8 @@ public class Search extends javax.swing.JPanel {
         panelRoundLine1.setBorderColor(new java.awt.Color(40, 40, 40));
         panelRoundLine1.setBorderRadius(20);
 
-        combobox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3" }));
-        combobox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        combobox1.setLabeText("Điếm đi");
+        cmbDiemDi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbDiemDi.setLabeText("Điếm đi");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/location.png"))); // NOI18N
 
@@ -66,11 +102,10 @@ public class Search extends javax.swing.JPanel {
         panelRoundLine1Layout.setHorizontalGroup(
             panelRoundLine1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRoundLine1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbDiemDi, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panelRoundLine1Layout.setVerticalGroup(
             panelRoundLine1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,7 +113,7 @@ public class Search extends javax.swing.JPanel {
                 .addGroup(panelRoundLine1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRoundLine1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbDiemDi, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRoundLine1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabel1)))
@@ -89,10 +124,10 @@ public class Search extends javax.swing.JPanel {
         panelRoundLine2.setBorderColor(new java.awt.Color(40, 40, 40));
         panelRoundLine2.setBorderRadius(20);
 
-        combobox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3" }));
-        combobox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        combobox2.setLabeText("Điếm đến");
-        combobox2.setLightWeightPopupEnabled(false);
+        cmbDiemDen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hãy chọn điểm đến" }));
+        cmbDiemDen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbDiemDen.setLabeText("Điếm đến");
+        cmbDiemDen.setLightWeightPopupEnabled(false);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/location.png"))); // NOI18N
 
@@ -103,15 +138,15 @@ public class Search extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRoundLine2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbDiemDen, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelRoundLine2Layout.setVerticalGroup(
             panelRoundLine2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRoundLine2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbDiemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRoundLine2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -126,14 +161,13 @@ public class Search extends javax.swing.JPanel {
         panelRoundLine3.setBorderRadius(20);
         panelRoundLine3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel4.setText("Ngày  đi");
-
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar.png"))); // NOI18N
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
+        cmbNgay.setLabeText("Ngày");
+
+        cmbThang.setLabeText("Tháng");
+
+        cmbNam.setLabeText("Năm");
 
         javax.swing.GroupLayout panelRoundLine3Layout = new javax.swing.GroupLayout(panelRoundLine3);
         panelRoundLine3.setLayout(panelRoundLine3Layout);
@@ -143,38 +177,35 @@ public class Search extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelRoundLine3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cmbNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRoundLine3Layout.setVerticalGroup(
             panelRoundLine3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRoundLine3Layout.createSequentialGroup()
-                .addGroup(panelRoundLine3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRoundLine3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, 0)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRoundLine3Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(jLabel5)
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRoundLine3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelRoundLine3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         panelRoundLine4.setBackground(new java.awt.Color(255, 255, 255));
         panelRoundLine4.setBorderColor(new java.awt.Color(40, 40, 40));
         panelRoundLine4.setBorderRadius(20);
 
-        jLabel6.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel6.setText("Số ngày");
-
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar.png"))); // NOI18N
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        cmbSoNgay.setLabeText("Số ngày");
 
         javax.swing.GroupLayout panelRoundLine4Layout = new javax.swing.GroupLayout(panelRoundLine4);
         panelRoundLine4.setLayout(panelRoundLine4Layout);
@@ -184,25 +215,20 @@ public class Search extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelRoundLine4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addComponent(cmbSoNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 97, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelRoundLine4Layout.setVerticalGroup(
             panelRoundLine4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRoundLine4Layout.createSequentialGroup()
                 .addGroup(panelRoundLine4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRoundLine4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRoundLine4Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jLabel7)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jLabel7))
+                    .addGroup(panelRoundLine4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cmbSoNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -210,28 +236,33 @@ public class Search extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(panelRoundLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelRoundLine2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelRoundLine3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelRoundLine4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelRoundLine1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panelRoundLine2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelRoundLine3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelRoundLine4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(panelRoundLine1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelRoundLine2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel3))
-                    .addComponent(panelRoundLine1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRoundLine2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRoundLine3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRoundLine4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelRoundLine3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRoundLine4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -240,7 +271,9 @@ public class Search extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(map1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,18 +286,18 @@ public class Search extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.huyhoang.swing.combobox.Combobox combobox1;
-    private com.huyhoang.swing.combobox.Combobox combobox2;
+    private com.huyhoang.swing.combobox.Combobox<String> cmbDiemDen;
+    private com.huyhoang.swing.combobox.Combobox<String> cmbDiemDi;
+    private com.huyhoang.swing.combobox.Combobox cmbNam;
+    private com.huyhoang.swing.combobox.Combobox cmbNgay;
+    private com.huyhoang.swing.combobox.Combobox cmbSoNgay;
+    private com.huyhoang.swing.combobox.Combobox cmbThang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private com.huyhoang.customer.gui.component.Map map1;
     private com.huyhoang.swing.panel.PanelRoundLine panelRoundLine1;
     private com.huyhoang.swing.panel.PanelRoundLine panelRoundLine2;

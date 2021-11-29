@@ -35,5 +35,19 @@ public class KhachHangImpl implements KhachHang_DAO {
         }
         return null;
     }
-    
+
+    @Override
+    public boolean updateKhachHang(KhachHang khachHang) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tr = session.getTransaction();
+        
+        try {
+            tr.begin();
+            session.update(khachHang);
+            tr.commit();
+        } catch (Exception e) {
+            tr.rollback();
+        }
+        return false;
+    }
 }

@@ -3,6 +3,7 @@ package com.huyhoang.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,11 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "khachhang", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "sdt")})
+@Table(name = "khachhang")
 public class KhachHang {
 
     @Id
@@ -26,8 +25,9 @@ public class KhachHang {
     private byte[] avatar;
     @Column(name = "CCCD", columnDefinition = "varchar(12)", nullable = false)
     private String cCCD;
-    @Column(name = "sdt", columnDefinition = "varchar(10)", nullable = false)
+    @Column(name = "sdt", columnDefinition = "varchar(10)", nullable = false, unique = true)
     private String soDienThoai;
+    @Column(unique = true)
     private String email;
     @ManyToOne
     @JoinColumn(name = "diachi_id", nullable = false)
@@ -59,7 +59,7 @@ public class KhachHang {
         this.matKhau = matKhau;
         this.chuyenDiDaThich = new ArrayList<>();
     }
-    
+
     public void themChuyenDiDaThich(ChuyenDuLich chuyenDuLich) {
         if(!chuyenDiDaThich.contains(chuyenDuLich)) {
             chuyenDiDaThich.add(chuyenDuLich);
@@ -184,25 +184,51 @@ public class KhachHang {
     public void setMatKhau(byte[] matKhau) {
         this.matKhau = matKhau;
     }
-    
+
     /**
      * @return the chuyenDiDaThich
      */
     public List<ChuyenDuLich> getChuyenDiDaThich() {
         return chuyenDiDaThich;
     }
-    
+
     /**
-     * @param chuyenDiDaThich 
+     * @param chuyenDiDaThich
      */
     public void setChuyenDiDaThich(List<ChuyenDuLich> chuyenDiDaThich) {
         this.chuyenDiDaThich = chuyenDiDaThich;
     }
-    
+
     @Override
     public String toString() {
         return "KhachHang [maKhachHang=" + maKhachHang + ", hoTen=" + hoTen + ", cCCD=" + cCCD + ", soDienThoai="
                 + soDienThoai + ", email=" + email + ", diaChi=" + diaChi + ", matKhau=" + Arrays.toString(matKhau)
                 + "]";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.maKhachHang);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final KhachHang other = (KhachHang) obj;
+        if (!Objects.equals(this.maKhachHang, other.maKhachHang)) {
+            return false;
+        }
+        return true;
+    }
+
 }
