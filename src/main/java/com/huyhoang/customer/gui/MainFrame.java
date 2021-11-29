@@ -8,7 +8,6 @@ import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.KhachHang;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
-import com.huyhoang.swing.panel.ProgressGlassPane;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -50,14 +49,12 @@ public class MainFrame extends javax.swing.JFrame {
     private final List<Component> historyComponent = new ArrayList<>();
     private int currentIndex = -1;
     public static KhachHang khachHang;
-    private ProgressGlassPane waitPanel;
 
-    public MainFrame() {
-        this.khachHang = new KhachHang();
+    public MainFrame(KhachHang khachHang) {
+        MainFrame.khachHang = khachHang;
         initComponents();
         btrang.setVisible(false);
         jPanel1.setVisible(true);
-        setGlassPane(waitPanel = new ProgressGlassPane());
         buildDisplay();
     }
 
@@ -80,7 +77,6 @@ public class MainFrame extends javax.swing.JFrame {
         menu.initMenu((int index) -> {
             if (index == 0) {
                 main.getContent().showForm(home);
-                waitPanel.setVisible(true);
                 addHistory(home);
             } else if (index == 1) {
                 main.getContent().showForm(search);
@@ -408,7 +404,32 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> {
+//            new MainFrame().setVisible(true);
+//        });
+//    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;
     private com.huyhoang.customer.gui.component.Bottom bottom;
