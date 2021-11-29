@@ -5,12 +5,12 @@
  */
 package com.huyhoang.employee.gui.dialog;
 
-import com.huyhoang.dao.ChiTietThamQuanDAO;
-import com.huyhoang.dao.ChuyenDuLichDAO;
-import com.huyhoang.dao.DiaChiDAO;
-import com.huyhoang.dao.DiaDanhDao;
-import com.huyhoang.dao.LoaiChuyenDiDAO;
-import com.huyhoang.dao.NhanVienDAO;
+import com.huyhoang.dao.impl.ChiTietThamQuanImpl;
+import com.huyhoang.dao.impl.ChuyenDuLichImpl;
+import com.huyhoang.dao.impl.DiaChiImpl;
+import com.huyhoang.dao.impl.DiaDanhImpl;
+import com.huyhoang.dao.impl.LoaiChuyenDiImpl;
+import com.huyhoang.dao.impl.NhanVienImpl;
 import com.huyhoang.model.ChiTietThamQuan;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.DiaChi;
@@ -20,9 +20,7 @@ import com.huyhoang.model.LoaiChuyenDi;
 import com.huyhoang.model.NhanVien;
 import com.huyhoang.model.PhuongTien;
 import com.huyhoang.model.TrangThaiChuyenDi;
-import com.huyhoang.swing.event.EventAddImage;
 import com.huyhoang.swing.model.AutoID;
-import com.huyhoang.swing.model.ModelAddImage;
 import com.huyhoang.swing.slideshow.EventPagination;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,12 +54,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DialogTour extends javax.swing.JDialog {
 
-    private ChuyenDuLichDAO chuyenDuLichDAO;
-    private LoaiChuyenDiDAO loaiChuyenDiDAO;
-    private DiaDanhDao diaDanhDao;
-    private NhanVienDAO nhanVienDAO;
-    private DiaChiDAO diaChiDAO;
-    private ChiTietThamQuanDAO chiTietThamQuanDAO;
+    private ChuyenDuLichImpl chuyenDuLichImpl;
+    private LoaiChuyenDiImpl loaiChuyenDiImpl;
+    private DiaDanhImpl diaDanhImpl;
+    private NhanVienImpl nhanVienImpl;
+    private DiaChiImpl diaChiImpl;
+    private ChiTietThamQuanImpl chiTietThamQuanImpl;
 
     private List<LoaiChuyenDi> listlLoaiChuyenDis;
     private List<DiaDanh> listDiaDanhs;
@@ -74,12 +72,12 @@ public class DialogTour extends javax.swing.JDialog {
         super(parent, true);
         initComponents();
 
-        chuyenDuLichDAO = new ChuyenDuLichDAO();
-        loaiChuyenDiDAO = new LoaiChuyenDiDAO();
-        diaDanhDao = new DiaDanhDao();
-        nhanVienDAO = new NhanVienDAO();
-        diaChiDAO = new DiaChiDAO();
-        chiTietThamQuanDAO = new ChiTietThamQuanDAO();
+        chuyenDuLichImpl = new ChuyenDuLichImpl();
+        loaiChuyenDiImpl = new LoaiChuyenDiImpl();
+        diaDanhImpl = new DiaDanhImpl();
+        nhanVienImpl = new NhanVienImpl();
+        diaChiImpl = new DiaChiImpl();
+        chiTietThamQuanImpl = new ChiTietThamQuanImpl();
 
         chiTietThamQuans = new ArrayList<ChiTietThamQuan>();
         chuyenDuLich = new ChuyenDuLich();
@@ -123,7 +121,7 @@ public class DialogTour extends javax.swing.JDialog {
      * Xử lý load dữ liệu lên các combobox
      */
     private void comboBoxHandle() {
-        listlLoaiChuyenDis = loaiChuyenDiDAO.getLoaiChuyenDis();
+        listlLoaiChuyenDis = loaiChuyenDiImpl.getLoaiChuyenDis();
         cmbLoaiChuyenDiModel.addAll(listlLoaiChuyenDis);
 
         DongTour[] dongTours = DongTour.values();
@@ -137,13 +135,13 @@ public class DialogTour extends javax.swing.JDialog {
         }
 
         // phường 4, gò vấp, HCM
-        cmbNoiKhoiHanh.addItem(diaChiDAO.getTinhByMaDiaChi("DC-0001204"));
+        cmbNoiKhoiHanh.addItem(diaChiImpl.getTinhByMaDiaChi("DC-0001204"));
         // Hải Hòa, Ngũ hành sơn, đà nẵng
-        cmbNoiKhoiHanh.addItem(diaChiDAO.getTinhByMaDiaChi("DC-0000121"));
+        cmbNoiKhoiHanh.addItem(diaChiImpl.getTinhByMaDiaChi("DC-0000121"));
         //sài đồng, long biên, hà nội
-        cmbNoiKhoiHanh.addItem(diaChiDAO.getTinhByMaDiaChi("DC-0000678"));
+        cmbNoiKhoiHanh.addItem(diaChiImpl.getTinhByMaDiaChi("DC-0000678"));
 
-        diaDanhDao.getTinhThanhDiaDanhs().forEach(i -> {
+        diaDanhImpl.getTinhThanhDiaDanhs().forEach(i -> {
             cmbTimKiemTinh.addItem(i);
         });
     }
@@ -173,7 +171,7 @@ public class DialogTour extends javax.swing.JDialog {
             public void run() {
                 String textSearch = txtTimKiem.getText().trim();
 
-                List<DiaDanh> list = diaDanhDao.searchDiaDanhs(textSearch, cmbTimKiemTinh.getSelectedItem().toString(), numPage);
+                List<DiaDanh> list = diaDanhImpl.searchDiaDanhs(textSearch, cmbTimKiemTinh.getSelectedItem().toString(), numPage);
                 Set<DiaDanh> temp = new HashSet<>();
 
                 for (DiaDanh i : list) {
@@ -199,7 +197,7 @@ public class DialogTour extends javax.swing.JDialog {
      * Load số trang - tạo số trang
      */
     private void loadPage() {
-        int row = diaDanhDao.getSoLuongSearch(txtTimKiem.getText().trim(), cmbTimKiemTinh.getSelectedItem().toString());
+        int row = diaDanhImpl.getSoLuongSearch(txtTimKiem.getText().trim(), cmbTimKiemTinh.getSelectedItem().toString());
         int x = row % 20 == 0 ? row / 20 : (row / 20) + 1;
         if (x == 0) {
             x = 1;
@@ -224,7 +222,7 @@ public class DialogTour extends javax.swing.JDialog {
      * làm mới lại giao diện
      */
     private void clearForm() {
-        ChuyenDuLich last = chuyenDuLichDAO.getLastChuyenDuLich();
+        ChuyenDuLich last = chuyenDuLichImpl.getLastChuyenDuLich();
         String newID = AutoID.generateId(last.getMaChuyen(), "CD");
         System.out.println(last.getMaChuyen());
 
@@ -305,7 +303,7 @@ public class DialogTour extends javax.swing.JDialog {
         int rowCount_CTTQ = tblCTTQ.getRowCount();
 
         for (int row = 0; row < rowCount_CTTQ; row++) {
-            DiaDanh diaDanh = diaDanhDao.getDiaDanh(tblCTTQ.getValueAt(row, 1).toString());
+            DiaDanh diaDanh = diaDanhImpl.getDiaDanh(tblCTTQ.getValueAt(row, 1).toString());
 
             File file = new File(tblCTTQ.getValueAt(row, 2).toString());
             byte[] anhPhong = null;
@@ -406,7 +404,7 @@ public class DialogTour extends javax.swing.JDialog {
 
         int soLuong = Integer.parseInt(txtSoLuong.getText());
 
-        NhanVien nhanVien = nhanVienDAO.getNhanVien("NV0004");
+        NhanVien nhanVien = nhanVienImpl.getNhanVien("NV0004");
 
         String maDiaChi = "";
         switch (cmbNoiKhoiHanh.getSelectedIndex()) {
@@ -422,7 +420,7 @@ public class DialogTour extends javax.swing.JDialog {
             default:
                 break;
         }
-        DiaChi noiKhoiHanh = diaChiDAO.getDiaChi(maDiaChi);
+        DiaChi noiKhoiHanh = diaChiImpl.getDiaChi(maDiaChi);
         System.out.println("maDiaChi" + maDiaChi);
         System.out.println("noiKhoiHanh" + noiKhoiHanh);
 
@@ -441,7 +439,7 @@ public class DialogTour extends javax.swing.JDialog {
         chuyenDuLich.setNhanVien(nhanVien);
         chuyenDuLich.setNoiKhoiHanh(noiKhoiHanh);
 
-        boolean result = chuyenDuLichDAO.addChuyenDuLich(chuyenDuLich);
+        boolean result = chuyenDuLichImpl.addChuyenDuLich(chuyenDuLich);
 
         return result;
     }
@@ -450,7 +448,7 @@ public class DialogTour extends javax.swing.JDialog {
 
         List<ChiTietThamQuan> list = chuyenDuLich.getDsChiTietThamQuan();
         for (ChiTietThamQuan i : list) {
-            if (chiTietThamQuanDAO.addChiTietThamQuan(i) == false) {
+            if (chiTietThamQuanImpl.addChiTietThamQuan(i) == false) {
                 return false;
             }
         }

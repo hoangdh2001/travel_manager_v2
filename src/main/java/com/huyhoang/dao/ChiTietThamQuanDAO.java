@@ -17,57 +17,20 @@ import org.hibernate.Transaction;
  *
  * @author NGUYE
  */
-public class ChiTietThamQuanDAO implements ChiTietThamQuanService{
+public interface ChiTietThamQuanDAO {
 
-    private SessionFactory sessionFactory;
+    public boolean addChiTietThamQuan(ChiTietThamQuan chiTietThamQuan);
 
-    public ChiTietThamQuanDAO() {
-        sessionFactory = HibernateUtil.getInstance().getSessionFactory();
-    }
-    @Override
-    public boolean addChiTietThamQuan(ChiTietThamQuan chiTietThamQuan) {
-         Session session = sessionFactory.getCurrentSession();
-        Transaction tr = session.getTransaction();
-        try {
-            tr.begin();
-            session.save(chiTietThamQuan);
-            tr.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            tr.rollback();
-        }
-        return false;
-    }
+    public boolean updateChiTietThamQuan(ChiTietThamQuan chiTietThamQuan);
 
-    @Override
-    public boolean updateChiTietThamQuan(ChiTietThamQuan diaDanh) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean deleteChiTietThamQuan(String id);
 
-    @Override
-    public boolean deleteChiTietThamQuan(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public ChiTietThamQuan getChiTietThamQuan(String id);
 
-    @Override
-    public ChiTietThamQuan getChiTietThamQuan(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public List<ChiTietThamQuan> getChiTietThamQuans();
 
-    @Override
-    public List<ChiTietThamQuan> getChiTietThamQuans() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public List<ChiTietThamQuan> getChiTietThamQuan(int numPage);
 
-    @Override
-    public List<ChiTietThamQuan> getChiTietThamQuan(int numPage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public int getSoLuongChiTietThamQuan();
 
-    @Override
-    public int getSoLuongChiTietThamQuan() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

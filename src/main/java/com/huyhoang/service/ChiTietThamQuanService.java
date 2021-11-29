@@ -13,17 +13,17 @@ import java.util.List;
  * @author NGUYE
  */
 public interface ChiTietThamQuanService {
-    public boolean addChiTietThamQuan(ChiTietThamQuan chiTietThamQuan);
-
-    public boolean updateChiTietThamQuan(ChiTietThamQuan chiTietThamQuan);
-
-    public boolean deleteChiTietThamQuan(String id);
-
-    public ChiTietThamQuan getChiTietThamQuan(String id);
-
-    public List<ChiTietThamQuan> getChiTietThamQuans();
-
-    public List<ChiTietThamQuan> getChiTietThamQuan(int numPage);
-
-    public int getSoLuongChiTietThamQuan();
+//    public boolean addChiTietThamQuan(ChiTietThamQuan chiTietThamQuan);
+//
+//    public boolean updateChiTietThamQuan(ChiTietThamQuan chiTietThamQuan);
+//
+//    public boolean deleteChiTietThamQuan(String id);
+//
+//    public ChiTietThamQuan getChiTietThamQuan(String id);
+//
+//    public List<ChiTietThamQuan> getChiTietThamQuans();
+//
+//    public List<ChiTietThamQuan> getChiTietThamQuan(int numPage);
+//
+//    public int getSoLuongChiTietThamQuan();
 }

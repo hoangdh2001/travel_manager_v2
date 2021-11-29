@@ -5,8 +5,9 @@
  */
 package com.huyhoang.employee.gui.component;
 
-import com.huyhoang.dao.ChuyenDuLichDAO;
 import com.huyhoang.dao.LoaiChuyenDiDAO;
+import com.huyhoang.dao.impl.ChuyenDuLichImpl;
+import com.huyhoang.dao.impl.LoaiChuyenDiImpl;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.DongTour;
 import com.huyhoang.model.LoaiChuyenDi;
@@ -24,8 +25,6 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -36,8 +35,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PanelTour extends javax.swing.JPanel {
 
-    private ChuyenDuLichDAO chuyenDuLichDAO;
-    private LoaiChuyenDiDAO loaiChuyenDiDAO;
+    private ChuyenDuLichImpl chuyenDuLichImpl;
+    private LoaiChuyenDiImpl loaiChuyenDiImpl;
 
     private List<ChuyenDuLich> listCDL;
     private List<LoaiChuyenDi> listChuyenDis;
@@ -52,8 +51,8 @@ public class PanelTour extends javax.swing.JPanel {
         setPropertiesForm();
         setSizeColumn();
 
-        chuyenDuLichDAO = new ChuyenDuLichDAO();
-        loaiChuyenDiDAO = new LoaiChuyenDiDAO();
+        chuyenDuLichImpl = new ChuyenDuLichImpl();
+        loaiChuyenDiImpl = new LoaiChuyenDiImpl();
 
         loadDataForm();
         tblTourHandle();
@@ -98,7 +97,7 @@ public class PanelTour extends javax.swing.JPanel {
 
     private void loadDataForm() {
 
-        listChuyenDis = loaiChuyenDiDAO.getLoaiChuyenDis();
+        listChuyenDis = loaiChuyenDiImpl.getLoaiChuyenDis();
         cmbLoaiChuyenDiModel.addAll(listChuyenDis);
 
         TrangThaiChuyenDi[] trangThais = TrangThaiChuyenDi.values();
@@ -210,7 +209,7 @@ public class PanelTour extends javax.swing.JPanel {
                     ngayTao = df.format(jdcNgayTao.getDate());
                 }
 
-                List<ChuyenDuLich> listRow = chuyenDuLichDAO.searchChuyenDuLichs(textSearch, cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex()),
+                List<ChuyenDuLich> listRow = chuyenDuLichImpl.searchChuyenDuLichs(textSearch, cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex()),
                         trangThai, phuongTien, ngayBatDau, ngayKetThuc, ngayTao, numPage);
                 if (listRow != null) {
 
@@ -249,7 +248,7 @@ public class PanelTour extends javax.swing.JPanel {
             ngayTao = df.format(jdcNgayTao.getDate());
         }
 
-        int row = chuyenDuLichDAO.soLuongSearch(textSearch, cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex()),
+        int row = chuyenDuLichImpl.soLuongSearch(textSearch, cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex()),
                 trangThai, phuongTien, ngayBatDau, ngayKetThuc, ngayTao);
         System.out.println("row " + row);
 //        System.out.println(0 % 20);

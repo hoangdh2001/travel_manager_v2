@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.huyhoang.dao;
+package com.huyhoang.dao.impl;
 
-import com.huyhoang.model.LoaiChuyenDi;
-import com.huyhoang.service.LoaiChuyenDiService;
+import com.huyhoang.dao.NhanVienDAO;
+import com.huyhoang.model.NhanVien;
 import com.huyhoang.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
@@ -17,63 +17,58 @@ import org.hibernate.Transaction;
  *
  * @author NGUYE
  */
-public class LoaiChuyenDiDAO implements LoaiChuyenDiService{
+public class NhanVienImpl implements  NhanVienDAO{
+     private SessionFactory sessionFactory;
 
-    private SessionFactory sessionFactory;
-
-    public LoaiChuyenDiDAO() {
+    public NhanVienImpl() {
         sessionFactory = HibernateUtil.getInstance().getSessionFactory();
     }
 
-    
     @Override
-    public boolean addLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) {
+    public boolean addNhanVien(NhanVien diaDanh) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean updateLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) {
+    public boolean updateNhanVien(NhanVien diaDanh) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean deleteLoaiChuyenDi(String id) {
+    public boolean deleteNhanVien(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public LoaiChuyenDi getLoaiChuyenDi(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public NhanVien getNhanVien(String id) {
+       Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
 
-    @Override
-    public List<LoaiChuyenDi> getLoaiChuyenDis() {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tr = session.getTransaction();
         try {
-            tr.begin();
-            List<LoaiChuyenDi> rs = session
-                    .createNativeQuery(" select * from loaichuyendi ", LoaiChuyenDi.class)
-                    .getResultList();
-            tr.commit();
+            transaction.begin();
+            NhanVien rs = session.find(NhanVien.class, id);
+            transaction.commit();
+
             return rs;
         } catch (Exception e) {
-            e.printStackTrace();
-            tr.rollback();
+            System.err.println(e);
+            transaction.rollback();
         }
         return null;
     }
 
     @Override
-    public List<LoaiChuyenDi> getLoaiChuyenDi(int numPage) {
+    public List<NhanVien> getNhanViens() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getSoLuongLCD() {
+    public List<NhanVien> getNhanVien(int numPage) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
+    @Override
+    public int getSoLuongNhanVien() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
