@@ -50,5 +50,48 @@ public class LoaiChuyenDiImpl implements LoaiChuyenDi_DAO {
         }
         return dsLoaiChuyenDi;
     }
+    //nh
+     @Override
+    public boolean updateLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteLoaiChuyenDi(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public LoaiChuyenDi getLoaiChuyenDi(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<LoaiChuyenDi> getLoaiChuyenDis() {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tr = session.getTransaction();
+        try {
+            tr.begin();
+            List<LoaiChuyenDi> rs = session
+                    .createNativeQuery(" select * from loaichuyendi ", LoaiChuyenDi.class)
+                    .getResultList();
+            tr.commit();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            tr.rollback();
+        }
+        return null;
+    }
+
+    @Override
+    public List<LoaiChuyenDi> getLoaiChuyenDi(int numPage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getSoLuongLCD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

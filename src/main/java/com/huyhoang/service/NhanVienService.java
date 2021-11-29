@@ -14,18 +14,18 @@ import java.util.List;
  */
 public interface NhanVienService {
 
-    public boolean addNhanVien(NhanVien diaDanh);
-
-    public boolean updateNhanVien(NhanVien diaDanh);
-
-    public boolean deleteNhanVien(String id);
-
-    public NhanVien getNhanVien(String id);
-
-    public List<NhanVien> getNhanViens();
-
-    public List<NhanVien> getNhanVien(int numPage);
-
-    public int getSoLuongNhanVien();
+//    public boolean addNhanVien(NhanVien diaDanh);
+//
+//    public boolean updateNhanVien(NhanVien diaDanh);
+//
+//    public boolean deleteNhanVien(String id);
+//
+//    public NhanVien getNhanVien(String id);
+//
+//    public List<NhanVien> getNhanViens();
+//
+//    public List<NhanVien> getNhanVien(int numPage);
+//
+//    public int getSoLuongNhanVien();
 
 }

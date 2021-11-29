@@ -17,60 +17,73 @@ import org.hibernate.Transaction;
  *
  * @author NGUYE
  */
-public class NhanVienDAO implements NhanVienService{
-    
-    private SessionFactory sessionFactory;
+public interface NhanVienDAO {
 
-    public NhanVienDAO() {
-        sessionFactory = HibernateUtil.getInstance().getSessionFactory();
-    }
+    public boolean addNhanVien(NhanVien diaDanh);
 
-    @Override
-    public boolean addNhanVien(NhanVien diaDanh) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean updateNhanVien(NhanVien diaDanh);
 
-    @Override
-    public boolean updateNhanVien(NhanVien diaDanh) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean deleteNhanVien(String id);
 
-    @Override
-    public boolean deleteNhanVien(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public NhanVien getNhanVien(String id);
 
-    @Override
-    public NhanVien getNhanVien(String id) {
-       Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();
+    public List<NhanVien> getNhanViens();
 
-        try {
-            transaction.begin();
-            NhanVien rs = session.find(NhanVien.class, id);
-            transaction.commit();
+    public List<NhanVien> getNhanVien(int numPage);
 
-            return rs;
-        } catch (Exception e) {
-            System.err.println(e);
-            transaction.rollback();
-        }
-        return null;
-    }
+    public int getSoLuongNhanVien();
 
-    @Override
-    public List<NhanVien> getNhanViens() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<NhanVien> getNhanVien(int numPage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getSoLuongNhanVien() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+//    private SessionFactory sessionFactory;
+//
+//    public NhanVienDAO() {
+//        sessionFactory = HibernateUtil.getInstance().getSessionFactory();
+//    }
+//
+//    @Override
+//    public boolean addNhanVien(NhanVien diaDanh) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public boolean updateNhanVien(NhanVien diaDanh) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public boolean deleteNhanVien(String id) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public NhanVien getNhanVien(String id) {
+//       Session session = sessionFactory.openSession();
+//        Transaction transaction = session.getTransaction();
+//
+//        try {
+//            transaction.begin();
+//            NhanVien rs = session.find(NhanVien.class, id);
+//            transaction.commit();
+//
+//            return rs;
+//        } catch (Exception e) {
+//            System.err.println(e);
+//            transaction.rollback();
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public List<NhanVien> getNhanViens() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public List<NhanVien> getNhanVien(int numPage) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public int getSoLuongNhanVien() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }

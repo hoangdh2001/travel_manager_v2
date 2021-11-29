@@ -6,6 +6,7 @@
 package com.huyhoang.employee.gui.component;
 
 import com.huyhoang.dao.DiaDanhDao;
+import com.huyhoang.dao.impl.DiaDanhImpl;
 import com.huyhoang.model.DiaDanh;
 import com.huyhoang.swing.slideshow.EventPagination;
 import java.awt.Color;
@@ -20,12 +21,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PanelDiaDanh extends javax.swing.JPanel {
 
-    private DiaDanhDao diaDanhDao;
+    private DiaDanhImpl diaDanhImpl;
     private List<DiaDanh> listDiaDanh;
     public PanelDiaDanh() {
         initComponents();
         setPropertiesForm();
-        diaDanhDao = new DiaDanhDao();
+        diaDanhImpl = new DiaDanhImpl();
         tblDiaDanhHandle();
         loadData(pnlPage.getCurrentIndex());
     }
@@ -52,7 +53,7 @@ public class PanelDiaDanh extends javax.swing.JPanel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                listDiaDanh = diaDanhDao.getDiaDanh(numPage);
+                listDiaDanh = diaDanhImpl.getDiaDanh(numPage);
 
                 if (listDiaDanh != null) {
                     listDiaDanh.forEach(i -> {
@@ -74,7 +75,7 @@ public class PanelDiaDanh extends javax.swing.JPanel {
                 loadData(pageClick);
             }
         });
-        int soLuongPhong = diaDanhDao.getSoLuongDiaDanh();
+        int soLuongPhong = diaDanhImpl.getSoLuongDiaDanh();
         pnlPage.init(soLuongPhong % 20 == 0 ? soLuongPhong / 20 : (soLuongPhong / 20) + 1);
     }
     

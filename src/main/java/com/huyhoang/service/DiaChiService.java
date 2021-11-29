@@ -14,44 +14,44 @@ import java.util.List;
  */
 public interface DiaChiService {
 
-    public DiaChi getDiaChi(String id);
-    
-    /**
-     * lấy tất cả tỉnh/thành phố
-     *
-     * @return
-     */
-    public List<String> getAllTinhThanh();
-
-    /**
-     * lấy quận/huyện dựa vào tỉnh thành
-     *
-     * @param tinhThanh
-     * @return
-     */
-    public List<String> getQuanHuyenTheoTinhThanh(String tinhThanh);
-
-    /**
-     * lấy phường/xã dựa vào quận/huyện và tỉnh thành
-     *
-     * @param quanHuyen
-     * @param tinhThanh
-     * @return
-     */
-    public List<String> getPhuongXaTheoQHTH(String quanHuyen, String tinhThanh);
-    
-    /**
-     *  lấy mã địa chỉ dựa vào tên tỉnh/ thành phố
-     * @param name
-     * @return 
-     */
-    public String getMaDiaChiByTinh(String name);
-    
-    /**
-     *  lấy tên tỉnh thành phố dựa vào mã
-     * @param id
-     * @return 
-     */
-    public String getTinhByMaDiaChi(String id);
+//    public DiaChi getDiaChi(String id);
+//    
+//    /**
+//     * lấy tất cả tỉnh/thành phố
+//     *
+//     * @return
+//     */
+//    public List<String> getAllTinhThanh();
+//
+//    /**
+//     * lấy quận/huyện dựa vào tỉnh thành
+//     *
+//     * @param tinhThanh
+//     * @return
+//     */
+//    public List<String> getQuanHuyenTheoTinhThanh(String tinhThanh);
+//
+//    /**
+//     * lấy phường/xã dựa vào quận/huyện và tỉnh thành
+//     *
+//     * @param quanHuyen
+//     * @param tinhThanh
+//     * @return
+//     */
+//    public List<String> getPhuongXaTheoQHTH(String quanHuyen, String tinhThanh);
+//    
+//    /**
+//     *  lấy mã địa chỉ dựa vào tên tỉnh/ thành phố
+//     * @param name
+//     * @return 
+//     */
+//    public String getMaDiaChiByTinh(String name);
+//    
+//    /**
+//     *  lấy tên tỉnh thành phố dựa vào mã
+//     * @param id
+//     * @return 
+//     */
+//    public String getTinhByMaDiaChi(String id);
     
 }
