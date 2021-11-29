@@ -14,14 +14,18 @@ public class CellImage extends javax.swing.JPanel {
     public void setjButton1(JButton jButton1) {
         this.jButton1 = jButton1;
     }
-    
+
     public CellImage(ModelAddImage data) {
         initComponents();
-        
+
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                jLabel1.setText(data.getEvent().addImage());
+                String text = data.getEvent().addImage();
+                System.out.println("data in cellimage: " + text);
+                
+                jLabel1.setText(text);
+                jLabel1.repaint();
             }
         });
     }

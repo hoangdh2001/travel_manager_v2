@@ -76,7 +76,7 @@ public class ChuyenDuLich {
      * @param nhanVien
      */
     public ChuyenDuLich(String maChuyen, double giaChuyenDi, LoaiChuyenDi loaiChuyenDi, Date ngayTao, Date ngayKhoiHanh, Date ngayKetThuc, TrangThaiChuyenDi trangThai,
-            PhuongTien phuongTien, DongTour dongTour, String moTa, int soLuong, NhanVien nhanVien) {
+            PhuongTien phuongTien, DongTour dongTour, String moTa, int soLuong, NhanVien nhanVien, DiaChi noiKhoiHanh) {
         this.maChuyen = maChuyen;
         this.giaChuyenDi = giaChuyenDi;
         this.loaiChuyenDi = loaiChuyenDi;
@@ -90,6 +90,7 @@ public class ChuyenDuLich {
         this.soLuong = soLuong;
         this.dsChiTietThamQuan = new ArrayList<ChiTietThamQuan>();
         this.nhanVien = nhanVien;
+        this.noiKhoiHanh = noiKhoiHanh;
     }
 
     /**
@@ -108,12 +109,11 @@ public class ChuyenDuLich {
     }
 
     /**
-     * @param chuyenDuLich
      * @param diaDanh
      * @param anhDiaDanh
      */
-    public void themChiTietThamQuan(ChuyenDuLich chuyenDuLich, DiaDanh diaDanh, byte[] anhDiaDanh) {
-        ChiTietThamQuan chiTietThamQuan = new ChiTietThamQuan(chuyenDuLich, diaDanh, anhDiaDanh);
+    public void themChiTietThamQuan(DiaDanh diaDanh, byte[] anhDiaDanh) {
+        ChiTietThamQuan chiTietThamQuan = new ChiTietThamQuan(this, diaDanh, anhDiaDanh);
         dsChiTietThamQuan.add(chiTietThamQuan);
     }
 
@@ -298,6 +298,16 @@ public class ChuyenDuLich {
     public void setNhanVien(NhanVien nhanVien) {
         this.nhanVien = nhanVien;
     }
+
+    public DiaChi getNoiKhoiHanh() {
+        return noiKhoiHanh;
+    }
+
+    public void setNoiKhoiHanh(DiaChi noiKhoiHanh) {
+        this.noiKhoiHanh = noiKhoiHanh;
+    }
+    
+    
 
     @Override
     public String toString() {

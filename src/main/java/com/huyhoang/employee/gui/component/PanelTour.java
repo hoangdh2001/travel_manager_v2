@@ -218,7 +218,7 @@ public class PanelTour extends javax.swing.JPanel {
                         tblTour.addRow(new ChuyenDuLich(i.getMaChuyen(), i.getGiaChuyenDi(),
                                 i.getLoaiChuyenDi(), i.getNgayTao(), i.getNgayKetThuc(),
                                 i.getNgayKhoiHanh(), i.getTrangThai(), i.getPhuongTien(),
-                                DongTour.GIA_TOT, i.getMoTa(), i.getSoLuong(), i.getNhanVien()).convertToRowTable());
+                                DongTour.GIA_TOT, i.getMoTa(), i.getSoLuong(), i.getNhanVien(), i.getNoiKhoiHanh()).convertToRowTable());
                     });
                     tblTour.repaint();
                     tblTour.revalidate();

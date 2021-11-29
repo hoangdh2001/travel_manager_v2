@@ -46,7 +46,20 @@ public class DiaDanhDao implements DiaDanhService {
 
     @Override
     public DiaDanh getDiaDanh(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+
+        try {
+            transaction.begin();
+            DiaDanh diaDanh = session.find(DiaDanh.class, id);
+            transaction.commit();
+
+            return diaDanh;
+        } catch (Exception e) {
+            System.err.println(e);
+            transaction.rollback();
+        }
+        return null;
     }
 
     @Override
