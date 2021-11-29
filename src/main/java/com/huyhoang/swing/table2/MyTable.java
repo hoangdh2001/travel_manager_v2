@@ -2,22 +2,46 @@ package com.huyhoang.swing.table2;
 
 import com.huyhoang.model.TrangThaiChuyenDi;
 import com.huyhoang.model.TrangThaiDonDat;
+import com.huyhoang.swing.model.ModelAddImage;
+import gui.swing.event.EventMinus;
+import gui.swing.model.ModelAction;
+import gui.swing.model.ModelAdd;
+import gui.swing.table2.TableCellAction;
+import gui.swing.table2.TableCellAdd;
+import gui.swing.table2.TableCellMinus;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
 public class MyTable extends JTable {
-    
+
     public MyTable() {
-        
+
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 if (value instanceof TrangThaiChuyenDi | value instanceof TrangThaiDonDat) {
                     CellStatus cell = new CellStatus(value);
+                    if (isSelected) {
+                        cell.setBackground(getSelectionBackground());
+//                        cell.setForeground(new Color(15, 89, 140));
+                    } else {
+//                        cell.setBackground(Color.WHITE);
+//                        cell.setForeground(new Color(102, 102, 102));
+                        if (row % 2 == 0) {
+                            cell.setBackground(Color.WHITE);
+                        } else {
+                            cell.setBackground(new Color(233, 235, 245));
+                        }
+                    }
+                    return cell;
+                } else if (value instanceof ModelAddImage) {
+                    ModelAddImage data = (ModelAddImage) value;
+                    CellImage cell = new CellImage(data);
                     if (isSelected) {
                         cell.setBackground(getSelectionBackground());
 //                        cell.setForeground(new Color(15, 89, 140));
@@ -53,6 +77,14 @@ public class MyTable extends JTable {
         });
     }
     
+    @Override
+    public TableCellEditor getCellEditor(int row, int column) {
+        if(getValueAt(row, column) instanceof ModelAddImage) {
+            return new CellImageEditor();
+        }
+        return super.getCellEditor(row, column);
+    }
+
     public void addRow(Object[] row) {
         DefaultTableModel model = (DefaultTableModel) getModel();
         model.addRow(row);

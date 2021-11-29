@@ -35,7 +35,7 @@ public class TabHidden extends PanelShadow {
         pic2.setImage(new ImageIcon(getClass().getResource("/icon/hinh-anh-suy-tu-1.jpg")));
         PictureBox pic3 = new PictureBox();
         pic3.setImage(new ImageIcon(getClass().getResource("/icon/hình-ảnh-phong-cảnh-đẹp-1024x680.jpg")));
-        slideShow.initSlideshow(pic1, pic2, pic3);
+        slideShow1.initSlideshow(pic1, pic2, pic3);
     }
     
     @SuppressWarnings("unchecked")
@@ -45,7 +45,7 @@ public class TabHidden extends PanelShadow {
         btnClose = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        slideShow = new org.netbeans.modules.form.InvalidComponent();
+        slideShow1 = new com.huyhoang.swing.slideshow.SlideShow();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
 
@@ -67,13 +67,15 @@ public class TabHidden extends PanelShadow {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(slideShow, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(slideShow1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(slideShow, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 398, Short.MAX_VALUE))
+                .addComponent(slideShow1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 419, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tour Detail", jPanel1);
@@ -129,6 +131,6 @@ public class TabHidden extends PanelShadow {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private org.netbeans.modules.form.InvalidComponent slideShow;
+    private com.huyhoang.swing.slideshow.SlideShow slideShow1;
     // End of variables declaration//GEN-END:variables
 }
