@@ -83,7 +83,8 @@ public class MainFrame extends javax.swing.JFrame {
                 Home home = new Home();
                 home.addEventTour(new EventTour() {
                     @Override
-                    public void openTour(ChuyenDuLich chuyenDuLich) {
+                    public void openTour(Object obj) {
+                        ChuyenDuLich chuyenDuLich = (ChuyenDuLich) obj;
                         tourInfo.setChuyenDuLich(chuyenDuLich);
                         main.getContent().showForm(tourInfo);
                         menu.unSelectedAll();
@@ -105,7 +106,8 @@ public class MainFrame extends javax.swing.JFrame {
                 Library library = new Library();
                 library.addEventTour(new EventTour() {
                     @Override
-                    public void openTour(ChuyenDuLich chuyenDuLich) {
+                    public void openTour(Object obj) {
+                        ChuyenDuLich chuyenDuLich = (ChuyenDuLich) obj;
                         tourInfo.setChuyenDuLich(chuyenDuLich);
                         main.getContent().showForm(tourInfo);
                         menu.unSelectedAll();
@@ -207,7 +209,8 @@ public class MainFrame extends javax.swing.JFrame {
         Home home = new Home();
         home.addEventTour(new EventTour() {
             @Override
-            public void openTour(ChuyenDuLich chuyenDuLich) {
+            public void openTour(Object obj) {
+                ChuyenDuLich chuyenDuLich = (ChuyenDuLich) obj;
                 tourInfo.setChuyenDuLich(chuyenDuLich);
                 main.getContent().showForm(tourInfo);
                menu.unSelectedAll();
@@ -264,7 +267,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         tourInfo.addEventTour(new EventTour() {
             @Override
-            public void openTour(ChuyenDuLich chuyenDuLich) {
+            public void openTour(Object obj) {
+                ChuyenDuLich chuyenDuLich = (ChuyenDuLich) obj;
                 tourInfo.setChuyenDuLich(chuyenDuLich);
                 main.getContent().showForm(tourInfo);
                 menu.unSelectedAll();
