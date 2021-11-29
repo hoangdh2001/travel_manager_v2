@@ -13,11 +13,24 @@ import java.util.List;
  * @author NGUYE
  */
 public interface DiaDanhService {
+
     public boolean addDiaDanh(DiaDanh diaDanh);
+
     public boolean updateDiaDanh(DiaDanh diaDanh);
+
     public boolean deleteDiaDanh(String id);
+
     public DiaDanh getDiaDanh(String id);
+
     public List<DiaDanh> getDiaDanhs();
+
     public List<DiaDanh> getDiaDanh(int numPage);
+
     public int getSoLuongDiaDanh();
+
+    public List<String> getTinhThanhDiaDanhs();
+
+    public List<DiaDanh> searchDiaDanhs(String textSearch, String tinhThanh, int numPage);
+
+    public int getSoLuongSearch(String textSearch, String tinhThanh);
 }

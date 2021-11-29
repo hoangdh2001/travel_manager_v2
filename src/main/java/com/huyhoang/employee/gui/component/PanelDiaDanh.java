@@ -26,7 +26,7 @@ public class PanelDiaDanh extends javax.swing.JPanel {
         initComponents();
         setPropertiesForm();
         diaDanhDao = new DiaDanhDao();
-        tblTourHandle();
+        tblDiaDanhHandle();
         loadData(pnlPage.getCurrentIndex());
     }
     
@@ -67,7 +67,7 @@ public class PanelDiaDanh extends javax.swing.JPanel {
         }).start();
     }
 
-    private void tblTourHandle() {
+    private void tblDiaDanhHandle() {
         pnlPage.addEventPagination(new EventPagination() {
             @Override
             public void onClick(int pageClick) {

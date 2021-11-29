@@ -119,7 +119,7 @@ public class PanelTour extends javax.swing.JPanel {
         txtTimKiem.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                
+
                 loadPage();
 
                 loadDataTable(pnlPage2.getCurrentIndex());
@@ -190,10 +190,9 @@ public class PanelTour extends javax.swing.JPanel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                
-                String textSearch=txtTimKiem.getText().trim();
-                
-                
+
+                String textSearch = txtTimKiem.getText().trim();
+
                 TrangThaiChuyenDi trangThai = TrangThaiChuyenDi.getValueTrangThaiChuyenDi(cmbTrangThai.getSelectedItem().toString());
                 PhuongTien phuongTien = PhuongTien.getValuePhuongTien(cmbPhuongTien.getSelectedItem().toString());
 
@@ -231,7 +230,7 @@ public class PanelTour extends javax.swing.JPanel {
     }
 
     private void loadPage() {
-        String textSearch=txtTimKiem.getText().trim();
+        String textSearch = txtTimKiem.getText().trim();
         TrangThaiChuyenDi trangThai = TrangThaiChuyenDi.getValueTrangThaiChuyenDi(cmbTrangThai.getSelectedItem().toString());
         PhuongTien phuongTien = PhuongTien.getValuePhuongTien(cmbPhuongTien.getSelectedItem().toString());
 
@@ -261,7 +260,7 @@ public class PanelTour extends javax.swing.JPanel {
 
         int x = row % 20 == 0 ? row / 20 : (row / 20) + 1;
         if (x == 0) {
-            x =1;
+            x = 1;
         }
 
         pnlPage2.init(x);

@@ -28,4 +28,6 @@ public interface ChuyenDuLichService {
 
     public int soLuongSearch(String textSearch, LoaiChuyenDi loaiChuyenDi, TrangThaiChuyenDi trangThaiCDL, PhuongTien phuongTien,
             String ngayBD, String ngayKT, String ngayTao);
+    
+    public ChuyenDuLich getLastChuyenDuLich();
 }

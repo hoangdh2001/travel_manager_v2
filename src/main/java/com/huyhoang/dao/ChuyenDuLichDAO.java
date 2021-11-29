@@ -136,7 +136,7 @@ public class ChuyenDuLichDAO implements ChuyenDuLichService {
         int soLuong = numPage * 20;
         System.out.println("offset DAO: " + soLuong);
         if (soLuong < 0) {
-            return null;
+            soLuong = Math.abs(soLuong);
         }
 
         String query = "select cdl.* from chuyendulich cdl where  "
@@ -200,5 +200,27 @@ public class ChuyenDuLichDAO implements ChuyenDuLichService {
 
         return 0;
     }
+
+    @Override
+    public ChuyenDuLich getLastChuyenDuLich() {
+    Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        try {
+            transaction.begin();
+            String query = "SELECT * FROM chuyendulich "
+                    + " WHERE chuyen_id = (SELECT MAX(chuyen_id) FROM chuyendulich)";
+            ChuyenDuLich nhanVien = session.createNativeQuery(query, ChuyenDuLich.class).getSingleResult();
+            transaction.commit();
+
+            return nhanVien;
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+        return null;
+    }
+    
+    
 
 }

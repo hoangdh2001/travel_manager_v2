@@ -3,7 +3,9 @@ package com.huyhoang.dao;
 import com.huyhoang.model.DiaDanh;
 import com.huyhoang.service.DiaDanhService;
 import com.huyhoang.util.HibernateUtil;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -101,6 +103,78 @@ public class DiaDanhDao implements DiaDanhService {
         } catch (Exception e) {
             tr.rollback();
         }
+        return 0;
+    }
+
+    @Override
+    public List<String> getTinhThanhDiaDanhs() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+
+        String query = "select distinct(tinh) from diadanh";
+        try {
+            transaction.begin();
+            List<String> list = session.createNativeQuery(query).getResultList();
+            transaction.commit();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<DiaDanh> searchDiaDanhs(String textSearch, String tinhThanh, int numPage) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+
+        int soLuong = numPage * 20;
+        if (soLuong < 0) {
+            soLuong = Math.abs(soLuong);
+        }
+        
+        System.out.println("offset: "+soLuong);
+        String query = "select d.* from diadanh d where  "
+                + " ( diadanh_id like '%" + textSearch + "%'"
+                + " or tendiadanh like N'%" + textSearch + "%' ) "
+                + " and tinh like N'%" + tinhThanh + "%'"
+                + " order by diadanh_id offset " + soLuong + " rows fetch next 20 rows only";
+        try {
+            transaction.begin();
+            List<DiaDanh> list = session.createNativeQuery(query, DiaDanh.class)
+                    .getResultList();
+            transaction.commit();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+
+        return null;
+    }
+
+    @Override
+    public int getSoLuongSearch(String textSearch, String tinhThanh) {
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
+
+        String query = "select count(*) from diadanh d where  "
+                + " ( diadanh_id like '%" + textSearch + "%'"
+                + " or tendiadanh like N'%" + textSearch + "%' ) "
+                + " and tinh like N'%" + tinhThanh + "%'";
+        try {
+            transaction.begin();
+            int x = (int) session.createNativeQuery(query).getSingleResult();
+            transaction.commit();
+            return x;
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+
         return 0;
     }
 
