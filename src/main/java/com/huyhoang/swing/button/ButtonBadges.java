@@ -19,7 +19,7 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class ButtonBadges extends JButton {
-    
+
     private Animator animator;
     private int targetSize;
     private float animatSize;
@@ -29,6 +29,8 @@ public class ButtonBadges extends JButton {
     private int badges;
     private boolean show;
     private float alpha = 1;
+    private Color borderColor = new Color(10, 10, 10);
+    private boolean borderLine = false;
 
     public int getBadges() {
         return badges;
@@ -60,6 +62,23 @@ public class ButtonBadges extends JButton {
 
     public void setAlpha(float alpha) {
         this.alpha = alpha;
+        repaint();
+    }
+
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    public boolean isBorderLine() {
+        return borderLine;
+    }
+
+    public void setBorderLine(boolean borderLine) {
+        this.borderLine = borderLine;
         repaint();
     }
     
@@ -101,7 +120,7 @@ public class ButtonBadges extends JButton {
         this.alpha = 0.5f;
         repaint();
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         int width = getWidth();
@@ -109,9 +128,17 @@ public class ButtonBadges extends JButton {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        if (borderLine) {
+            g2.setColor(borderColor);
+            g2.fillRoundRect(0, 0, width, height, height, height);
+        }
         g2.setColor(getBackground());
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.fillRoundRect(0, 0, width, height, height, height);
+        if (borderLine) {
+            g2.setColor(borderColor);
+            g2.drawRoundRect(0, 0, width, height, height, height);
+        }
         if (pressedPoint != null) {
             g2.setColor(effectColor);
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alphaEffect));

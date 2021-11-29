@@ -1,4 +1,4 @@
-package com.huyhoang.customer.form;
+package com.huyhoang.customer.gui.form;
 
 import com.huyhoang.customer.gui.component.BoxType;
 

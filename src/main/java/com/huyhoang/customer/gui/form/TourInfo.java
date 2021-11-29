@@ -1,4 +1,4 @@
-package com.huyhoang.customer.form;
+package com.huyhoang.customer.gui.form;
 
 import com.huyhoang.customer.gui.component.BoxTour;
 import com.huyhoang.customer.gui.component.Map;
@@ -15,6 +15,7 @@ import com.huyhoang.swing.panel.LayerPaneGradient;
 import com.huyhoang.swing.slideshow.SlideShowTransparent;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -61,10 +62,10 @@ public class TourInfo extends javax.swing.JLayeredPane {
         this.event = event;
     }
     
-    public void addEventDat(ActionListener action) {
+    public void addEventBookTour(ActionListener action) {
         btnDat.addActionListener(action);
     }
-
+    
     public ChuyenDuLich getChuyenDuLich() {
         return chuyenDuLich;
     }

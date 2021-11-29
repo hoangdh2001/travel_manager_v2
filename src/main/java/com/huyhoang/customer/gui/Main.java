@@ -1,10 +1,11 @@
 package com.huyhoang.customer.gui;
 
-import com.huyhoang.customer.form.BookTour;
-import com.huyhoang.customer.form.Home;
-import com.huyhoang.customer.form.Search;
-import com.huyhoang.customer.form.TourInfo;
+import com.huyhoang.customer.gui.dialog.DialogBookTour;
+import com.huyhoang.customer.gui.form.Home;
+import com.huyhoang.customer.gui.form.Search;
+import com.huyhoang.customer.gui.form.TourInfo;
 import com.huyhoang.model.ChuyenDuLich;
+import com.huyhoang.model.KhachHang;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
 import java.awt.Color;
@@ -47,9 +48,13 @@ public class Main extends javax.swing.JFrame {
     private TourInfo tourInfo;
     private final List<Component> historyComponent = new ArrayList<>();
     private int currentIndex = -1;
+    public static KhachHang khachHang;
 
     public Main() {
+        this.khachHang = new KhachHang();
         initComponents();
+        btrang.setVisible(false);
+        jPanel1.setVisible(true);
         buildDisplay();
     }
 
@@ -211,9 +216,11 @@ public class Main extends javax.swing.JFrame {
             public void itemStateChanged(ItemEvent arg0) {
                 int state = arg0.getStateChange();
                 if (state == ItemEvent.SELECTED) {
+                    khachHang.themChuyenDiDaThich(tourInfo.getChuyenDuLich());
                     main.showMessage("Đã lưu vào thư viện");
                 } else {
                     main.showMessage("Đã xóa khỏi thư viện");
+                    khachHang.getChuyenDiDaThich().remove(tourInfo.getChuyenDuLich());
                 }
             }
         });
@@ -226,13 +233,13 @@ public class Main extends javax.swing.JFrame {
                 addHistory(tourInfo);
             }
         });
-        tourInfo.addEventDat(new ActionListener() {
+        tourInfo.addEventBookTour(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                BookTour bookTour = new BookTour();
-                main.getContent().showForm(bookTour);
-                menu.unSelectedAll();
-                addHistory(bookTour);
+                DialogBookTour bookTour = new DialogBookTour(Main.this, tourInfo.getChuyenDuLich());
+                btrang.setVisible(true);
+                bookTour.setVisible(true);
+                btrang.setVisible(false);
             }
         });
     }
@@ -333,15 +340,19 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
+        
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         bg = new com.huyhoang.swing.panel.LayerPaneShadow();
+        btrang = new com.huyhoang.swing.panel.PanelTransparent();
+        jPanel1 = new javax.swing.JPanel();
+        bottom = new com.huyhoang.customer.gui.component.Bottom();
         menu = new com.huyhoang.customer.gui.component.Menu();
         chat = new com.huyhoang.customer.gui.component.Chat();
         main = new com.huyhoang.customer.gui.component.Main();
-        bottom = new com.huyhoang.customer.gui.component.Bottom();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -350,10 +361,14 @@ public class Main extends javax.swing.JFrame {
         bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         bg.setShadowOpacity(0.3F);
         bg.setShadowSize(10);
-        bg.setLayout(new java.awt.BorderLayout());
-        bg.add(menu, java.awt.BorderLayout.LINE_START);
-        bg.add(chat, java.awt.BorderLayout.LINE_END);
-        bg.add(main, java.awt.BorderLayout.CENTER);
+        bg.setLayout(new java.awt.CardLayout());
+
+        btrang.setBackground(new java.awt.Color(0, 0, 0));
+        btrang.setAlpha(0.5F);
+        bg.setLayer(btrang, javax.swing.JLayeredPane.POPUP_LAYER);
+        bg.add(btrang, "card2");
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout bottomLayout = new javax.swing.GroupLayout(bottom);
         bottom.setLayout(bottomLayout);
@@ -366,7 +381,12 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 80, Short.MAX_VALUE)
         );
 
-        bg.add(bottom, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(bottom, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(menu, java.awt.BorderLayout.LINE_START);
+        jPanel1.add(chat, java.awt.BorderLayout.LINE_END);
+        jPanel1.add(main, java.awt.BorderLayout.CENTER);
+
+        bg.add(jPanel1, "card3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -410,7 +430,9 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;
     private com.huyhoang.customer.gui.component.Bottom bottom;
+    private com.huyhoang.swing.panel.PanelTransparent btrang;
     private com.huyhoang.customer.gui.component.Chat chat;
+    private javax.swing.JPanel jPanel1;
     private com.huyhoang.customer.gui.component.Main main;
     private com.huyhoang.customer.gui.component.Menu menu;
     // End of variables declaration//GEN-END:variables

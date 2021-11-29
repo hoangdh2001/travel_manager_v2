@@ -1,10 +1,18 @@
 package com.huyhoang.customer.gui.component;
 
+import com.huyhoang.model.DonDatVe;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.miginfocom.swing.MigLayout;
 
 public class Chat extends javax.swing.JPanel {
-    
+    private DonDatVe donDatVe;
+    private JLabel thanhTien;
+    private final  DecimalFormat df = new DecimalFormat("#,##0 VND");
     public void addActionMinimize(ActionListener evt) {
         btnMi.addActionListener(evt);
     }
@@ -16,6 +24,19 @@ public class Chat extends javax.swing.JPanel {
     public void addActionClose(ActionListener evt) {
         btnClose.addActionListener(evt);
     }
+    
+    public void showDonDat(DonDatVe donDatVe) {
+        this.donDatVe = donDatVe;
+        jPanel2.removeAll();
+        createPnlForm();
+        loadData();
+        jPanel2.repaint();
+        jPanel2.revalidate();
+    }
+    
+    public void loadData() {
+        thanhTien.setText(donDatVe.getSoLuong() + " X " + df.format(donDatVe.getChuyenDuLich().getGiaChuyenDi()));
+    }
 
     public JPanel getPnlTop() {
         return pnlTop;
@@ -23,6 +44,22 @@ public class Chat extends javax.swing.JPanel {
     
     public Chat() {
         initComponents();
+    }
+    
+    private void createPnlForm() {
+        JPanel don = new JPanel();
+        don.setLayout(new MigLayout("fillx, wrap", "[]push[right]", "5[]5"));
+        don.setOpaque(false);
+        JLabel khoan = new JLabel("Người");
+        khoan.setForeground(Color.WHITE);
+        khoan.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        don.add(khoan);
+        
+        thanhTien = new JLabel();
+        thanhTien.setForeground(Color.WHITE);
+        thanhTien.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        don.add(thanhTien);
+        jPanel2.add(don);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +71,7 @@ public class Chat extends javax.swing.JPanel {
         btnMi = new com.huyhoang.swing.button.Button();
         btnClose = new com.huyhoang.swing.button.Button();
         btnRe = new com.huyhoang.swing.button.Button();
+        jPanel2 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(40, 40, 40));
 
@@ -87,17 +125,22 @@ public class Chat extends javax.swing.JPanel {
                 .addGap(0, 31, Short.MAX_VALUE))
         );
 
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(609, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -107,6 +150,7 @@ public class Chat extends javax.swing.JPanel {
     private com.huyhoang.swing.button.Button btnMi;
     private com.huyhoang.swing.button.Button btnRe;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel pnlTop;
     // End of variables declaration//GEN-END:variables
 }

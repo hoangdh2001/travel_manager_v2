@@ -70,6 +70,7 @@ public class KhachHang {
      *
      */
     public KhachHang() {
+        this.chuyenDiDaThich = new ArrayList<>();
     }
 
     /**

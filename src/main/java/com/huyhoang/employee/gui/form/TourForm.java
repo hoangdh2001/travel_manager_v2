@@ -1,6 +1,6 @@
 package com.huyhoang.employee.gui.form;
 
-import com.huyhoang.dao.daoimpl.ChuyenDuLichImpl;
+import com.huyhoang.dao.impl.ChuyenDuLichImpl;
 import com.huyhoang.employee.gui.component.TabLayout;
 import com.huyhoang.model.ChuyenDuLich;
 import java.awt.Color;

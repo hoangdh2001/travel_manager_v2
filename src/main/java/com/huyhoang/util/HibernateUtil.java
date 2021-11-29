@@ -7,7 +7,6 @@ import com.huyhoang.model.DiaChi;
 import com.huyhoang.model.DiaDanh;
 import com.huyhoang.model.DonDatVe;
 import com.huyhoang.model.DongTour;
-import com.huyhoang.model.HanhKhach;
 import com.huyhoang.model.HuongDanVien;
 import com.huyhoang.model.KhachHang;
 import com.huyhoang.model.LoaiChuyenDi;
@@ -37,7 +36,6 @@ public class HibernateUtil {
                 .addAnnotatedClass(DiaDanh.class)
                 .addAnnotatedClass(DonDatVe.class)
                 .addAnnotatedClass(DongTour.class)
-                .addAnnotatedClass(HanhKhach.class)
                 .addAnnotatedClass(HuongDanVien.class)
                 .addAnnotatedClass(KhachHang.class)
                 .addAnnotatedClass(LoaiChuyenDi.class)

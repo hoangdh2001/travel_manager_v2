@@ -1,8 +1,6 @@
 package com.huyhoang.model;
 
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,7 +8,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -33,30 +30,20 @@ public class DonDatVe {
     private HuongDanVien huongDanVien;
     @Enumerated(EnumType.STRING)
     private TrangThaiDonDat trangThai;
-    @OneToMany
-    @JoinColumn(name = "dondatve_id")
-    private List<HanhKhach> dsHanhKhach;
     @Column(name = "soluong")
     private int soLuong;
     @Column(name = "thanhtien", columnDefinition = "money")
     private double thanhTien;
-
     /**
      * @param maDonDatVe
-     * @param ngayDat
      * @param khachHang
-     * @param nhanVien
-     * @param chuyenDuLich
-     * @param huongDanVien
-     * @param trangThai 
+     * @param chuyenDuLich 
      */
-    public DonDatVe(String maDonDatVe, Date ngayDat, KhachHang khachHang, NhanVien nhanVien, ChuyenDuLich chuyenDuLich, HuongDanVien huongDanVien, TrangThaiDonDat trangThai) {
+    public DonDatVe(String maDonDatVe, KhachHang khachHang, ChuyenDuLich chuyenDuLich) {
         this.maDonDatVe = maDonDatVe;
-        this.ngayDat = ngayDat;
         this.khachHang = khachHang;
         this.chuyenDuLich = chuyenDuLich;
-        this.huongDanVien = huongDanVien;
-        this.trangThai = trangThai;
+        this.thanhTien = getThanhTien();
     }
     
     /**
@@ -65,8 +52,6 @@ public class DonDatVe {
     public DonDatVe(TrangThaiDonDat trangThai) {
         this.ngayDat = new Date();
         this.trangThai = trangThai;
-        this.dsHanhKhach = new ArrayList<>();
-        this.soLuong = getSoLuong();
         this.thanhTien = getThanhTien();
     }
 
@@ -75,10 +60,6 @@ public class DonDatVe {
      */
     public DonDatVe() {
         this(TrangThaiDonDat.MOI);
-    }
-
-    public void themHanhKhach(String hoTen, boolean gioiTinh, Date ngaySinh) {
-        dsHanhKhach.add(new HanhKhach(hoTen, gioiTinh, ngaySinh));
     }
 
     /**
@@ -166,38 +147,30 @@ public class DonDatVe {
     }
 
     /**
-     * @return the dsHanhKhach
-     */
-    public List<HanhKhach> getDsHanhKhach() {
-        return dsHanhKhach;
-    }
-
-    /**
-     * @param dsHanhKhach the dsHanhKhach to set
-     */
-    public void setDsHanhKhach(List<HanhKhach> dsHanhKhach) {
-        this.dsHanhKhach = dsHanhKhach;
-    }
-
-    /**
      * @return the soLuong
      */
     public int getSoLuong() {
-        return dsHanhKhach.size();
+        return soLuong;
     }
-
+    /**
+     * @param soLuong 
+     */
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+    
     /**
      * @return the thanhTien
      */
     public double getThanhTien() {
-        return chuyenDuLich.getGiaChuyenDi() * soLuong;
+        return thanhTien = chuyenDuLich.getGiaChuyenDi() * soLuong;
     }
 
     @Override
     public String toString() {
         return "DonDatVe [maDonDatVe=" + maDonDatVe + ", ngayDat=" + ngayDat + ", khachHang=" + khachHang
                 + ", chuyenDuLich=" + chuyenDuLich + ", huongDanVien=" + huongDanVien
-                + ", trangThai=" + trangThai + ", dsHanhKhach=" + dsHanhKhach + ", soLuong=" + soLuong + ", thanhTien="
+                + ", trangThai=" + trangThai + ", soLuong=" + soLuong + ", thanhTien="
                 + thanhTien + "]";
     }
 }

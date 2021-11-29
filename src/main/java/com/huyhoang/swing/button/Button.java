@@ -1,5 +1,6 @@
 package com.huyhoang.swing.button;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -13,6 +14,7 @@ public class Button extends JButton {
     private Color overColor = new Color(93, 93, 93);
     private Color backgroundColor = new Color(19, 19, 19);
     private int borderRadius = 0;
+    private float alpha = 1;
 
     public Color getOverColor() {
         return overColor;
@@ -34,6 +36,15 @@ public class Button extends JButton {
         return backgroundColor;
     }
 
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+        repaint();
+    }
+    
     public Button() {
         setContentAreaFilled(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -58,6 +69,7 @@ public class Button extends JButton {
         int width = getWidth();
         int height = getHeight();
         g2.setColor(getBackground());
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.fillRoundRect(0, 0, width, height, borderRadius, borderRadius);
         super.paint(grphcs);
     }

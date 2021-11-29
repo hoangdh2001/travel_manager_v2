@@ -1,31 +1,27 @@
 package com.huyhoang.dao.impl;
 
-import com.huyhoang.dao.LoaiChuyenDi_DAO;
-import com.huyhoang.model.LoaiChuyenDi;
+import com.huyhoang.dao.DonDatVe_DAO;
+import com.huyhoang.model.DonDatVe;
 import com.huyhoang.util.HibernateUtil;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
+import java.rmi.server.UnicastRemoteObject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class LoaiChuyenDi_Impl implements LoaiChuyenDi_DAO {
-    
+public class DonDatVeImpl implements DonDatVe_DAO {
     private SessionFactory sessionFactory;
-
-    public LoaiChuyenDi_Impl() {
+    public DonDatVeImpl() {
         this.sessionFactory = HibernateUtil.getInstance().getSessionFactory();
     }
-
     @Override
-    public boolean addLoaiChuyenDi(LoaiChuyenDi loaiChuyenDi) throws RemoteException {
-        Session session = sessionFactory.getCurrentSession();
+    public boolean addDonDatVe(DonDatVe donDatVe) {
+        Session session =sessionFactory.getCurrentSession();
         Transaction tr = session.getTransaction();
         
         try {
             tr.begin();
-            session.save(loaiChuyenDi);
+            session.save(donDatVe);
             tr.commit();
             return true;
         } catch (Exception e) {
@@ -35,20 +31,23 @@ public class LoaiChuyenDi_Impl implements LoaiChuyenDi_DAO {
     }
 
     @Override
-    public List<LoaiChuyenDi> getDsLoaiChuyenDi() throws RemoteException {
-        Session session = sessionFactory.openSession();
+    public String getMaxID() {
+        Session session = sessionFactory.getCurrentSession();
         Transaction tr = session.getTransaction();
-        List<LoaiChuyenDi> rs = new ArrayList<>();
+
+        String sql = "select max(dondatve_id) from dondatve";
+
         try {
             tr.begin();
-            rs = session
-                    .createNamedQuery("getDsLoaiChuyenDi", LoaiChuyenDi.class)
-                    .getResultList();
+            String id = (String) session
+                    .createNativeQuery(sql)
+                    .getSingleResult();
             tr.commit();
+            return id;
         } catch (Exception e) {
             tr.rollback();
         }
-        return rs;
+        return null;
     }
     
 }

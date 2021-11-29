@@ -1,4 +1,4 @@
-package com.huyhoang.swing.panel;
+package com.huyhoang.swing.button;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

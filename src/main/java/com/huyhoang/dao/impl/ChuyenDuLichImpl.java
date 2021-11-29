@@ -1,4 +1,4 @@
-package com.huyhoang.dao.daoimpl;
+package com.huyhoang.dao.impl;
 
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.util.HibernateUtil;
@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import com.huyhoang.dao.ChuyenDuLich_DAO;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class ChuyenDuLichImpl implements ChuyenDuLich_DAO {

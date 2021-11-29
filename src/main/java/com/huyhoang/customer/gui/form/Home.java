@@ -1,11 +1,11 @@
-package com.huyhoang.customer.form;
+package com.huyhoang.customer.gui.form;
 
 import com.huyhoang.customer.gui.component.BoxTour;
 import com.huyhoang.customer.gui.component.Map;
 import com.huyhoang.swing.image.PictureBox;
 import javax.swing.ImageIcon;
 import com.huyhoang.dao.ChuyenDuLich_DAO;
-import com.huyhoang.dao.daoimpl.ChuyenDuLichImpl;
+import com.huyhoang.dao.impl.ChuyenDuLichImpl;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.event.EventTour;
 import java.awt.Frame;
