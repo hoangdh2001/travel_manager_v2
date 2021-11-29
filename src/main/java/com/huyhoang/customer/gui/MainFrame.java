@@ -2,13 +2,15 @@ package com.huyhoang.customer.gui;
 
 import com.huyhoang.customer.gui.dialog.DialogBookTour;
 import com.huyhoang.customer.gui.form.Home;
+import com.huyhoang.customer.gui.form.Library;
 import com.huyhoang.customer.gui.form.Search;
 import com.huyhoang.customer.gui.form.TourInfo;
+import com.huyhoang.dao.KhachHang_DAO;
+import com.huyhoang.dao.impl.KhachHangImpl;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.KhachHang;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
-import com.huyhoang.swing.panel.ProgressGlassPane;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -26,12 +28,15 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.json.Json;
+import javax.json.JsonValue;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.animation.timing.Animator;
@@ -44,20 +49,18 @@ public class MainFrame extends javax.swing.JFrame {
     private int yy;
     private boolean show;
     private Animator start;
-    private Home home;
-    private Search search;
     private TourInfo tourInfo;
     private final List<Component> historyComponent = new ArrayList<>();
     private int currentIndex = -1;
     public static KhachHang khachHang;
-    private ProgressGlassPane waitPanel;
+    private KhachHang_DAO khachHang_DAO;
 
-    public MainFrame() {
-        this.khachHang = new KhachHang();
+    public MainFrame(KhachHang khachHang) {
+        MainFrame.khachHang = khachHang;
+        this.khachHang_DAO = new KhachHangImpl();
         initComponents();
         btrang.setVisible(false);
         jPanel1.setVisible(true);
-        setGlassPane(waitPanel = new ProgressGlassPane());
         buildDisplay();
     }
 
@@ -71,20 +74,37 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void createForm() {
-        createFormHome();
-        createFormSearch();
         createFormTourInfo();
     }
 
     private void createMenu() {
         menu.initMenu((int index) -> {
             if (index == 0) {
+                Home home = new Home();
+                home.addEventTour(new EventTour() {
+                    @Override
+                    public void openTour(ChuyenDuLich chuyenDuLich) {
+                        tourInfo.setChuyenDuLich(chuyenDuLich);
+                        main.getContent().showForm(tourInfo);
+                        menu.unSelectedAll();
+                        addHistory(tourInfo);
+                        try {
+                            write2File(chuyenDuLich);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
                 main.getContent().showForm(home);
-                waitPanel.setVisible(true);
                 addHistory(home);
             } else if (index == 1) {
+                Search search = new Search();
                 main.getContent().showForm(search);
                 addHistory(search);
+            } else if(index == 2) {
+                Library library = new Library();
+                main.getContent().showForm(library);
+                addHistory(library);
             }
         });
         move(menu.getjPanel1(), 0);
@@ -165,6 +185,21 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
         });
+        Home home = new Home();
+        home.addEventTour(new EventTour() {
+            @Override
+            public void openTour(ChuyenDuLich chuyenDuLich) {
+                tourInfo.setChuyenDuLich(chuyenDuLich);
+                main.getContent().showForm(tourInfo);
+               menu.unSelectedAll();
+                addHistory(tourInfo);
+                try {
+                    write2File(chuyenDuLich);
+                } catch (FileNotFoundException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
         main.getContent().add(home);
         historyComponent.add(home);
         currentIndex++;
@@ -191,28 +226,6 @@ public class MainFrame extends javax.swing.JFrame {
         move(chat.getPnlTop(), menu.getWidth() + main.getHeader().getWidth());
     }
 
-    private void createFormHome() {
-        home = new Home();
-        home.addEventTour(new EventTour() {
-            @Override
-            public void openTour(ChuyenDuLich chuyenDuLich) {
-                tourInfo.setChuyenDuLich(chuyenDuLich);
-                main.getContent().showForm(tourInfo);
-                menu.unSelectedAll();
-                addHistory(tourInfo);
-//                try {
-//                    write2File(chuyenDuLich);
-//                } catch (FileNotFoundException ex) {
-//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-            }
-        });
-    }
-
-    private void createFormSearch() {
-        search = new Search();
-    }
-    
     private void createFormTourInfo() {
         tourInfo = new TourInfo();
         tourInfo.addEventLike(new ItemListener() {
@@ -221,10 +234,12 @@ public class MainFrame extends javax.swing.JFrame {
                 int state = arg0.getStateChange();
                 if (state == ItemEvent.SELECTED) {
                     khachHang.themChuyenDiDaThich(tourInfo.getChuyenDuLich());
+                    khachHang_DAO.updateKhachHang(khachHang);
                     main.showMessage("Đã lưu vào thư viện");
                 } else {
                     main.showMessage("Đã xóa khỏi thư viện");
                     khachHang.getChuyenDiDaThich().remove(tourInfo.getChuyenDuLich());
+                    khachHang_DAO.updateKhachHang(khachHang);
                 }
             }
         });
@@ -235,6 +250,11 @@ public class MainFrame extends javax.swing.JFrame {
                 main.getContent().showForm(tourInfo);
                 menu.unSelectedAll();
                 addHistory(tourInfo);
+                try {
+                    write2File(chuyenDuLich);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         tourInfo.addEventBookTour(new ActionListener() {
@@ -337,11 +357,22 @@ public class MainFrame extends javax.swing.JFrame {
     private static void write2File(ChuyenDuLich chuyenDuLich) throws FileNotFoundException {
         JsonReader jsonReader = Json.createReader(new FileReader("data/ChuyenDuLich.json"));
         JsonArray jsonArray = jsonReader.readArray();
+        JsonObjectBuilder job = Json.createObjectBuilder();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder(jsonArray);
-        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        if (jsonArray.size() > 2) {
+            jsonArrayBuilder.remove(0);
+        }
+        for (JsonValue jsonValue : jsonArray) {
+            if(jsonValue instanceof JsonObject) {
+                JsonObject jo = jsonValue.asJsonObject();
+                if(chuyenDuLich.getMaChuyen().equals(jo.getString("maChuyenDi"))) {
+                    return;
+                }
+            }
+        }
+        JsonObject jsonObject = job.add("maChuyenDi", chuyenDuLich.getMaChuyen()).build();
         
-        JsonObject jo = jsonObjectBuilder.add("maChuyenDi", chuyenDuLich.getMaChuyen()).build();
-        jsonArray = jsonArrayBuilder.add(jo).build();
+        jsonArray = jsonArrayBuilder.add(jsonObject).build();
         try (PrintWriter out = new PrintWriter(new FileWriter("data/ChuyenDuLich.json"))) {
             out.println(jsonArray);
         } catch (Exception e) {
@@ -408,7 +439,32 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> {
+//            new MainFrame().setVisible(true);
+//        });
+//    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;
     private com.huyhoang.customer.gui.component.Bottom bottom;

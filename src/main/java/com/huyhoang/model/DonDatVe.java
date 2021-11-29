@@ -41,25 +41,20 @@ public class DonDatVe {
      */
     public DonDatVe(String maDonDatVe, KhachHang khachHang, ChuyenDuLich chuyenDuLich) {
         this.maDonDatVe = maDonDatVe;
+        this.ngayDat = new Date();
+        this.trangThai = TrangThaiDonDat.DANG_XU_LY;
         this.khachHang = khachHang;
         this.chuyenDuLich = chuyenDuLich;
         this.thanhTien = getThanhTien();
     }
     
     /**
-     * @param trangThai 
-     */
-    public DonDatVe(TrangThaiDonDat trangThai) {
-        this.ngayDat = new Date();
-        this.trangThai = trangThai;
-        this.thanhTien = getThanhTien();
-    }
-
-    /**
      *
      */
     public DonDatVe() {
-        this(TrangThaiDonDat.MOI);
+        this.ngayDat = new Date();
+        this.trangThai = TrangThaiDonDat.DANG_XU_LY;
+        this.thanhTien = getThanhTien();
     }
 
     /**

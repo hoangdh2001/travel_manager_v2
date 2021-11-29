@@ -69,7 +69,9 @@ public class BoxTour extends com.huyhoang.swing.panel.PanelTransparent {
         String tinh = "Du lịch ";
         if(dsChiTietThamQuan.size() > 0) {
             for (int i = 0; i < dsChiTietThamQuan.size(); i++) {
-                slideShowTransparent1.addImage(new PictureBox(new ImageIcon(dsChiTietThamQuan.get(i).getAnhDiaDanh())));
+                PictureBox pictureBox = new PictureBox(new ImageIcon(dsChiTietThamQuan.get(i).getAnhDiaDanh()));
+                pictureBox.setBorderRadius(15);
+                slideShowTransparent1.addImage(pictureBox);
                 if(i == (dsChiTietThamQuan.size() - 1)) {
                     tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh();
                 } else {

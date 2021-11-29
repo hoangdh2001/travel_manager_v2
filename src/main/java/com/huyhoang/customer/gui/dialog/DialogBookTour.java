@@ -119,6 +119,7 @@ public class DialogBookTour extends javax.swing.JDialog {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 them = donDatVe_DAO.addDonDatVe(donDatVe);
+                dispose();
             }
         });
         jPanel1.add(btnDat, "w 120!, h 40!, right");

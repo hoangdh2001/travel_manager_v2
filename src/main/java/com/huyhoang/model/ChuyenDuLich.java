@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,7 +38,7 @@ public class ChuyenDuLich {
     @ManyToOne
     @JoinColumn(name = "noikhoihanh")
     private DiaChi noiKhoiHanh;
-    @OneToMany(mappedBy = "chuyenDuLich", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chuyenDuLich")
     private List<ChiTietThamQuan> dsChiTietThamQuan;
     @Column(name = "ngaykhoihanh", columnDefinition = "datetime")
     private Date ngayKhoiHanh;
@@ -325,4 +326,30 @@ public class ChuyenDuLich {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         return new Object[] {maChuyen, df.format(ngayTao), df.format(ngayKhoiHanh), df.format(ngayKetThuc), loaiChuyenDi.getTenLoaiChuyen(), trangThai};
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.maChuyen);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ChuyenDuLich other = (ChuyenDuLich) obj;
+        if (!Objects.equals(this.maChuyen, other.maChuyen)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

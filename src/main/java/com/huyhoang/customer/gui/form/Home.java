@@ -8,10 +8,20 @@ import com.huyhoang.dao.ChuyenDuLich_DAO;
 import com.huyhoang.dao.impl.ChuyenDuLichImpl;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.swing.event.EventTour;
-import java.awt.Frame;
+import com.huyhoang.swing.list.Reversed;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
 import net.miginfocom.swing.MigLayout;
 
 public class Home extends javax.swing.JPanel {
@@ -47,21 +57,58 @@ public class Home extends javax.swing.JPanel {
     }
 
     private void createMapTour() {
-        pnlSuggestions.setLayout(new MigLayout("fillx, insets 0"));
-        loadDataMapTourDaXemGanDay();
-        loadDataMapTourMoi();
-        loadDataMapTourPhoBien();
+        pnlSuggestions.setLayout(new MigLayout("fillx, insets 0, wrap", "[fill]"));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadDataMapTourDaXemGanDay();
+                loadDataMapTourMoi();
+                loadDataMapTourPhoBien();
+            }
+        }).start();
     }
-    
+
     private void loadDataMapTourDaXemGanDay() {
-        
+        List<String> dsChuyenDuLich = null;
+        try {
+            JsonReader jReader = Json.createReader(new FileReader("data/chuyendulich.json"));
+            dsChuyenDuLich = new ArrayList<>();
+            JsonArray ja = jReader.readArray();
+            for (JsonValue jsonValue : ja) {
+                if (jsonValue instanceof JsonObject) {
+                    JsonObject jo = jsonValue.asJsonObject();
+                    dsChuyenDuLich.add(jo.getString("maChuyenDi"));
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {
+            Map mapTourDaXem = new Map();
+            mapTourDaXem.setTitle("Tour đã xem gần đây");
+            for (String string : Reversed.reversed(dsChuyenDuLich)) {
+                ChuyenDuLich chuyenDuLich = chuyenDuLich_DAO.getChuyenDuLich(string);
+                BoxTour boxTour = new BoxTour();
+                boxTour.setChuyenDuLich(chuyenDuLich);
+                boxTour.addEventBoxTour(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        event.openTour(chuyenDuLich);
+                        boxTour.refresh();
+                    }
+                });
+                mapTourDaXem.addBox(boxTour, 200, 280);
+            }
+            pnlSuggestions.add(mapTourDaXem);
+        }
     }
 
     private void loadDataMapTourMoi() {
         List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichMoi();
         if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {
             Map mapTourMoi = new Map();
-            mapTourMoi.setTitle("Chuyến du lịch mới nhất");
+            mapTourMoi.setTitle("Tour mới nhất");
             for (ChuyenDuLich chuyenDuLich : dsChuyenDuLich) {
                 BoxTour boxTour = new BoxTour();
                 boxTour.setChuyenDuLich(chuyenDuLich);
@@ -77,7 +124,7 @@ public class Home extends javax.swing.JPanel {
             pnlSuggestions.add(mapTourMoi);
         }
     }
-    
+
     private void loadDataMapTourPhoBien() {
         List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichNhieuDonDatNhat();
         if (dsChuyenDuLich != null && dsChuyenDuLich.size() > 0) {

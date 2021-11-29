@@ -20,10 +20,18 @@ public class Map extends javax.swing.JPanel {
     public void addBox(Component com, int width, int height) {
         com.setPreferredSize(new Dimension(width, height));
         pnlCenter.add(com);
+        pnlCenter.repaint();
+        pnlCenter.revalidate();
     }
     
     public void setTitle(String text) {
         lblRole.setText(text);
+    }
+    
+    public void removeAllBox() {
+        pnlCenter.removeAll();
+        pnlCenter.repaint();
+        pnlCenter.revalidate();
     }
 
     @SuppressWarnings("unchecked")

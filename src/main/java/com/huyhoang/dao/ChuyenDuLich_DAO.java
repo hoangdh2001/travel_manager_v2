@@ -11,4 +11,5 @@ public interface ChuyenDuLich_DAO {
     public List<ChuyenDuLich> getDsChuyenDuLich();
     public List<ChuyenDuLich> getDsChuyenDuLichMoi();
     public List<ChuyenDuLich> getDsChuyenDuLichNhieuDonDatNhat();
+    public List<ChuyenDuLich> getDsChuyenDuLichNgauNhien(String maChuyen);
 }

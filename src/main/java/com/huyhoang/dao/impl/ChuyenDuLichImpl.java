@@ -126,8 +126,10 @@ public class ChuyenDuLichImpl implements ChuyenDuLich_DAO {
         }
         return null;
     }
+
     /**
      * Lấy danh sách 5 chuyến du lịch phổ biến nhất
+     *
      * @return dsChuyenDuLich
      */
     @Override
@@ -141,11 +143,34 @@ public class ChuyenDuLichImpl implements ChuyenDuLich_DAO {
                 + "group by cd.chuyen_id, cd.dongtour, cd.giachuyen, cd.loaichuyendi_id, cd.mota,\n"
                 + "cd.noikhoihanh, cd.ngay_tao, cd.ngayketthuc, cd.ngaykhoihanh,\n"
                 + "cd.nhanvien_id, cd.phuongtien, cd.soluong, cd.trangthai\n"
-                + "having COUNT(d.dondatve_id) = (select top 3 COUNT(d.dondatve_id) as slDonDat from chuyendulich cd join dondatve d";
+                + "having COUNT(d.dondatve_id) = (select top 3 COUNT(d.dondatve_id) as slDonDat from chuyendulich cd join dondatve d on cd.chuyen_id = d.chuyen_id)";
         try {
             tr.begin();
             List<ChuyenDuLich> dsChuyenDuLich = session
                     .createNativeQuery(sql, ChuyenDuLich.class)
+                    .getResultList();
+            tr.commit();
+            return dsChuyenDuLich;
+        } catch (Exception e) {
+            tr.rollback();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ChuyenDuLich> getDsChuyenDuLichNgauNhien(String maChuyen) {
+        Session session = sessionFactory.openSession();
+        Transaction tr = session.getTransaction();
+
+        String sql = "SELECT TOP 3 * FROM chuyendulich\n"
+                + "where chuyen_id != :x\n"
+                + "ORDER BY NEWID()";
+
+        try {
+            tr.begin();
+            List<ChuyenDuLich> dsChuyenDuLich = session
+                    .createNativeQuery(sql, ChuyenDuLich.class)
+                    .setParameter("x", maChuyen)
                     .getResultList();
             tr.commit();
             return dsChuyenDuLich;

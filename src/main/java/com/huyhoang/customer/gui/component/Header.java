@@ -1,5 +1,6 @@
 package com.huyhoang.customer.gui.component;
 
+import com.huyhoang.customer.gui.MainFrame;
 import com.huyhoang.swing.button.Button;
 import com.huyhoang.swing.button.ButtonBadges;
 import com.huyhoang.swing.button.PopupMenu;
@@ -7,6 +8,7 @@ import com.huyhoang.swing.event.EventMenuSelected;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.interpolation.PropertySetter;
 
@@ -50,6 +52,12 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
 
     private void buildDisplay() {
         createPopupMenu();
+        createButtonInfo();
+    }
+    
+    private void createButtonInfo() {
+        buttonInfo1.setPrefixIcon(new ImageIcon(MainFrame.khachHang.getAvatar()));
+        buttonInfo1.setText(MainFrame.khachHang.getHoTen());
     }
 
     private void createPopupMenu() {
@@ -109,7 +117,6 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
         buttonInfo1.setBorderRadius(37);
         buttonInfo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonInfo1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/avatar.jpg"))); // NOI18N
-        buttonInfo1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/expand_bottom.png"))); // NOI18N
         buttonInfo1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/expand_top.png"))); // NOI18N
         buttonInfo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
