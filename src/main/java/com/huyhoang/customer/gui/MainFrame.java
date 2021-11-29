@@ -103,6 +103,20 @@ public class MainFrame extends javax.swing.JFrame {
                 addHistory(search);
             } else if(index == 2) {
                 Library library = new Library();
+                library.addEventTour(new EventTour() {
+                    @Override
+                    public void openTour(ChuyenDuLich chuyenDuLich) {
+                        tourInfo.setChuyenDuLich(chuyenDuLich);
+                        main.getContent().showForm(tourInfo);
+                        menu.unSelectedAll();
+                        addHistory(tourInfo);
+                        try {
+                            write2File(chuyenDuLich);
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
                 main.getContent().showForm(library);
                 addHistory(library);
             }
@@ -122,7 +136,8 @@ public class MainFrame extends javax.swing.JFrame {
                         System.out.println("Open cài đặt");
                         break;
                     case 2:
-                        System.out.println("Đăng xuất");
+                        close();
+                        Application.getLogin().setVisible(true);
                         break;
                     default:
                         break;
@@ -179,9 +194,13 @@ public class MainFrame extends javax.swing.JFrame {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent arg0) {
                 if (arg0.getValue() > 10) {
-                    main.getHeader().hidden();
+                    if(main.getHeader().isTransparent()) {
+                        main.getHeader().hidden();
+                    }
                 } else {
-                    main.getHeader().display();
+                    if(!main.getHeader().isTransparent()) {
+                        main.getHeader().display();
+                    }
                 }
             }
         });
@@ -221,7 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         chat.addActionClose((ActionEvent arg0) -> {
-            close();
+            System.exit(0);
         });
         move(chat.getPnlTop(), menu.getWidth() + main.getHeader().getWidth());
     }
@@ -302,7 +321,7 @@ public class MainFrame extends javax.swing.JFrame {
             @Override
             public void end() {
                 if (!show) {
-                    System.exit(0);
+                    dispose();
                 }
             }
         };
