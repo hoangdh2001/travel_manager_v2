@@ -16,6 +16,7 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
 
     private PopupMenu popupMenu;
     private EventMenuSelected event;
+    private boolean transparent;
     
     public void addEventBack(ActionListener event) {
         btnBack.addActionListener(event);
@@ -44,7 +45,11 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
     public void setBtnNext(ButtonBadges btnNext) {
         this.btnNext = btnNext;
     }
-    
+
+    public boolean isTransparent() {
+        return transparent;
+    }
+
     public Header() {
         initComponents();
         buildDisplay();
@@ -85,6 +90,7 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
     }
 
     public void display() {
+        transparent = true;
         Animator animator = new Animator(200);
         animator.addTarget(new PropertySetter(this, "alpha", 0.0f));
         animator.setAcceleration(0.2f);
@@ -93,6 +99,7 @@ public class Header extends com.huyhoang.swing.panel.PanelTransparent {
     }
 
     public void hidden() {
+        transparent = false;
         Animator animator = new Animator(200);
         animator.addTarget(new PropertySetter(this, "alpha", 1.0f));
         animator.setAcceleration(0.2f);

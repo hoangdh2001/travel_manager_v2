@@ -1,5 +1,6 @@
 package com.huyhoang.customer.gui.form;
 
+import com.huyhoang.customer.gui.MainFrame;
 import com.huyhoang.customer.gui.component.BoxTour;
 import com.huyhoang.customer.gui.component.Map;
 import com.huyhoang.dao.ChuyenDuLich_DAO;
@@ -113,6 +114,11 @@ public class TourInfo extends javax.swing.JLayeredPane {
                 String lblText = String.format("<html><div style=\"width:%dpx;font-size:10px;font-family:'Segoe UI', Arial, sans-serif;\">%s</div></html>", 500, chuyenDuLich.getMoTa());
                 lblDescription.setText(lblText);
                 lblthoiGian.setText("THỜI GIAN: " + getDifferenceDays(chuyenDuLich.getNgayKhoiHanh(), chuyenDuLich.getNgayKetThuc()) + " ngày");
+                if(MainFrame.khachHang.getChuyenDiDaThich().contains(chuyenDuLich))  {
+                    btnLike.setSelected(true);
+                } else {
+                    btnLike.setSelected(false);
+                }
                 List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichNgauNhien(chuyenDuLich.getMaChuyen());
                 mapTour.removeAllBox();
                 if (dsChuyenDuLich != null) {
