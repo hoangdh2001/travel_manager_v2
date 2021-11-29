@@ -3,10 +3,15 @@ package com.huyhoang.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "diadanh")
+@NamedQueries({
+    @NamedQuery(name = "getDiaDanhs", query = "select x from DiaDanh x")
+})
 public class DiaDanh {
 
     @Id
@@ -79,5 +84,9 @@ public class DiaDanh {
     @Override
     public String toString() {
         return "DiaDanh [maDiaDanh=" + maDiaDanh + ", tenDiaDanh=" + tenDiaDanh + ", tinh=" + tinh + "]";
+    }
+    
+    public Object[] convertToRowTable() {
+        return new Object[]{maDiaDanh, tenDiaDanh, tinh};
     }
 }

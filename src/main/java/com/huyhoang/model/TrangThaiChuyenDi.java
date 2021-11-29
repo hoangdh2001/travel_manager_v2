@@ -3,7 +3,7 @@ package com.huyhoang.model;
 import java.awt.Color;
 
 public enum TrangThaiChuyenDi {
-    DANG_XU_LY("Đang xử lý", new Color(104, 104, 104)),
+    DANG_XU_LY("Đang xử lý", new Color(255, 184, 108)),
     CHUA_KHOI_HANH("Chưa khởi hành", new Color(152, 247, 111)),
     SAP_BAT_DAU("Sắp bắt đầu", new Color(111, 247, 243)),
     HUY("Hủy", new Color(253, 89, 89)),
@@ -21,6 +21,16 @@ public enum TrangThaiChuyenDi {
         this.trangThai = trangThai;
         this.mauTrangThai = mauTrangThai;
 
+    }
+    
+    public  static  TrangThaiChuyenDi getValueTrangThaiChuyenDi(String trangThai){
+        for (TrangThaiChuyenDi i : TrangThaiChuyenDi.values()) {
+            if (i.trangThai.equals(trangThai)) {
+                return i;
+            }
+        }
+        
+        return null;
     }
 
     /**

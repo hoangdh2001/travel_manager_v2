@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "loaichuyendi")
 @NamedQueries({
-    @NamedQuery(name = "getDsLoaiChuyenDi", query = "select l from LoaiChuyenDi l")
+        @NamedQuery(name = "getDsLoaiChuyenDi", query = "select l from LoaiChuyenDi l")
 })
 public class LoaiChuyenDi {
 
@@ -83,6 +83,6 @@ public class LoaiChuyenDi {
 
     @Override
     public String toString() {
-        return "LoaiChuyenDi{" + "maLoaiChuyen=" + maLoaiChuyen + ", tenLoaiChuyen=" + tenLoaiChuyen + ", mauLoai=" + mauLoai + '}';
+        return tenLoaiChuyen;
     }
 }
