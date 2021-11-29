@@ -8,6 +8,7 @@ import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.KhachHang;
 import com.huyhoang.swing.event.EventMenuSelected;
 import com.huyhoang.swing.event.EventTour;
+import com.huyhoang.swing.panel.ProgressGlassPane;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -37,7 +38,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-public class Main extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame {
 
     private int xx;
     private int yy;
@@ -49,12 +50,14 @@ public class Main extends javax.swing.JFrame {
     private final List<Component> historyComponent = new ArrayList<>();
     private int currentIndex = -1;
     public static KhachHang khachHang;
+    private ProgressGlassPane waitPanel;
 
-    public Main() {
+    public MainFrame() {
         this.khachHang = new KhachHang();
         initComponents();
         btrang.setVisible(false);
         jPanel1.setVisible(true);
+        setGlassPane(waitPanel = new ProgressGlassPane());
         buildDisplay();
     }
 
@@ -77,6 +80,7 @@ public class Main extends javax.swing.JFrame {
         menu.initMenu((int index) -> {
             if (index == 0) {
                 main.getContent().showForm(home);
+                waitPanel.setVisible(true);
                 addHistory(home);
             } else if (index == 1) {
                 main.getContent().showForm(search);
@@ -236,9 +240,14 @@ public class Main extends javax.swing.JFrame {
         tourInfo.addEventBookTour(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                DialogBookTour bookTour = new DialogBookTour(Main.this, tourInfo.getChuyenDuLich());
+                DialogBookTour bookTour = new DialogBookTour(MainFrame.this, tourInfo.getChuyenDuLich());
                 btrang.setVisible(true);
                 bookTour.setVisible(true);
+                if(bookTour.isThem()) {
+                    main.showMessage("Đã đặt thành công");
+                } else {
+                    main.showMessage("Đặt thất bại");
+                }
                 btrang.setVisible(false);
             }
         });
@@ -339,9 +348,6 @@ public class Main extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-        
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -402,30 +408,6 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Main().setVisible(true);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.panel.LayerPaneShadow bg;

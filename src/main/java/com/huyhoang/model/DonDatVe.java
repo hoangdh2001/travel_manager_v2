@@ -163,7 +163,7 @@ public class DonDatVe {
      * @return the thanhTien
      */
     public double getThanhTien() {
-        return thanhTien = chuyenDuLich.getGiaChuyenDi() * soLuong;
+        return thanhTien = chuyenDuLich.getGiaChuyenDi() * soLuong + (huongDanVien == null ? 0:huongDanVien.getPhiHDV());
     }
 
     @Override

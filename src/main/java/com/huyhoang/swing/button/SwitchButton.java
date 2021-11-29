@@ -62,9 +62,10 @@ public class SwitchButton extends Component {
                 }
             }
         };
-        animator = new Animator(300, target);
+        animator = new Animator(200, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
+        animator.setDeceleration(0.5f);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {

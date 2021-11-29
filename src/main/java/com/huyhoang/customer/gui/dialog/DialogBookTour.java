@@ -1,30 +1,48 @@
 package com.huyhoang.customer.gui.dialog;
 
-import com.huyhoang.customer.gui.Main;
+import com.huyhoang.customer.gui.MainFrame;
+import com.huyhoang.customer.gui.component.Message;
 import com.huyhoang.dao.DonDatVe_DAO;
 import com.huyhoang.dao.impl.DonDatVeImpl;
+import com.huyhoang.dao.impl.HuongDanVienImpl;
 import com.huyhoang.model.ChiTietThamQuan;
 import com.huyhoang.model.ChuyenDuLich;
 import com.huyhoang.model.DonDatVe;
+import com.huyhoang.model.HuongDanVien;
 import com.huyhoang.swing.autoid.AutoID;
+import com.huyhoang.swing.button.ButtonBadges;
+import com.huyhoang.swing.event.EventSwitchSelected;
 import com.huyhoang.swing.image.PictureBox;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.ImageIcon;
+import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class DialogBookTour extends javax.swing.JDialog {
-
+    
     private boolean show;
     private Animator start;
     private DonDatVe_DAO donDatVe_DAO;
     private DonDatVe donDatVe;
+    private HuongDanVien huongDanVien;
+    private boolean them;
+    private final DecimalFormat df = new DecimalFormat("#,##0đ");
+
+    public boolean isThem() {
+        return them;
+    }
 
     public DialogBookTour(java.awt.Frame parent, ChuyenDuLich chuyenDuLich) {
         super(parent, true);
         donDatVe_DAO = new DonDatVeImpl();
+        huongDanVien = new HuongDanVienImpl().getHuongDanVienRandom();
         String maxID = donDatVe_DAO.getMaxID();
         String maDon;
         if (maxID == null) {
@@ -32,19 +50,31 @@ public class DialogBookTour extends javax.swing.JDialog {
         } else {
             maDon = AutoID.generateId(maxID, "HD");
         }
-        this.donDatVe = new DonDatVe(maDon, Main.khachHang, chuyenDuLich);
+        this.donDatVe = new DonDatVe(maDon, MainFrame.khachHang, chuyenDuLich);
+        donDatVe.setSoLuong(1);
         initComponents();
         buildDisplay();
     }
-
     
-
     private void buildDisplay() {
         start();
+        createSlide();
+        createPanelMessage();
         loadDataForm();
     }
     
     private void loadDataForm() {
+        if(donDatVe.getHuongDanVien() != null) {
+            jLabel5.setText(df.format(donDatVe.getHuongDanVien().getPhiHDV()));
+        } else {
+            jLabel5.setText("0đ");
+        }
+        
+        jLabel7.setText(donDatVe.getSoLuong() + "X" + df.format(donDatVe.getChuyenDuLich().getGiaChuyenDi()));
+        jLabel9.setText(df.format(donDatVe.getThanhTien()));
+    }
+    
+    private void createSlide() {
         String diaDanh = "[";
         String tinh = "Du lịch ";
         List<ChiTietThamQuan> dsChiTietThamQuan = donDatVe.getChuyenDuLich().getDsChiTietThamQuan();
@@ -60,10 +90,89 @@ public class DialogBookTour extends javax.swing.JDialog {
                 }
             }
         }
+        slideShowTransparent1.start();
         tenTour.setText(tinh);
         tenDiaDanh.setText(diaDanh);
+        
+        switchButton1.addEventSelected(new EventSwitchSelected() {
+            @Override
+            public void onSelected(boolean selected) {
+                if(selected) {
+                    donDatVe.setHuongDanVien(huongDanVien);
+                    loadDataForm();
+                } else {
+                    donDatVe.setHuongDanVien(null);
+                    loadDataForm();
+                }
+            }
+        });
     }
-
+    
+    private void createPanelMessage() {
+        jPanel1.setLayout(new MigLayout("fillx, insets 0", "[fill]"));
+        ButtonBadges btnDat = new ButtonBadges();
+        btnDat.setText("Đặt ngay");
+        btnDat.setForeground(Color.WHITE);
+        btnDat.setFont(new Font("Segoe ui", Font.BOLD, 14));
+        btnDat.setBackground(new Color(29, 185, 84));
+        btnDat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                them = donDatVe_DAO.addDonDatVe(donDatVe);
+            }
+        });
+        jPanel1.add(btnDat, "w 120!, h 40!, right");
+    }
+    
+    public void showMessage(String text) {
+        Message ms = new Message();
+        ms.showMessage(text);
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void begin() {
+                if (!ms.isShow()) {
+                    jPanel1.add(ms, "pos 0.5al 0 n n, h 40!", 0); // Chèn thêm message vào panel login
+                    ms.setVisible(true);
+                    jPanel1.repaint();
+                }
+            }
+            
+            @Override
+            public void timingEvent(float fraction) {
+                if (ms.isShow()) {
+                    ms.show(1f - fraction);
+                } else {
+                    ms.show(fraction);
+                }
+            }
+            
+            @Override
+            public void end() {
+                if (ms.isShow()) {
+                    jPanel1.remove(ms);
+                    jPanel1.repaint();
+                    jPanel1.revalidate();
+                } else {
+                    ms.setShow(true);
+                }
+            }
+        };
+        Animator animator2 = new Animator(300, target);
+        animator2.setResolution(0);
+        animator2.setAcceleration(0.5f);
+        animator2.setDeceleration(0.5f);
+        animator2.start();
+        
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+                animator2.start();
+            } catch (InterruptedException e) {
+                System.err.println(e);
+            }
+        }).start();
+    }
+    
     private void start() {
         setBackground(new Color(0, 0, 0, 0));
         setOpacity(0);
@@ -76,7 +185,7 @@ public class DialogBookTour extends javax.swing.JDialog {
                     setOpacity(1f - fraction);
                 }
             }
-
+            
             @Override
             public void end() {
                 if (!show) {
@@ -88,7 +197,7 @@ public class DialogBookTour extends javax.swing.JDialog {
         start.setResolution(0);
         start.setAcceleration(0.5f);
     }
-
+    
     @Override
     public void setVisible(boolean b) {
         show = b;
@@ -97,7 +206,7 @@ public class DialogBookTour extends javax.swing.JDialog {
         }
         super.setVisible(b);
     }
-
+    
     private void close() {
         if (start.isRunning()) {
             start.stop();
@@ -105,7 +214,7 @@ public class DialogBookTour extends javax.swing.JDialog {
         show = false;
         start.start();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -120,13 +229,21 @@ public class DialogBookTour extends javax.swing.JDialog {
         slideShowTransparent1 = new com.huyhoang.swing.slideshow.SlideShowTransparent();
         tenTour = new com.huyhoang.swing.label.WrapLabel();
         tenDiaDanh = new com.huyhoang.swing.label.WrapLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
         button1 = new com.huyhoang.swing.button.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         layerPaneShadow1.setBackground(new java.awt.Color(19, 19, 19));
-        layerPaneShadow1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        layerPaneShadow1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 20, 10));
         layerPaneShadow1.setBorderRadius(10);
         layerPaneShadow1.setShadowOpacity(0.3F);
         layerPaneShadow1.setShadowSize(10);
@@ -136,14 +253,28 @@ public class DialogBookTour extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Số lượng");
 
+        switchButton1.setBackground(new java.awt.Color(29, 185, 84));
+
+        buttonBadges1.setBackground(new java.awt.Color(29, 185, 84));
         buttonBadges1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        buttonBadges1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBadges1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("1");
 
+        buttonBadges2.setBackground(new java.awt.Color(29, 185, 84));
         buttonBadges2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minus.png"))); // NOI18N
+        buttonBadges2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBadges2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -153,13 +284,50 @@ public class DialogBookTour extends javax.swing.JDialog {
         tenTour.setText("Du lịch");
         tenTour.setToolTipText("");
         tenTour.setVAlignStyle(0.0F);
-        tenTour.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tenTour.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         tenDiaDanh.setForeground(new java.awt.Color(255, 255, 255));
         tenDiaDanh.setText("[địa danh]");
         tenDiaDanh.setToolTipText("");
         tenDiaDanh.setVAlignStyle(0.0F);
-        tenDiaDanh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tenDiaDanh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Phí hướng dẫn viên");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("0đ");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Người");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("5 X 2,000,000đ");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Tổng cộng");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("10,000,000đ");
+
+        jPanel1.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 617, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 46, Short.MAX_VALUE)
+        );
 
         layerPaneShadow1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layerPaneShadow1.setLayer(switchButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -170,6 +338,14 @@ public class DialogBookTour extends javax.swing.JDialog {
         layerPaneShadow1.setLayer(slideShowTransparent1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layerPaneShadow1.setLayer(tenTour, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layerPaneShadow1.setLayer(tenDiaDanh, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layerPaneShadow1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layerPaneShadow1Layout = new javax.swing.GroupLayout(layerPaneShadow1);
         layerPaneShadow1.setLayout(layerPaneShadow1Layout);
@@ -177,39 +353,56 @@ public class DialogBookTour extends javax.swing.JDialog {
             layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layerPaneShadow1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layerPaneShadow1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(switchButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(switchButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layerPaneShadow1Layout.createSequentialGroup()
+                                .addComponent(buttonBadges2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(buttonBadges1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layerPaneShadow1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(buttonBadges2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(buttonBadges1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layerPaneShadow1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(slideShowTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tenTour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tenDiaDanh, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layerPaneShadow1Layout.createSequentialGroup()
+                        .addComponent(slideShowTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tenTour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tenDiaDanh, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                            .addComponent(jSeparator1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layerPaneShadow1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5))
+                    .addGroup(layerPaneShadow1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)))
                 .addContainerGap())
         );
         layerPaneShadow1Layout.setVerticalGroup(
             layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layerPaneShadow1Layout.createSequentialGroup()
-                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(slideShowTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layerPaneShadow1Layout.createSequentialGroup()
+                        .addComponent(slideShowTransparent1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layerPaneShadow1Layout.createSequentialGroup()
                         .addComponent(tenTour, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tenDiaDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
+                        .addComponent(tenDiaDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)))
                 .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonBadges1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -219,7 +412,21 @@ public class DialogBookTour extends javax.swing.JDialog {
                 .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(switchButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/close.png"))); // NOI18N
@@ -255,6 +462,30 @@ public class DialogBookTour extends javax.swing.JDialog {
         close();
     }//GEN-LAST:event_button1ActionPerformed
 
+    private void buttonBadges1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBadges1ActionPerformed
+        int soLuong = Integer.valueOf(jLabel2.getText().trim()) + 1;
+        if (soLuong <= donDatVe.getChuyenDuLich().getSoLuong()) {
+            jLabel2.setText(String.valueOf(soLuong));
+            jLabel2.repaint();
+            donDatVe.setSoLuong(soLuong);
+            loadDataForm();
+        } else {
+            showMessage("Số lượng tối đa chỉ " + donDatVe.getChuyenDuLich().getSoLuong());
+        }
+    }//GEN-LAST:event_buttonBadges1ActionPerformed
+
+    private void buttonBadges2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBadges2ActionPerformed
+        int soLuong = Integer.valueOf(jLabel2.getText().trim()) - 1;
+        if (soLuong > 0) {
+            jLabel2.setText(String.valueOf(soLuong));
+            jLabel2.repaint();
+            donDatVe.setSoLuong(soLuong);
+            loadDataForm();
+        } else {
+            showMessage("Yêu cầu tổi thiểu 1 người");
+        }
+    }//GEN-LAST:event_buttonBadges2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.button.Button button1;
     private com.huyhoang.swing.button.ButtonBadges buttonBadges1;
@@ -262,6 +493,14 @@ public class DialogBookTour extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private com.huyhoang.swing.panel.LayerPaneShadow layerPaneShadow1;
     private com.huyhoang.swing.slideshow.SlideShowTransparent slideShowTransparent1;
     private com.huyhoang.swing.button.SwitchButton switchButton1;
