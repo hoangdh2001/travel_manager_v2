@@ -20,15 +20,16 @@ public class DiaChiDAO implements DiaChiService {
         HibernateUtil hibernateUtil = HibernateUtil.getInstance();
         this.sessionFactory = hibernateUtil.getSessionFactory();
     }
-    
+
     @Override
     public DiaChi getDiaChi(String id) {
-       Session session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
 
         try {
             transaction.begin();
-            DiaChi rs = session.find(DiaChi.class, id);
+            String query = "select *from diachi where diachi_id like '" + id + "' ";
+            DiaChi rs = (DiaChi) session.createNativeQuery(query).getSingleResult();
             transaction.commit();
 
             return rs;
@@ -126,7 +127,5 @@ public class DiaChiDAO implements DiaChiService {
         }
         return null;
     }
-
-    
 
 }

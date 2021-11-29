@@ -5,6 +5,7 @@
  */
 package com.huyhoang.employee.gui.dialog;
 
+import com.huyhoang.dao.ChiTietThamQuanDAO;
 import com.huyhoang.dao.ChuyenDuLichDAO;
 import com.huyhoang.dao.DiaChiDAO;
 import com.huyhoang.dao.DiaDanhDao;
@@ -32,24 +33,16 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -68,6 +61,7 @@ public class DialogTour extends javax.swing.JDialog {
     private DiaDanhDao diaDanhDao;
     private NhanVienDAO nhanVienDAO;
     private DiaChiDAO diaChiDAO;
+    private ChiTietThamQuanDAO chiTietThamQuanDAO;
 
     private List<LoaiChuyenDi> listlLoaiChuyenDis;
     private List<DiaDanh> listDiaDanhs;
@@ -78,34 +72,36 @@ public class DialogTour extends javax.swing.JDialog {
 
     public DialogTour(java.awt.Frame parent) {
         super(parent, true);
+        initComponents();
+
         chuyenDuLichDAO = new ChuyenDuLichDAO();
         loaiChuyenDiDAO = new LoaiChuyenDiDAO();
         diaDanhDao = new DiaDanhDao();
         nhanVienDAO = new NhanVienDAO();
         diaChiDAO = new DiaChiDAO();
+        chiTietThamQuanDAO = new ChiTietThamQuanDAO();
 
         chiTietThamQuans = new ArrayList<ChiTietThamQuan>();
         chuyenDuLich = new ChuyenDuLich();
 
-        initComponents();
         setPropertiesForm();
-        comboBoxHandler();
+        comboBoxHandle();
 
-        tblDiaDanhHandle();
+        loadPageDiaDanhHandle();
         searchHandle();
 
         loadDataDiaDanh(pnlPageDD.getCurrentIndex());
 
-        addChiTietThamQuan();
+        addValueTable_CTTQ();
+        themHinhAnhHandle();
         loaiBoChiTietThamQuan();
 
-        insertChuyenDuLich();
+        insertChuyenDuLichHandle();
 
         clearForm();
     }
 
     private void setPropertiesForm() {
-        int txtRadius = 10;
         Color colorBtn = new Color(184, 238, 241);
 
         tblDiaDanh.getTableHeader().setPreferredSize(new Dimension(getWidth(), 30));
@@ -120,10 +116,12 @@ public class DialogTour extends javax.swing.JDialog {
         btnThem.setBackground(colorBtn);
         btnThemCTTQ.setBackground(colorBtn);
         btnLoaiBo.setBackground(colorBtn);
-
     }
 
-    private void comboBoxHandler() {
+    /**
+     * Xử lý load dữ liệu lên các combobox
+     */
+    private void comboBoxHandle() {
         listlLoaiChuyenDis = loaiChuyenDiDAO.getLoaiChuyenDis();
         cmbLoaiChuyenDiModel.addAll(listlLoaiChuyenDis);
 
@@ -147,7 +145,6 @@ public class DialogTour extends javax.swing.JDialog {
         diaDanhDao.getTinhThanhDiaDanhs().forEach(i -> {
             cmbTimKiemTinh.addItem(i);
         });
-
     }
 
     private void searchHandle() {
@@ -162,6 +159,11 @@ public class DialogTour extends javax.swing.JDialog {
         });
     }
 
+    /**
+     * Load dữ liệu lên bảng địa danh dựa và số trang
+     *
+     * @param numPage
+     */
     private void loadDataDiaDanh(int numPage) {
         ((DefaultTableModel) tblDiaDanh.getModel()).setRowCount(0);
 
@@ -175,7 +177,6 @@ public class DialogTour extends javax.swing.JDialog {
 
                 for (DiaDanh i : list) {
                     temp.add(i);
-
                 }
 
                 if (temp != null) {
@@ -183,7 +184,6 @@ public class DialogTour extends javax.swing.JDialog {
                         System.out.println(i);
                         tblDiaDanh.addRow(new DiaDanh(i.getMaDiaDanh(), i.getTenDiaDanh(),
                                 i.getTinh()).convertToRowTable());
-
                     });
 
                     tblDiaDanh.repaint();
@@ -193,28 +193,34 @@ public class DialogTour extends javax.swing.JDialog {
         }).start();
     }
 
+    /**
+     * Load số trang - tạo số trang
+     */
     private void loadPage() {
         int row = diaDanhDao.getSoLuongSearch(txtTimKiem.getText().trim(), cmbTimKiemTinh.getSelectedItem().toString());
         int x = row % 20 == 0 ? row / 20 : (row / 20) + 1;
         if (x == 0) {
             x = 1;
         }
-
         pnlPageDD.init(x);
     }
 
-    private void tblDiaDanhHandle() {
+    /**
+     * Xử lý load trang ở bảng địa danh
+     */
+    private void loadPageDiaDanhHandle() {
         pnlPageDD.addEventPagination(new EventPagination() {
             @Override
             public void onClick(int pageClick) {
                 loadDataDiaDanh(pageClick);
             }
         });
-
         loadPage();
-
     }
 
+    /**
+     * làm mới lại giao diện
+     */
     private void clearForm() {
         ChuyenDuLich last = chuyenDuLichDAO.getLastChuyenDuLich();
         String newID = AutoID.generateId(last.getMaChuyen(), "CD");
@@ -231,46 +237,49 @@ public class DialogTour extends javax.swing.JDialog {
 
     }
 
-    private void addChiTietThamQuan() {
+    /**
+     *
+     *
+     */
+    private void addValueTable_CTTQ() {
         tblDiaDanh.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
-                    String maDD = (String) tblDiaDanh.getValueAt(tblDiaDanh.getSelectedRow(), 0);
-                    EventAddImage event = new EventAddImage() {
-                        @Override
-                        public String addImage() {
-
-                            JFileChooser chooser = new JFileChooser();
-                            FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                                    "JPG & GIF Images", "jpg", "jpeg", "gif", "png");
-                            chooser.setFileFilter(filter);
-
-                            int returnVal = chooser.showOpenDialog(null);
-
-                            String fileName = "";
-                            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                                fileName = chooser.getSelectedFile().getName();
-                                System.out.println("You chose to open this file: " + fileName);
-                            }
-
-//                            String pathImage = chooser.getSelectedFile().getAbsolutePath();
-//                            System.out.println("path: " + pathImage);
-                            File file = chooser.getSelectedFile();
-                            byte[] anhPhong = null;
-                            try {
-                                anhPhong = Files.readAllBytes(file.toPath());
-                            } catch (IOException ex) {
-
-                            }
-                            DiaDanh diaDanh = diaDanhDao.getDiaDanh(tblCTTQ.getValueAt(tblCTTQ.getSelectedRow(), 1).toString());
-//                            System.out.println("dia danh" + diaDanh + Arrays.toString(anhPhong));
-
-                            chuyenDuLich.themChiTietThamQuan(diaDanh, anhPhong);
-                            return "hinh anh da them";
-                        }
-                    };
-                    tblCTTQ.addRow(new Object[]{"id", maDD, new ModelAddImage("hinh anh string", event)});
+                    String maDiaDanh = (String) tblDiaDanh.getValueAt(tblDiaDanh.getSelectedRow(), 0);
+                    String maChuyenDi = txtMa.getText();
+//                    EventAddImage event = new EventAddImage() {
+//                        @Override
+//                        public String addImage() {
+//
+//                            JFileChooser chooser = new JFileChooser();
+//                            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//                                    "JPG & GIF Images", "jpg", "jpeg", "gif", "png");
+//                            chooser.setFileFilter(filter);
+//
+//                            int returnVal = chooser.showOpenDialog(null);
+//
+//                            String fileName = "";
+//                            if (returnVal == JFileChooser.APPROVE_OPTION) {
+//                                fileName = chooser.getSelectedFile().getName();
+//                                System.out.println("You chose to open this file: " + fileName);
+//                            }
+//
+//                            File file = chooser.getSelectedFile();
+//                            byte[] anhPhong = null;
+//                            try {
+//                                anhPhong = Files.readAllBytes(file.toPath());
+//                            } catch (IOException ex) {
+//
+//                            }
+//                            DiaDanh diaDanh = diaDanhDao.getDiaDanh(tblCTTQ.getValueAt(tblCTTQ.getSelectedRow(), 1).toString());
+//
+//                            chuyenDuLich.themChiTietThamQuan(diaDanh, anhPhong);
+//                            return "hinh anh da them";
+//                        }
+//                    };
+//                    tblCTTQ.addRow(new Object[]{"id", maDD, new ModelAddImage("hinh anh string", event)});
+                    tblCTTQ.addRow(new Object[]{maChuyenDi, maDiaDanh, ""});
                     tblCTTQ.repaint();
                     tblCTTQ.revalidate();
 
@@ -278,6 +287,65 @@ public class DialogTour extends javax.swing.JDialog {
             }
 
         });
+    }
+
+    private void themHinhAnhHandle() {
+
+        btnThemAnh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (tblCTTQ.getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(null, "Chưa chọn chi tiết tham quan nêm không thêm ảnh được");
+
+                } else {
+                    JFileChooser chooser = new JFileChooser();
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "jpeg", "gif", "png");
+                    chooser.setFileFilter(filter);
+
+                    String fileName = "";
+                    String filePath = "";
+
+                    int returnVal = chooser.showOpenDialog(null);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        fileName = chooser.getSelectedFile().getName();
+                        filePath = chooser.getSelectedFile().getAbsolutePath();
+
+                        //thêm đường dẫn vào cột hình ảnh của dòng đang được chọn
+                        tblCTTQ.setValueAt(filePath, tblCTTQ.getSelectedRow(), 2);
+                        tblCTTQ.getSelectionModel().clearSelection();
+
+                        System.out.println("You chose to open this file: " + fileName);
+                    } else {
+                        return;
+                    }
+                }
+
+            }
+        });
+    }
+
+    /**
+     * lấy dữ liệu từ bảng chi tiết tham quan (tblCTTQ) để tạo ChiTietThamQuan
+     * sau đó thêm vào chuyenDuLich.themChiTietThamQuan(..., ...)
+     */
+    private void createAndSet_ChiTietThamQuan() {
+        int rowCount_CTTQ = tblCTTQ.getRowCount();
+
+        for (int row = 0; row < rowCount_CTTQ; row++) {
+            DiaDanh diaDanh = diaDanhDao.getDiaDanh(tblCTTQ.getValueAt(row, 1).toString());
+
+            File file = new File(tblCTTQ.getValueAt(row, 2).toString());
+            byte[] anhPhong = null;
+            try {
+                anhPhong = Files.readAllBytes(file.toPath());
+            } catch (IOException ex) {
+
+            }
+
+            chuyenDuLich.themChiTietThamQuan(diaDanh, anhPhong);
+        }
+
     }
 
     private void loaiBoChiTietThamQuan() {
@@ -289,85 +357,132 @@ public class DialogTour extends javax.swing.JDialog {
         });
     }
 
-    private void insertChuyenDuLich() {
+    private void insertChuyenDuLichHandle() {
+
         btnThem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("thêm ");
 
-                String maCDL = txtMa.getText();
-                double gia = Double.parseDouble(txtGiaChuyen.getText());
-                LoaiChuyenDi loaiChuyenDi = cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex());
-
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                LocalDate now = LocalDate.now();
-
-                System.out.println(now);
-                System.out.println(now.getYear() + "" + now.getMonthValue() + "" + now.getDayOfMonth());
-
-                Date ngayTao = new java.sql.Date(now.getYear() - 1900, now.getMonthValue(), now.getDayOfMonth());
-                System.out.println(".actionPerformed()" + ngayTao);
-
-                Date ngayKhoiHanh = new java.sql.Date(jdcNgayBatDau.getDate().getTime());
-                Date ngayKetThuc = new java.sql.Date(jdcNgayKetThuc.getDate().getTime());
-
-                TrangThaiChuyenDi trangThai = TrangThaiChuyenDi.CHUA_KHOI_HANH;
-                PhuongTien phuongTien = PhuongTien.getValuePhuongTien(cmbPhuongTien.getSelectedItem().toString());
-                DongTour dongTour = DongTour.getEnumDongTour(cmbDongTour.getSelectedItem().toString());
-
-                String moTa = txaMoTa.getText().trim();
-
-                int soLuong = Integer.parseInt(txtSoLuong.getText());
-
-                NhanVien nhanVien = nhanVienDAO.getNhanVien("NV0004");
-
-                String maDiaChi = "";
-                switch (cmbNoiKhoiHanh.getSelectedIndex()) {
-                    case 0:
-                        maDiaChi = "DC-0001204";
-                        break;
-                    case 1:
-                        maDiaChi = "DC-0000121";
-                        break;
-                    case 2:
-                        maDiaChi = "DC-0000678";
-                        break;
-                    default:
-                        break;
-                }
-                DiaChi noiKhoiHanh = diaChiDAO.getDiaChi(maDiaChi);
-
-//                chuyenDuLich = new ChuyenDuLich(maCDL, gia, loaiChuyenDi, ngayTao, ngayKhoiHanh, ngayKetThuc, trangThai, phuongTien, dongTour, moTa, soLuong, nhanVien);
-                chuyenDuLich.setMaChuyen(maCDL);
-                chuyenDuLich.setGiaChuyenDi(gia);
-                chuyenDuLich.setLoaiChuyenDi(loaiChuyenDi);
-                chuyenDuLich.setNgayTao(ngayTao);
-                chuyenDuLich.setNgayKhoiHanh(ngayKhoiHanh);
-                chuyenDuLich.setNgayKetThuc(ngayKetThuc);
-
-                chuyenDuLich.setTrangThai(trangThai);
-                chuyenDuLich.setPhuongTien(phuongTien);
-                chuyenDuLich.setDongTour(dongTour);
-                chuyenDuLich.setMoTa(moTa);
-                chuyenDuLich.setSoLuong(soLuong);
-                chuyenDuLich.setNhanVien(nhanVien);
-                chuyenDuLich.setNoiKhoiHanh(noiKhoiHanh);
-
-                boolean result = chuyenDuLichDAO.addChuyenDuLich(chuyenDuLich);
-                if (result) {
-                    JOptionPane.showMessageDialog(null, "Thêm thành công");
+                // check có đủ ảnh hay chưa: nếu số dòng != số đường dẫn ảnh -> lỗi
+                if (checkPathImage() == false) {
+                    JOptionPane.showMessageDialog(null, "Thiếu ảnh của chi tiết tham quan");
                 } else {
 
-                    JOptionPane.showMessageDialog(null, "Thêm thất bại");
-                }
+                    createAndSet_ChiTietThamQuan();
 
-//                System.out.println(chuyenDuLich);
-//                System.out.println(chuyenDuLich.getNgayTao());
-//                System.out.println(chuyenDuLich.getLoaiChuyenDi());
-//                System.out.println(chuyenDuLich.getNhanVien().getMaNhanVien());
-//                System.out.println(chuyenDuLich.getDsChiTietThamQuan().toString());
+                    if (insert_CDL() == true) {
+
+                        //Nếu thêm chi tiết tham quan thành công thì thông báo tất cả thêm thành công
+                        if (insert_CTTQ() == true) {
+                            JOptionPane.showMessageDialog(null, "Thêm thành công");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Thêm thất bại");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thêm thất bại");
+                    }
+                }
             }
         });
+    }
+
+    /**
+     * kiểm tra đã chọn đầy đủ hình ảnh cho chi tiết tham quan hay chưa
+     *
+     * @return true: đủ
+     * @return false: thiếu đường dẫn
+     */
+    private boolean checkPathImage() {
+
+        for (int row = 0; row < tblCTTQ.getRowCount(); row++) {
+            String value = (String) tblCTTQ.getValueAt(row, 2);
+            if (value.equals("")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * chèn chuyến du lịch xuống database
+     */
+    private boolean insert_CDL() {
+
+        String maCDL = txtMa.getText();
+        double gia = Double.parseDouble(txtGiaChuyen.getText());
+        LoaiChuyenDi loaiChuyenDi = cmbLoaiChuyenDiModel.getElementAt(cmbLoaiChuyenDi.getSelectedIndex());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate now = LocalDate.now();
+
+        System.out.println(now);
+        System.out.println(now.getYear() + "" + now.getMonthValue() + "" + now.getDayOfMonth());
+
+        Date ngayTao = new java.sql.Date(now.getYear() - 1900, now.getMonthValue(), now.getDayOfMonth());
+        System.out.println(".actionPerformed()" + ngayTao);
+
+        Date ngayKhoiHanh = new java.sql.Date(jdcNgayBatDau.getDate().getTime());
+        Date ngayKetThuc = new java.sql.Date(jdcNgayKetThuc.getDate().getTime());
+
+        TrangThaiChuyenDi trangThai = TrangThaiChuyenDi.CHUA_KHOI_HANH;
+        PhuongTien phuongTien = PhuongTien.getValuePhuongTien(cmbPhuongTien.getSelectedItem().toString());
+        DongTour dongTour = DongTour.getEnumDongTour(cmbDongTour.getSelectedItem().toString());
+
+        String moTa = txaMoTa.getText().trim();
+
+        int soLuong = Integer.parseInt(txtSoLuong.getText());
+
+        NhanVien nhanVien = nhanVienDAO.getNhanVien("NV0004");
+
+        String maDiaChi = "";
+        switch (cmbNoiKhoiHanh.getSelectedIndex()) {
+            case 0:
+                maDiaChi = "DC-0001204";
+                break;
+            case 1:
+                maDiaChi = "DC-0000121";
+                break;
+            case 2:
+                maDiaChi = "DC-0000678";
+                break;
+            default:
+                break;
+        }
+        DiaChi noiKhoiHanh = diaChiDAO.getDiaChi(maDiaChi);
+        System.out.println("maDiaChi" + maDiaChi);
+        System.out.println("noiKhoiHanh" + noiKhoiHanh);
+
+        chuyenDuLich.setMaChuyen(maCDL);
+        chuyenDuLich.setGiaChuyenDi(gia);
+        chuyenDuLich.setLoaiChuyenDi(loaiChuyenDi);
+        chuyenDuLich.setNgayTao(ngayTao);
+        chuyenDuLich.setNgayKhoiHanh(ngayKhoiHanh);
+        chuyenDuLich.setNgayKetThuc(ngayKetThuc);
+
+        chuyenDuLich.setTrangThai(trangThai);
+        chuyenDuLich.setPhuongTien(phuongTien);
+        chuyenDuLich.setDongTour(dongTour);
+        chuyenDuLich.setMoTa(moTa);
+        chuyenDuLich.setSoLuong(soLuong);
+        chuyenDuLich.setNhanVien(nhanVien);
+        chuyenDuLich.setNoiKhoiHanh(noiKhoiHanh);
+
+        boolean result = chuyenDuLichDAO.addChuyenDuLich(chuyenDuLich);
+
+        return result;
+    }
+
+    private boolean insert_CTTQ() {
+
+        List<ChiTietThamQuan> list = chuyenDuLich.getDsChiTietThamQuan();
+        for (ChiTietThamQuan i : list) {
+            if (chiTietThamQuanDAO.addChiTietThamQuan(i) == false) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -416,6 +531,7 @@ public class DialogTour extends javax.swing.JDialog {
         btnLoaiBo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblCTTQ = new com.huyhoang.swing.table2.MyTable();
+        btnThemAnh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 0));
@@ -704,12 +820,17 @@ public class DialogTour extends javax.swing.JDialog {
         tblCTTQ.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jScrollPane3.setViewportView(tblCTTQ);
 
+        btnThemAnh.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnThemAnh.setText("Thêm ảnh");
+
         javax.swing.GroupLayout pnlBottomRightLayout = new javax.swing.GroupLayout(pnlBottomRight);
         pnlBottomRight.setLayout(pnlBottomRightLayout);
         pnlBottomRightLayout.setHorizontalGroup(
             pnlBottomRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBottomRightLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnThemAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnLoaiBo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
             .addGroup(pnlBottomRightLayout.createSequentialGroup()
@@ -726,7 +847,9 @@ public class DialogTour extends javax.swing.JDialog {
             pnlBottomRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBottomRightLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(btnLoaiBo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlBottomRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoaiBo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
                 .addComponent(pnlPageHDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -770,6 +893,7 @@ public class DialogTour extends javax.swing.JDialog {
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnLoaiBo;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnThemAnh;
     private javax.swing.JButton btnThemCTTQ;
     private javax.swing.JComboBox<String> cmbDongTour;
     private javax.swing.JComboBox cmbLoaiChuyenDi;

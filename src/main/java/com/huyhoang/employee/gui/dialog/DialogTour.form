@@ -578,6 +578,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnThemAnh" min="-2" pref="112" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnLoaiBo" min="-2" pref="112" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
@@ -599,7 +601,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="btnLoaiBo" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnLoaiBo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="btnThemAnh" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="189" max="32767" attributes="0"/>
                   <Component id="pnlPageHDV" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -673,6 +678,14 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="btnThemAnh">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="SansSerif" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Th&#xea;m &#x1ea3;nh"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

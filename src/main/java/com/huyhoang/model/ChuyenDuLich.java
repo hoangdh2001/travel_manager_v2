@@ -109,6 +109,7 @@ public class ChuyenDuLich {
     }
 
     /**
+     * @param chuyenDuLich
      * @param diaDanh
      * @param anhDiaDanh
      */
