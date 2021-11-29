@@ -58,9 +58,14 @@ public class Home extends javax.swing.JPanel {
 
     private void createMapTour() {
         pnlSuggestions.setLayout(new MigLayout("fillx, insets 0, wrap", "[fill]"));
-        loadDataMapTourDaXemGanDay();
-        loadDataMapTourMoi();
-        loadDataMapTourPhoBien();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadDataMapTourDaXemGanDay();
+                loadDataMapTourMoi();
+                loadDataMapTourPhoBien();
+            }
+        }).start();
     }
 
     private void loadDataMapTourDaXemGanDay() {

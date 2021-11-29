@@ -5,6 +5,7 @@
  */
 package com.huyhoang.customer.gui;
 
+import com.huyhoang.customer.gui.component.Message;
 import com.huyhoang.dao.KhachHang_DAO;
 import com.huyhoang.dao.impl.KhachHangImpl;
 import com.huyhoang.model.KhachHang;
@@ -17,6 +18,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
@@ -43,6 +46,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         this.khachHang_DAO = new KhachHangImpl();
         initComponents();
+        loading.setVisible(false);
+        jPanel1.setVisible(true);
         buildDisplay();
     }
     
@@ -54,7 +59,7 @@ public class Login extends javax.swing.JFrame {
     
     private void buildDisplay() {
         start();
-        jPanel1.setLayout(new MigLayout("wrap", "push[center]push[center]push", "push[center]20[center]10[center]10[center]20[center]10[center]push"));
+        jPanel1.setLayout(new MigLayout("wrap", "push[center]push[center]push", "push[center]10[center]10[center]10[center]20[center]10[center]push"));
         createLogin();
     }
     
@@ -72,7 +77,7 @@ public class Login extends javax.swing.JFrame {
         wrapLabel1.setHAlignStyle(0.5F);
         wrapLabel1.setVAlignStyle(0.0F);
         wrapLabel1.setFont(new Font("Segoe UI", 1, 30)); // NOI18N
-        jPanel1.add(wrapLabel1, "w 80%, h 100!, span 2");
+        jPanel1.add(wrapLabel1, "w 70%, h 100!, span 2");
         
         txtSdt.setForeground(new Color(255, 255, 255));
         txtSdt.setBackgroundColor(new Color(51, 51, 51));
@@ -93,7 +98,7 @@ public class Login extends javax.swing.JFrame {
         
         jLabel1.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setForeground(new Color(200, 200, 200));
-        jLabel1.setText("Ghi nhớ tôi");
+        jLabel1.setText("Nhớ mật khẩu");
         jPanel1.add(jLabel1);
         
         switchButton1.setBackground(new Color(29, 185, 84));
@@ -106,24 +111,34 @@ public class Login extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent evt) {
                 String sdt = txtSdt.getText().trim();
                 byte[] matKhau = String.valueOf(txtMatKhau.getPassword()).getBytes();
-                if(sdt.length() < 0) {
+                if(sdt.length() <= 0) {
                     setTextWhenBack();
+                    showMessage("Nhập email hoặc số điện thoại!");
                     return;
                 }
-                if(matKhau.length < 0) {
+                if(matKhau.length <= 0) {
                     setTextWhenBack();
+                    showMessage("Nhập mật khẩu!");
                     return;
                 }
-                
+                loading.setVisible(true);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        khachHang = khachHang_DAO.getKhachHangByLogin(sdt, matKhau);
-                        if(khachHang != null) {
-                            new MainFrame(khachHang).setVisible(true);
-                            dispose();
-                        } else {
-                            
+                        try {
+                            Thread.sleep(1000);
+                            khachHang = khachHang_DAO.getKhachHangByLogin(sdt, matKhau);
+                            if(khachHang != null) {
+                                new MainFrame(khachHang).setVisible(true);
+                                dispose();
+                                loading.setVisible(false);
+                            } else {
+                                loading.setVisible(false);
+                                setTextWhenBack();
+                                showMessage("Sai mật khẩu!");
+                            }
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }).start();
@@ -141,6 +156,55 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(buttonBadges2, "w 80%, h 40!, span 2");
         
+    }
+    
+    public void showMessage(String text) {
+        Message ms = new Message();
+        ms.showMessage(text);
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void begin() {
+                if (!ms.isShow()) {
+                    jPanel1.add(ms, "pos 0.5al 0", 0); // Chèn thêm message vào panel login
+                    ms.setVisible(true);
+                    jPanel1.repaint();
+                }
+            }
+
+            @Override
+            public void timingEvent(float fraction) {
+                if (ms.isShow()) {
+                    ms.show(1f - fraction);
+                } else {
+                    ms.show(fraction);
+                }
+            }
+
+            @Override
+            public void end() {
+                if (ms.isShow()) {
+                    jPanel1.remove(ms);
+                    jPanel1.repaint();
+                    jPanel1.revalidate();
+                } else {
+                    ms.setShow(true);
+                }
+            }
+        };
+        Animator animator2 = new Animator(300, target);
+        animator2.setResolution(0);
+        animator2.setAcceleration(0.5f);
+        animator2.setDeceleration(0.5f);
+        animator2.start();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+                animator2.start();
+            } catch (InterruptedException e) {
+                System.err.println(e);
+            }
+        }).start();
     }
     
     private void start() {
@@ -189,53 +253,51 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        layerPaneShadow1 = new com.huyhoang.swing.panel.LayerPaneShadow();
+        bg = new com.huyhoang.swing.panel.LayerPaneShadow();
         jPanel1 = new javax.swing.JPanel();
+        loading = new com.huyhoang.customer.gui.component.Loading();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        layerPaneShadow1.setBackground(new java.awt.Color(19, 19, 19));
-        layerPaneShadow1.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        layerPaneShadow1.setBorderRadius(20);
-        layerPaneShadow1.setShadowOpacity(0.3F);
-        layerPaneShadow1.setShadowSize(10);
+        bg.setBackground(new java.awt.Color(19, 19, 19));
+        bg.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        bg.setBorderRadius(20);
+        bg.setShadowOpacity(0.3F);
+        bg.setShadowSize(10);
+        bg.setLayout(new java.awt.CardLayout());
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 40, 40, 40));
         jPanel1.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 324, Short.MAX_VALUE)
+            .addGap(0, 318, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGap(0, 404, Short.MAX_VALUE)
         );
 
-        layerPaneShadow1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        bg.add(jPanel1, "card2");
 
-        javax.swing.GroupLayout layerPaneShadow1Layout = new javax.swing.GroupLayout(layerPaneShadow1);
-        layerPaneShadow1.setLayout(layerPaneShadow1Layout);
-        layerPaneShadow1Layout.setHorizontalGroup(
-            layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layerPaneShadow1Layout.setVerticalGroup(
-            layerPaneShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        loading.setBackground(new java.awt.Color(255, 255, 255));
+        loading.setAlpha(0.3F);
+        loading.setBorderRadius(20);
+        bg.setLayer(loading, javax.swing.JLayeredPane.POPUP_LAYER);
+        bg.add(loading, "card3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layerPaneShadow1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layerPaneShadow1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -278,7 +340,8 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.huyhoang.swing.panel.LayerPaneShadow bg;
     private javax.swing.JPanel jPanel1;
-    private com.huyhoang.swing.panel.LayerPaneShadow layerPaneShadow1;
+    private com.huyhoang.customer.gui.component.Loading loading;
     // End of variables declaration//GEN-END:variables
 }

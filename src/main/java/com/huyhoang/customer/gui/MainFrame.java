@@ -2,6 +2,7 @@ package com.huyhoang.customer.gui;
 
 import com.huyhoang.customer.gui.dialog.DialogBookTour;
 import com.huyhoang.customer.gui.form.Home;
+import com.huyhoang.customer.gui.form.Library;
 import com.huyhoang.customer.gui.form.Search;
 import com.huyhoang.customer.gui.form.TourInfo;
 import com.huyhoang.dao.KhachHang_DAO;
@@ -100,6 +101,10 @@ public class MainFrame extends javax.swing.JFrame {
                 Search search = new Search();
                 main.getContent().showForm(search);
                 addHistory(search);
+            } else if(index == 2) {
+                Library library = new Library();
+                main.getContent().showForm(library);
+                addHistory(library);
             }
         });
         move(menu.getjPanel1(), 0);
@@ -354,7 +359,7 @@ public class MainFrame extends javax.swing.JFrame {
         JsonArray jsonArray = jsonReader.readArray();
         JsonObjectBuilder job = Json.createObjectBuilder();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder(jsonArray);
-        if (jsonArray.size() > 3) {
+        if (jsonArray.size() > 2) {
             jsonArrayBuilder.remove(0);
         }
         for (JsonValue jsonValue : jsonArray) {

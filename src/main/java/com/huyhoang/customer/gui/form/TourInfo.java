@@ -79,54 +79,59 @@ public class TourInfo extends javax.swing.JLayeredPane {
     }
 
     private void loadData() {
-        slide.removeAllImage();
-        String diaDanh = "[";
-        String tinh = "Du lịch ";
-        String diemDen = "";
-        List<ChiTietThamQuan> dsChiTietThamQuan = chuyenDuLich.getDsChiTietThamQuan();
-        if (dsChiTietThamQuan.size() > 0) {
-            for (int i = 0; i < dsChiTietThamQuan.size(); i++) {
-                slide.addImage(new PictureBox(new ImageIcon(dsChiTietThamQuan.get(i).getAnhDiaDanh())));
-                if (i == (dsChiTietThamQuan.size() - 1)) {
-                    diaDanh = diaDanh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + "]";
-                    tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTinh();
-                    diemDen = diemDen + dsChiTietThamQuan.get(i).getDiaDanh().getTinh();
-                } else {
-                    diaDanh = diaDanh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + " - ";
-                    tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTinh() + " - ";
-                    diemDen = diemDen + dsChiTietThamQuan.get(i).getDiaDanh().getTinh() + " - ";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                slide.removeAllImage();
+                String diaDanh = "[";
+                String tinh = "Du lịch ";
+                String diemDen = "";
+                List<ChiTietThamQuan> dsChiTietThamQuan = chuyenDuLich.getDsChiTietThamQuan();
+                if (dsChiTietThamQuan.size() > 0) {
+                    for (int i = 0; i < dsChiTietThamQuan.size(); i++) {
+                        slide.addImage(new PictureBox(new ImageIcon(dsChiTietThamQuan.get(i).getAnhDiaDanh())));
+                        if (i == (dsChiTietThamQuan.size() - 1)) {
+                            diaDanh = diaDanh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + "]";
+                            tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTinh();
+                            diemDen = diemDen + dsChiTietThamQuan.get(i).getDiaDanh().getTinh();
+                        } else {
+                            diaDanh = diaDanh + dsChiTietThamQuan.get(i).getDiaDanh().getTenDiaDanh() + " - ";
+                            tinh = tinh + dsChiTietThamQuan.get(i).getDiaDanh().getTinh() + " - ";
+                            diemDen = diemDen + dsChiTietThamQuan.get(i).getDiaDanh().getTinh() + " - ";
+                        }
+                    }
+                    slide.select(0);
+                }
+                tourName.setText(tinh);
+                lblDiaDanh.setText(diaDanh);
+                lblLoaiChuyen.setText(chuyenDuLich.getLoaiChuyenDi().getTenLoaiChuyen());
+                lblGia.setText(df.format(chuyenDuLich.getGiaChuyenDi()));
+                lblNgayKhoiHanh.setText("NGÀY KHỞI HÀNH: " + sdf.format(chuyenDuLich.getNgayKhoiHanh()));
+                lblPhuongTien.setText("PHƯƠNG TIỆN: " + chuyenDuLich.getPhuongTien().getPhuongTien());
+                lblNoiKhoiHanh.setText("NƠI KHỞI HÀNH: " + chuyenDuLich.getNoiKhoiHanh().getTinhThanh());
+                lblDiemDen.setText("ĐIỂM ĐẾN: " + diemDen);
+                String lblText = String.format("<html><div style=\"width:%dpx;font-size:10px;font-family:'Segoe UI', Arial, sans-serif;\">%s</div></html>", 500, chuyenDuLich.getMoTa());
+                lblDescription.setText(lblText);
+                lblthoiGian.setText("THỜI GIAN: " + getDifferenceDays(chuyenDuLich.getNgayKhoiHanh(), chuyenDuLich.getNgayKetThuc()) + " ngày");
+                List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichNgauNhien(chuyenDuLich.getMaChuyen());
+                mapTour.removeAllBox();
+                if (dsChuyenDuLich != null) {
+                    for (ChuyenDuLich chuyenDuLich1 : dsChuyenDuLich) {
+                        BoxTour boxTour = new BoxTour();
+                        boxTour.setChuyenDuLich(chuyenDuLich1);
+                        boxTour.addEventBoxTour(new MouseAdapter() {
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                                event.openTour(chuyenDuLich1);
+                                boxTour.refresh();
+                            }
+                        });
+                        mapTour.addBox(boxTour, 200, 280);
+                    }
+
                 }
             }
-            slide.select(0);
-        }
-        tourName.setText(tinh);
-        lblDiaDanh.setText(diaDanh);
-        lblLoaiChuyen.setText(chuyenDuLich.getLoaiChuyenDi().getTenLoaiChuyen());
-        lblGia.setText(df.format(chuyenDuLich.getGiaChuyenDi()));
-        lblNgayKhoiHanh.setText("NGÀY KHỞI HÀNH: " + sdf.format(chuyenDuLich.getNgayKhoiHanh()));
-        lblPhuongTien.setText("PHƯƠNG TIỆN: " + chuyenDuLich.getPhuongTien().getPhuongTien());
-        lblNoiKhoiHanh.setText("NƠI KHỞI HÀNH: " + chuyenDuLich.getNoiKhoiHanh().getTinhThanh());
-        lblDiemDen.setText("ĐIỂM ĐẾN: " + diemDen);
-        String lblText = String.format("<html><div style=\"width:%dpx;font-size:10px;font-family:'Segoe UI', Arial, sans-serif;\">%s</div></html>", 500, chuyenDuLich.getMoTa());
-        lblDescription.setText(lblText);
-        lblthoiGian.setText("THỜI GIAN: " + getDifferenceDays(chuyenDuLich.getNgayKhoiHanh(), chuyenDuLich.getNgayKetThuc()) + " ngày");
-        List<ChuyenDuLich> dsChuyenDuLich = chuyenDuLich_DAO.getDsChuyenDuLichNgauNhien(chuyenDuLich.getMaChuyen());
-        mapTour.removeAllBox();
-        if (dsChuyenDuLich != null) {
-            for (ChuyenDuLich chuyenDuLich1 : dsChuyenDuLich) {
-                BoxTour boxTour = new BoxTour();
-                boxTour.setChuyenDuLich(chuyenDuLich1);
-                boxTour.addEventBoxTour(new MouseAdapter() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        event.openTour(chuyenDuLich1);
-                        boxTour.refresh();
-                    }
-                });
-                mapTour.addBox(boxTour, 200, 280);
-            }
-            
-        }
+        }).start();
     }
 
     private long getDifferenceDays(Date d1, Date d2) {
@@ -253,12 +258,12 @@ public class TourInfo extends javax.swing.JLayeredPane {
         lblDescription.setForeground(Color.WHITE);
         lblDescription.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         pnlCenter.add(lblDescription, "span 2");
-        
+
         createMap();
-        
+
         add(pnlCenter);
     }
-    
+
     private void createMap() {
         mapTour = new Map();
         mapTour.setTitle("Có thể bạn sẽ thích");

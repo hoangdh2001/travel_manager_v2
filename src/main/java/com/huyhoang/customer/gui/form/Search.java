@@ -6,6 +6,7 @@ import com.huyhoang.dao.LoaiChuyenDi_DAO;
 import com.huyhoang.dao.impl.DiaChiImpl;
 import com.huyhoang.dao.impl.LoaiChuyenDiImpl;
 import com.huyhoang.model.LoaiChuyenDi;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
@@ -13,6 +14,7 @@ public class Search extends javax.swing.JPanel {
 
     private LoaiChuyenDi_DAO loaiChuyenDi_DAO;
     private DiaChi_DAO diaChi_DAO;
+
     public Search() {
         this.loaiChuyenDi_DAO = new LoaiChuyenDiImpl();
         this.diaChi_DAO = new DiaChiImpl();
@@ -24,38 +26,43 @@ public class Search extends javax.swing.JPanel {
         loadDataForm();
         createMap();
     }
-    
+
     private void loadDataForm() {
-        DefaultComboBoxModel<String> cmbDiemDiModel = new DefaultComboBoxModel<>();
-        cmbDiemDiModel.addAll(diaChi_DAO.getAllTinhThanh());
-        cmbDiemDi.setModel(cmbDiemDiModel);
-        cmbDiemDiModel.setSelectedItem("Thành phố Hồ Chí Minh");
-        DefaultComboBoxModel<String> cmbDiemDenModel = new DefaultComboBoxModel<>();
-        cmbDiemDenModel.addAll(diaChi_DAO.getAllTinhThanh());
-        cmbDiemDen.addItem("Hãy chọn điểm đến");
-        cmbDiemDen.setModel(cmbDiemDiModel);
-        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DefaultComboBoxModel<String> cmbDiemDenModel = new DefaultComboBoxModel<>();
+                cmbDiemDenModel.addAll(diaChi_DAO.getAllTinhThanh());
+                cmbDiemDen.addItem("Hãy chọn điểm đến");
+                cmbDiemDen.setModel(cmbDiemDenModel);
+            }
+        }).start();
+
         for (int i = 1; i <= 31; i++) {
             cmbNgay.addItem(i);
         }
-        
+
         for (int i = 1; i <= 12; i++) {
             cmbThang.addItem(i);
         }
-        
-        for (int i = 1951; i < 2010; i++) {
-            cmbNam.addItem(i);
-        }
+
+        cmbNgay.setSelectedIndex(new Date().getDay());
+        cmbThang.setSelectedIndex(new Date().getMonth());
     }
 
     private void createMap() {
-        List<LoaiChuyenDi> dsChuyenDi = loaiChuyenDi_DAO.getDsLoaiChuyenDi();
-        if (dsChuyenDi != null) {
-            for (LoaiChuyenDi loaiChuyenDi : dsChuyenDi) {
-                BoxType boxType = new BoxType(loaiChuyenDi);
-                map1.addBox(boxType, 200, 200);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<LoaiChuyenDi> dsChuyenDi = loaiChuyenDi_DAO.getDsLoaiChuyenDi();
+                if (dsChuyenDi != null) {
+                    for (LoaiChuyenDi loaiChuyenDi : dsChuyenDi) {
+                        BoxType boxType = new BoxType(loaiChuyenDi);
+                        map1.addBox(boxType, 200, 200);
+                    }
+                }
             }
-        }
+        }).start();
     }
 
     @SuppressWarnings("unchecked")
@@ -73,9 +80,9 @@ public class Search extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         panelRoundLine3 = new com.huyhoang.swing.panel.PanelRoundLine();
         jLabel5 = new javax.swing.JLabel();
-        cmbNgay = new com.huyhoang.swing.combobox.Combobox();
-        cmbThang = new com.huyhoang.swing.combobox.Combobox();
-        cmbNam = new com.huyhoang.swing.combobox.Combobox();
+        cmbNgay = new com.huyhoang.swing.combobox.Combobox<>();
+        cmbThang = new com.huyhoang.swing.combobox.Combobox<>();
+        cmbNam = new com.huyhoang.swing.combobox.Combobox<>();
         panelRoundLine4 = new com.huyhoang.swing.panel.PanelRoundLine();
         jLabel7 = new javax.swing.JLabel();
         cmbSoNgay = new com.huyhoang.swing.combobox.Combobox();
@@ -92,6 +99,7 @@ public class Search extends javax.swing.JPanel {
         panelRoundLine1.setBorderColor(new java.awt.Color(40, 40, 40));
         panelRoundLine1.setBorderRadius(20);
 
+        cmbDiemDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thành phố Hồ Chí Minh", "Thủ đô Hà Nội", "Thành phố Đà Nẵng" }));
         cmbDiemDi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbDiemDi.setLabeText("Điếm đi");
 
@@ -167,6 +175,7 @@ public class Search extends javax.swing.JPanel {
 
         cmbThang.setLabeText("Tháng");
 
+        cmbNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2022" }));
         cmbNam.setLabeText("Năm");
 
         javax.swing.GroupLayout panelRoundLine3Layout = new javax.swing.GroupLayout(panelRoundLine3);
@@ -189,7 +198,7 @@ public class Search extends javax.swing.JPanel {
             .addGroup(panelRoundLine3Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel5)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRoundLine3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelRoundLine3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -205,6 +214,7 @@ public class Search extends javax.swing.JPanel {
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar.png"))); // NOI18N
 
+        cmbSoNgay.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1-3 ngày", "4-7 ngày", "8-14 ngày", "Trên 14 ngày" }));
         cmbSoNgay.setLabeText("Số ngày");
 
         javax.swing.GroupLayout panelRoundLine4Layout = new javax.swing.GroupLayout(panelRoundLine4);
@@ -215,7 +225,7 @@ public class Search extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbSoNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 97, Short.MAX_VALUE)
+                .addComponent(cmbSoNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 89, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelRoundLine4Layout.setVerticalGroup(
@@ -228,7 +238,7 @@ public class Search extends javax.swing.JPanel {
                     .addGroup(panelRoundLine4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(cmbSoNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -236,17 +246,17 @@ public class Search extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelRoundLine3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelRoundLine4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelRoundLine1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panelRoundLine2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelRoundLine3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelRoundLine4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(panelRoundLine2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -288,10 +298,10 @@ public class Search extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.huyhoang.swing.combobox.Combobox<String> cmbDiemDen;
     private com.huyhoang.swing.combobox.Combobox<String> cmbDiemDi;
-    private com.huyhoang.swing.combobox.Combobox cmbNam;
-    private com.huyhoang.swing.combobox.Combobox cmbNgay;
+    private com.huyhoang.swing.combobox.Combobox<String> cmbNam;
+    private com.huyhoang.swing.combobox.Combobox<Integer> cmbNgay;
     private com.huyhoang.swing.combobox.Combobox cmbSoNgay;
-    private com.huyhoang.swing.combobox.Combobox cmbThang;
+    private com.huyhoang.swing.combobox.Combobox<Integer> cmbThang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -34,13 +34,13 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/icon/home.png")),
                 new ImageIcon(getClass().getResource("/icon/home_selected.png")),
                 new ImageIcon(getClass().getResource("/icon/home_over.png")),
-                "Home", 0);
+                "Trang chủ", 0);
         addMenu(new ImageIcon(getClass().getResource("/icon/search.png")),
                 new ImageIcon(getClass().getResource("/icon/search_selected.png")),
-                new ImageIcon(getClass().getResource("/icon/search_over.png")), "Search", 1);
+                new ImageIcon(getClass().getResource("/icon/search_over.png")), "Tìm kiếm", 1);
         addMenu(new ImageIcon(getClass().getResource("/icon/library.png")),
                 new ImageIcon(getClass().getResource("/icon/library_selected.png")),
-                new ImageIcon(getClass().getResource("/icon/library_over.png")), "Library", 2);
+                new ImageIcon(getClass().getResource("/icon/library_over.png")), "Thư viện", 2);
         addEmpty();
 
     }
