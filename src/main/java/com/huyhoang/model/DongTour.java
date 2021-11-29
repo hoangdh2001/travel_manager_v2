@@ -12,6 +12,16 @@ public enum DongTour {
     private DongTour(String dongTour) {
         this.dongTour = dongTour;
     }
+    
+    public  static  DongTour getEnumDongTour(String dongTour){
+        for (DongTour i : DongTour.values()) {
+            if (i.dongTour.equals(dongTour)) {
+                return i;
+            }
+        }
+        
+        return null;
+    }
 
     /**
      * @return the dongTour
