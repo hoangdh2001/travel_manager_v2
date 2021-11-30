@@ -38,16 +38,6 @@ public class Main extends javax.swing.JFrame {
         buildMenu();
     }
 
-//    private void createMenu() {
-//        menu1.initMenu(new EventMenuSelected() {
-//            @Override
-//            public void menuSelected(int index) {
-//                if(index == 0) {
-//                    content1.showForm(new Home());
-//                }
-//            }
-//        });
-//    }
     private void buildMenu() {
         
         menu1.initMenu(new EventMenuSelected() {
@@ -56,7 +46,7 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("main " + index);
                 
                 switch (index) {
-                    case 2:
+                    case 0:
                         PanelTour panelTour = new PanelTour();
                         panelTour.btnThemHandle(new ActionListener() {
                             @Override
@@ -68,19 +58,19 @@ public class Main extends javax.swing.JFrame {
                         content1.showForm(panelTour);
                         break;
                     
-                    case 3:
+                    case 1:
                         PanelKhachHang panelKhachHang = new PanelKhachHang();
                         content1.showForm(panelKhachHang);
                         break;
-                    case 4:
+                    case 2:
                         PanelDonDatVe panelDonDat = new PanelDonDatVe();
                         content1.showForm(panelDonDat);
                         break;
-                    case 5:
+                    case 3:
                         PanelHuongDanVien panelHDV = new PanelHuongDanVien();
                         content1.showForm(panelHDV);
                         break;
-                    case 6:
+                    case 4:
                         PanelDiaDanh panelDiaDanh = new PanelDiaDanh();
                         content1.showForm(panelDiaDanh);
                         break;

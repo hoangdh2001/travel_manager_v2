@@ -234,7 +234,8 @@ public class DialogTour extends javax.swing.JDialog {
 
         txtGiaChuyen.setText("");
         txaMoTa.setText("");
-
+        jdcNgayBatDau.setDate(null);
+        jdcNgayKetThuc.setDate(null);
     }
 
     /**
@@ -345,6 +346,7 @@ public class DialogTour extends javax.swing.JDialog {
                         //Nếu thêm chi tiết tham quan thành công thì thông báo tất cả thêm thành công
                         if (insert_CTTQ() == true) {
                             JOptionPane.showMessageDialog(null, "Thêm thành công");
+                            clearForm();
                         } else {
                             JOptionPane.showMessageDialog(null, "Thêm thất bại");
                         }
