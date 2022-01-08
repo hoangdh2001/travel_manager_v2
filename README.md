@@ -1,6 +1,6 @@
 # Travel Management
 ###
-https://user-images.githubusercontent.com/76101060/148654952-66da511f-b061-47a0-8123-fe1e12f0b2b0.mp4
+![2022-01-09 01-06-34 (1)](https://user-images.githubusercontent.com/76101060/148655238-498862ab-139d-4e1f-8dac-1651a3c4c516.gif)
 ###
-https://user-images.githubusercontent.com/76101060/148654959-afd2471b-2865-4fa3-b9cd-6420f363bad0.mp4
+![2022-01-09 01-06-34 (1)](https://user-images.githubusercontent.com/76101060/148655260-9ab80d0b-d4d2-454a-8223-e23267f8b62b.gif)
 
